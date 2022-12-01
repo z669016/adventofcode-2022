@@ -24,7 +24,6 @@ public class Day1 extends Day {
 
     @Override
     public void part2() {
-        final List<Elf> topThree = Elves.topThreeMostCalories(elves);
-        System.out.println("The top three elves carry " + Elves.calories(topThree));
+        System.out.println("The top three elves carry " + Elves.topThreeMostCalories(elves));
     }
 }

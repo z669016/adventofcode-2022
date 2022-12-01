@@ -25,7 +25,6 @@ class ElvesTest {
 
     @Test
     void topThreeMostCalories() {
-        final List<Elf> topThree = Elves.topThreeMostCalories(elves);
-        assertEquals(45000, Elves.calories(topThree));
+        assertEquals(45000, Elves.topThreeMostCalories(elves));
     }
 }

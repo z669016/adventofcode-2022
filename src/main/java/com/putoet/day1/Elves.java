@@ -28,20 +28,14 @@ public class Elves {
         return elves.stream().max(Comparator.comparing(Elf::calories));
     }
 
-    public static List<Elf> topThreeMostCalories(List<Elf> elves) {
+    public static int topThreeMostCalories(List<Elf> elves) {
         assert elves != null;
         assert elves.size() >= 3;
 
-        final List<Elf> ordered = elves.stream()
+        return elves.stream()
                 .sorted(Comparator.comparing(Elf::calories).reversed())
-                .toList();
-
-        return List.of(ordered.get(0), ordered.get(1), ordered.get(2));
-    }
-
-    public static int calories(List<Elf> elves) {
-        assert elves != null;
-
-        return elves.stream().mapToInt(Elf::calories).sum();
+                .limit(3)
+                .mapToInt(Elf::calories)
+                .sum();
     }
 }
