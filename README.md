@@ -12,6 +12,11 @@ Also uses the algorithm library, which contains generic classes for addressing c
 It was never my intention to create the shortest program possible. I did try to create clear and simple implementations.
 
 ## Day 1
+December 1, 2022, looking forward to a month of puzzles! Day 1 in general is for warming up. Create a list of 
+```ElF``` each carrying a list of calories (int). For part 1, find the Elf with max ```Elf::calories```. To solve
+part 2, order the list according to ```ELf::Calories``` and take the top-3.
+
+## Day 2
 
 
 
