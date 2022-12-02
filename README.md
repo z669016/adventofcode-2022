@@ -17,14 +17,16 @@ December 1, 2022, looking forward to a month of puzzles! Day 1 in general is for
 part 2, order the list according to ```ELf::Calories``` and take the top-3.
 
 ## Day 2
-Rock, Paper, Scissors! I use a RPS enum to represent the item for a player, with a ```score()``` method returning the
-score for the item. The ```RPS.of()``` is the factory method (taking a 1 letter string as an input). 
+Rock, Paper, Scissors! I use an RPS enum to represent the item for a player, with a ```score()``` method returning the
+score for the item. The ```RPS.of()``` is the factory method (taking a 1 letter string as an input). RPS provides
+convenience methods ```loserFor()``` and ```winnerFor()``` to test game results.
 A ```Game``` record is used to represent a single game. The ```Game.of()``` method takes a line from the input and 
 transforms it into a ```Game``` with two players (```RPS``` instances). The ```Game.score()``` returns the value of the 
 game. That's enough for part 1.
 For part 2, I added a ```RPS.of2()```, taking a 1 letter string and the RPS for the other player, to determine the right
 ite to use for player 2. ```Game.of2()``` uses this new ```RPS.of2()``` to build a game according to the rules explained
-by the Elf. The calculation of the total sscore is unchanged, but now using ```Game::of2```.
+by the Elf using the RPS convenience methods. The calculation of the total score is unchanged, but now using 
+```Game::of2``` in the stream for mapping an input line into a ```Game```.
 
 
 

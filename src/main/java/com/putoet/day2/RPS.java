@@ -22,27 +22,23 @@ public enum RPS {
 
     public static RPS of2(String code, RPS other) {
         return switch (code) {
-            case "X" -> loserFor(other);
+            case "X" -> other.loserFor();
             case "Y" -> other;
-            case "Z" -> winnerFor(other);
+            case "Z" -> other.winnerFor();
             default -> throw new IllegalArgumentException("Invalid RPS code: " + code);
         };
     }
 
-    public RPS winnerFor() {
-        return winnerFor(this);
-    }
-
-    public static RPS loserFor(RPS other) {
-        return switch (other) {
+    public RPS loserFor() {
+        return switch (this) {
             case ROCK -> SCISSORS;
             case PAPER -> ROCK;
             case SCISSORS -> PAPER;
         };
     }
 
-    public static RPS winnerFor(RPS other) {
-        return switch (other) {
+    public RPS winnerFor() {
+        return switch (this) {
             case ROCK -> PAPER;
             case PAPER -> SCISSORS;
             case SCISSORS -> ROCK;
