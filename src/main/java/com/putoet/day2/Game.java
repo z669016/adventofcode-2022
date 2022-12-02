@@ -10,7 +10,7 @@ public record Game(RPS player1, RPS player2) {
         if (player1 == player2)
             return 3 + player2.score();
 
-        if (player2 == player1.winnerFor())
+        if (player2 == player1.losesFrom())
             return 6 + player2.score();
 
         return player2().score();
