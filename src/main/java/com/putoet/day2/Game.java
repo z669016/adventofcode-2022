@@ -1,7 +1,5 @@
 package com.putoet.day2;
 
-import static com.putoet.day2.RPS.*;
-
 public record Game(RPS player1, RPS player2) {
     public Game {
         assert player1 != null;
@@ -12,9 +10,7 @@ public record Game(RPS player1, RPS player2) {
         if (player1 == player2)
             return 3 + player2.score();
 
-        if ((player2 == ROCK && player1 == SCISSORS) ||
-                (player2 == PAPER && player1 == ROCK) ||
-                (player2 == SCISSORS && player1 == PAPER))
+        if (player2 == player1.winnerFor())
             return 6 + player2.score();
 
         return player2().score();
