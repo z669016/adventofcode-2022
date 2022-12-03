@@ -28,5 +28,16 @@ ite to use for player 2. ```Game.of2()``` uses this new ```RPS.of2()``` to build
 by the Elf using the RPS convenience methods. The calculation of the total score is unchanged, but now using 
 ```Game::of2``` in the stream for mapping an input line into a ```Game```.
 
+## Day 3
+```Rucksacks```, with ```RucksackItem```s (with a priority) in two compartments, without duplication in any compartment.
+The ```RucksackItem``` record holds the character and it's ```priority()``` methods calculates priority from the char
+value. The ```RucksackItems.of()``` creates a ```Set<RucksackItem>``` from  a string (set has no doubles), and
+```RucksackItems.of2()``` creates a ```List<Set<RucksackItem>>``` from a string (using ```RucksackItems.of()```splitting
+the string in 2 halves).
+The ```Rucksack.shared()``` returns the one RucksackItem that is the intersection between the two compartments (using 
+the Google Guave Sets class). For part 1, transform the input in a ```List<Rucksack>```, stream the list, find the shared
+items and sum theis priorities. For part 2, ```Rucksack.shared()``` can also take two other rucksacks and find the shared
+rucksack item among ```allItems()``` of all three rucksacks. Iterate the rucksack list (in groups of 3), find the
+shared item across all 3 rucksacks and sum its priority.
 
 
