@@ -15,13 +15,13 @@ class RucksackTest {
 
     @Test
     void shared() {
-        final Rucksack rucksack = Rucksack.of("abcAbC");
+        final var rucksack = Rucksack.of("abcAbC");
         assertEquals(b, rucksack.shared());
     }
 
     @Test
     void allItems() {
-        final Rucksack rucksack = Rucksack.of("abcAbC");
+        final var rucksack = Rucksack.of("abcAbC");
         final var allItems = rucksack.allItems();
         assertEquals(5, allItems.size());
         assertTrue(rucksack.allItems().containsAll(Set.of(a,b,c,A,C)));

@@ -17,7 +17,7 @@ public class Day4 extends Day {
     }
 
     public static void main(String[] args) {
-        final Day day = new Day4(args);
+        final var day = new Day4(args);
         day.challenge();
     }
 

@@ -33,7 +33,7 @@ public record RangePair(Pair<Range,Range> pair) {
     }
 
     public static RangePair of (String rangePair) {
-        final String[] split = rangePair.split(",");
+        final var split = rangePair.split(",");
         assert split.length == 2;
 
         return new RangePair(Pair.with(Range.of(split[0]), Range.of(split[1])));

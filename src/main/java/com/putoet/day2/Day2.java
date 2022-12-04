@@ -15,19 +15,19 @@ public class Day2 extends Day {
     }
 
     public static void main(String[] args) {
-        final Day day = new Day2(args);
+        final var day = new Day2(args);
         day.challenge();
     }
 
     @Override
     public void part1() {
-        final int score = input.stream().map(Game::of).mapToInt(Game::score).sum();
+        final var score = input.stream().map(Game::of).mapToInt(Game::score).sum();
         System.out.println("The total score according to the strategy guide is " + score);
     }
 
     @Override
     public void part2() {
-        final int score = input.stream().map(Game::of2).mapToInt(Game::score).sum();
+        final var score = input.stream().map(Game::of2).mapToInt(Game::score).sum();
         System.out.println("The total score according to the Elf's explanation is " + score);
     }
 }

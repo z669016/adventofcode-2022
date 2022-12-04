@@ -1,14 +1,14 @@
-package com.putoet.day5;
+package com.putoet.day6;
 
 import com.putoet.day.Day;
 
-public class Day5 extends Day {
-    public Day5(String[] args) {
+public class Day6 extends Day {
+    public Day6(String[] args) {
         super(args);
     }
 
     public static void main(String[] args) {
-        final var day = new Day5(args);
+        final var day = new Day6(args);
         day.challenge();
     }
 

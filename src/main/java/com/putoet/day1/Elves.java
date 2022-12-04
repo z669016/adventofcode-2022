@@ -1,16 +1,13 @@
 package com.putoet.day1;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Elves {
     public static List<Elf> from(List<String> input) {
         assert input != null;
-        final List<Elf> elves = new ArrayList<>();
+        final var elves = new ArrayList<Elf>();
         int id = 1;
-        List<Integer> foodCalories = new ArrayList<>();
+        var foodCalories = new ArrayList<Integer>();
         for (String line : input) {
             if (line.trim().isEmpty()) {
                 elves.add(new Elf(id++, foodCalories));
@@ -20,7 +17,7 @@ public class Elves {
             }
         }
         elves.add(new Elf(id++, foodCalories));
-        return elves;
+        return Collections.unmodifiableList(elves);
     }
 
     public static Optional<Elf> mostCalories(List<Elf> elves) {

@@ -8,7 +8,7 @@ class RangeTest {
 
     @Test
     void of() {
-        final Range range = Range.of("12-28");
+        final var range = Range.of("12-28");
         assertEquals(12, range.lower());
         assertEquals(28, range.upper());
 

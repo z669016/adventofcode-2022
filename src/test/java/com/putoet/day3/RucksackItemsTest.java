@@ -16,7 +16,7 @@ class RucksackItemsTest {
 
     @Test
     void of() {
-        final Set<RucksackItem> items = RucksackItems.of("abc");
+        final var items = RucksackItems.of("abc");
         assertEquals(3, items.size());
         assertTrue(items.containsAll(Set.of(a,b,c)));
     }

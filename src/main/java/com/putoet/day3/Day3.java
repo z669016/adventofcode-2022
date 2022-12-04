@@ -17,7 +17,7 @@ public class Day3 extends Day {
     }
 
     public static void main(String[] args) {
-        final Day day = new Day3(args);
+        final var day = new Day3(args);
         day.challenge();
     }
 
@@ -39,7 +39,7 @@ public class Day3 extends Day {
     }
 
     public int batchPrioritySum() {
-       int sum = 0;
+       var sum = 0;
 
        for (int i = 0; i < rucksacks.size() - 2; i += 3) {
            sum += rucksacks.get(i).shared(rucksacks.get(i + 1), rucksacks.get(i + 2)).priority();

@@ -19,7 +19,7 @@ public record Game(RPS player1, RPS player2) {
     public static Game of(String line) {
         assert line != null;
 
-        final String[] split = line.trim().split(" ");
+        final var split = line.trim().split(" ");
         assert split.length == 2;
 
         return new Game(RPS.of(split[0]), RPS.of(split[1]));
@@ -28,7 +28,7 @@ public record Game(RPS player1, RPS player2) {
     public static Game of2(String line) {
         assert line != null;
 
-        final String[] split = line.trim().split(" ");
+        final var split = line.trim().split(" ");
         assert split.length == 2;
 
         final RPS player1 = RPS.of(split[0]);
@@ -36,5 +36,4 @@ public record Game(RPS player1, RPS player2) {
 
         return new Game(player1, player2);
     }
-
 }

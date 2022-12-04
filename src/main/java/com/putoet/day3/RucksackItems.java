@@ -15,7 +15,7 @@ public class RucksackItems {
         assert items != null;
         assert items.length() % 2 == 0;
 
-        final int size = items.length() / 2;
+        final var size = items.length() / 2;
         return List.of( of(items.substring(0, size)), of(items.substring(size)));
     }
 }

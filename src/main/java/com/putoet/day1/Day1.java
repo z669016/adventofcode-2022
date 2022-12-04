@@ -13,7 +13,7 @@ public class Day1 extends Day {
     }
 
     public static void main(String[] args) {
-        final Day day = new Day1(args);
+        final var day = new Day1(args);
         day.challenge();
     }
 
