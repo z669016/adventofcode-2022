@@ -40,4 +40,11 @@ items and sum theis priorities. For part 2, ```Rucksack.shared()``` can also tak
 rucksack item among ```allItems()``` of all three rucksacks. Iterate the rucksack list (in groups of 3), find the
 shared item across all 3 rucksacks and sum its priority.
 
+## Day 4
+Created a ```Range``` record to contain one range, and a ```RangePair``` record to contain two. The ```Range``` ensures
+the lower and upper values are in the right order (and the input seems to be so as well, but you might never know). The 
+```RangePair.fullContainment()``` returns true if one of the ranges fully contains the other. That's enough to
+solve part 1. For part 2 ```RangePair.overlap()``` returns true is there is a overlap between the two ranges. For the
+rest calculating the result is pretty similar. 
+The only caveat in this puzzle is of course that second can be contained in first, and the other way around (same goes for overlap).
 
