@@ -1,23 +1,10 @@
 package com.putoet.day4;
 
-
-import org.javatuples.Pair;
-
 import java.util.regex.Pattern;
 
-public record Range(Pair<Integer,Integer> range) {
+public record Range(int lower, int upper) {
     public Range {
-        assert range != null;
-        assert range.getValue0() != null && range.getValue1() != null;
-        assert range.getValue0() <= range.getValue1();
-    }
-
-    public int lower() {
-        return range.getValue0();
-    }
-
-    public int upper() {
-        return range.getValue1();
+        assert lower <= upper;
     }
 
     private static final Pattern RANGE_PATTERN = Pattern.compile("(\\d+)-(\\d+)");
@@ -26,7 +13,6 @@ public record Range(Pair<Integer,Integer> range) {
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid range pattern: " + range);
 
-        return new Range(Pair.with(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2))));
+        return new Range(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
     }
-
 }
