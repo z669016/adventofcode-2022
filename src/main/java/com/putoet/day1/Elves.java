@@ -6,9 +6,9 @@ public class Elves {
     public static List<Elf> from(List<String> input) {
         assert input != null;
         final var elves = new ArrayList<Elf>();
-        int id = 1;
+        var id = 1;
         var foodCalories = new ArrayList<Integer>();
-        for (String line : input) {
+        for (var line : input) {
             if (line.trim().isEmpty()) {
                 elves.add(new Elf(id++, foodCalories));
                 foodCalories = new ArrayList<>();
