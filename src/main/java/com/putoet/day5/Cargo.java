@@ -5,38 +5,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cargo {
-    private final List<CrateStack> stock;
+    private final List<Crates> stock;
 
-    public Cargo(List<CrateStack> stock) {
+    public Cargo(List<Crates> stock) {
         this.stock = new ArrayList<>(stock);
 
     }
 
-    public void move(int from, int to, int count) {
+    public Crates take(int from, int count, Crane crane) {
         assert from > 0 && from <= stock.size();
-        assert to > 0 && to <= stock.size();
-        assert from != to;
         assert count > 0 && count <= stock.get(from - 1).size();
 
-        stock.get(to - 1).add(stock.get(from - 1).take(count));
+        return crane.take(stock.get(from - 1), count);
     }
 
-    public void move2(int from, int to, int count) {
-        assert from > 0 && from <= stock.size();
+    public void add(int to, Crates stack) {
         assert to > 0 && to <= stock.size();
-        assert from != to;
-        assert count > 0 && count <= stock.get(from - 1).size();
 
-        stock.get(to - 1).add(new CrateStack(new StringBuilder(stock.get(from - 1).take(count).toString()).reverse().toString()));
+        stock.get(to - 1).add(stack);
     }
 
     public String top() {
-        return stock.stream().map(CrateStack::top).collect(Collectors.joining());
+        return stock.stream().map(Crates::top).collect(Collectors.joining());
     }
 
     public String toString() {
         return stock.stream()
-                .map(CrateStack::toString)
+                .map(Crates::toString)
                 .collect(Collectors.joining("\n"));
     }
 }

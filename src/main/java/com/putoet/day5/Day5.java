@@ -4,77 +4,94 @@ import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Day5 extends Day {
-    //    [P]     [L]         [T]
-    //    [L]     [M] [G]     [G]     [S]
-    //    [M]     [Q] [W]     [H] [R] [G]
-    //    [N]     [F] [M]     [D] [V] [R] [N]
-    //    [W]     [G] [Q] [P] [J] [F] [M] [C]
-    //    [V] [H] [B] [F] [H] [M] [B] [H] [B]
-    //    [B] [Q] [D] [T] [T] [B] [N] [L] [D]
-    //    [H] [M] [N] [Z] [M] [C] [M] [P] [P]
-    //     1   2   3   4   5   6   7   8   9
-
-    private Cargo cargo;
     private final List<Instruction> instructions = new ArrayList<>();
+    private List<String> stacks;
+
+    protected static final Crane crateMover9000 = Crates::take;
+    protected static final Crane crateMover9001 = (stack, count) -> stack.take(count).reverse();
 
 
-    public Day5(String[] args, Cargo cargo) {
+    public Day5(String[] args) {
         super(args);
-
-        this.cargo = cargo;
 
         boolean layout = true;
         final var input = ResourceLines.list("/day5.txt");
+        final List<String> stack = new ArrayList<>();
         for (var line : input) {
             if (layout) {
-                if (line.length() == 0)
+                if (line.length() > 0)
+                    stack.add(line);
+
+                if (line.length() == 0) {
+                    stacks = createStacks(stack);
                     layout = false;
+                }
             } else {
                 instructions.add(Instruction.of(line));
             }
         }
     }
 
+    private List<String> createStacks(List<String> stack) {
+        final int size = stack.size() - 1;
+        final int columnCount = columnCount(stack, size);
+        return columns(stack, size, columnCount);
+    }
+
+    private static List<String> columns(List<String> stack, int size, int columnCount) {
+        final StringBuilder[] columns = new StringBuilder[columnCount];
+        for (var i = 0; i < columnCount; i++)
+            columns[i] = new StringBuilder();
+
+        for (var lineNumber = 0; lineNumber < size; lineNumber++) {
+            final String line = stack.get(lineNumber);
+            for (var column = 0; column < columnCount; column++) {
+                if (line.length() > 4 * column) {
+                    final char c = line.charAt(4 * column + 1);
+                    if (c != ' ')
+                        columns[column].append(c);
+                }
+            }
+        }
+
+        return Arrays.stream(columns)
+                .map(StringBuilder::reverse)
+                .map(StringBuilder::toString)
+                .toList();
+    }
+
+    private static int columnCount(List<String> stack, int size) {
+        final String columnsLine = stack.get(size);
+        return Integer.parseInt(columnsLine.substring(columnsLine.lastIndexOf(' ') + 1));
+    }
+
     public static void main(String[] args) {
-        final var day = new Day5(args, initCargo());
+        final var day = new Day5(args);
         day.challenge();
     }
 
-    public static Cargo initCargo() {
-        return new Cargo(List.of(
-                new CrateStack("HBVWNMLP"),
-                new CrateStack("MQH"),
-                new CrateStack("NDBGFQML"),
-                new CrateStack("ZTFQMWG"),
-                new CrateStack("MTHP"),
-                new CrateStack("CBMJDHGT"),
-                new CrateStack("NMBFVR"),
-                new CrateStack("PLHMRGS"),
-                new CrateStack("PDBCN")
-        ));
+    public Cargo initCargo() {
+        return new Cargo(stacks.stream().map(Crates::new).toList());
     }
 
     @Override
     public void part1() {
-        System.out.println("Top crates after processing are: " + move());
+        final Cargo cargo = initCargo();
+        System.out.println("Top crates after processing are: " + move(cargo, crateMover9000));
     }
 
-    public String move() {
-        instructions.forEach(instruction -> cargo.move(instruction.from(), instruction.to(), instruction.count()));
+    public String move(Cargo cargo, Crane crane) {
+        instructions.forEach(instruction -> cargo.add(instruction.to(), cargo.take(instruction.from(), instruction.count(), crane)));
         return cargo.top();
     }
 
     @Override
     public void part2() {
-        System.out.println("Top crates after processing with the 9001 crane are: " + move2());
-    }
-
-    private String move2() {
-        cargo = initCargo();
-        instructions.forEach(instruction -> cargo.move2(instruction.from(), instruction.to(), instruction.count()));
-        return cargo.top();
+        final Cargo cargo = initCargo();
+        System.out.println("Top crates after processing with the 9001 crane are: " + move(cargo, crateMover9001));
     }
 }

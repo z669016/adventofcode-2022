@@ -4,24 +4,24 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CrateStackTest {
+class CratesTest {
 
     @Test
     void construct() {
-        final CrateStack stack = new CrateStack("MZP");
+        final Crates stack = new Crates("MZP");
         assertEquals("MZP", stack.toString());
     }
 
     @Test
     void take() {
-        final CrateStack stack = new CrateStack("MZP");
+        final Crates stack = new Crates("MZP");
         assertEquals("PZ", stack.take(2).toString());
     }
 
     @Test
     void add() {
-        final CrateStack one = new CrateStack("MZP");
-        final CrateStack two = new CrateStack("ABCD");
+        final Crates one = new Crates("MZP");
+        final Crates two = new Crates("ABCD");
         two.add(one.take(3));
         assertEquals("ABCDPZM", two.toString());
     }

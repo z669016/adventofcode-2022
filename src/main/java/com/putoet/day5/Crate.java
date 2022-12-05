@@ -1,4 +1,4 @@
 package com.putoet.day5;
 
-public record Crate(char letter) {
+public record Crate(char id) {
 }
