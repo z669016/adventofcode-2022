@@ -50,26 +50,27 @@ The only caveat in this puzzle is of course that second can be contained in firs
 
 ## Day 5
 Solved this day in two steps. First solved answers to part 1 and 2, and didn't waste any time on parsing the layout
-of the crate stacks. In step two, I parsed the full input, and refactored the Cargo class, to correctly parameterize
-the use of a separate crate strategy.
+of the crate stacks. In step two, I parsed the full input, and refactored the Cargo class to correctly parameterize
+the use of a separate crane strategy.
 
-First ```Crate``` represents a crate with an ```id``` (letter). A ```Creates``` is a class representing a stack of 
+```Crate``` represents a crate with an ```id``` (letter). ```Creates``` is a class representing a stack of 
 crates, with operations to ```take()``` and ```add()``` crates (behaving like a stack, i.e. LIFO). A convenience
-method can create a Crates instance using a string (indicating the crates from bottom to top). The ```top()``` method
-returns the id of the crate on top. A ```Crane``` is a functional interface, which can take n elements from a 
-```Crates``` instance. ```Cargo``` represents the entire set of crate stacks, with operations to ```take()```
-n elements from one of the crate stacks using a ```Crane``` instance, and to ```add()``` a 'taken' crate stack to some 
-other crate stack in the cargo.
+method can create a ```Crates``` instance using a string (indicating the crates from bottom to top). The ```top()``` 
+method returns the id of the crate on top, and ```reverse()``` returns the ```Crates``` in reversed order. 
+A ```Crane``` is a functional interface, to take n elements from a ```Crates``` instance. ```Cargo``` represents the 
+entire set of crate stacks of the input, with operations to ```take()```n elements from one of the crate stacks using 
+a ```Crane``` instance, and to ```add()``` a 'taken' crate stack to some other crate stack in the cargo.
 
-Parsing the second part of the input (after the blank line) is simple using a regexp, and mapping the details int
-an ```Instruction``` record. Parsing the first part is a bot more difficult, however all columns have width 4 (the 
+Parsing the second part of the input (after the blank line) is simple using a regexp, and mapping the details into
+an ```Instruction``` record. Parsing the first part is a bit more difficult, however all columns have width 4 (the 
 second character in each column being a crate id), and the last char on the last line (of the first part) indicates
 the number of columns. Using that you can parse the lines into ```StringBuilder```s containing the crate ids.
 
-Now part 1 and two of day 5 become quite easy, just create a Cargo instance using the list of "crate id strings",
-and process all instructions using the default ```Crane```, which takes n elements from a crate stack. Part 2, is just
-as simple, with a slightly different ```Crane```, which reverses the crate stack that was taken, before it is added 
-again (so the original order is preserved). 
+Now part 1 and 2 become quite easy, just create a Cargo instance using the list of "crate id strings",
+and process all instructions using the default ```Crane```, which takes n elements from a crate stack (as a consequence 
+the order of the taken crates gets reversed when added). Part 2, is just as simple, with a slightly different 
+```Crane```, which reverses the crate stack that was taken before it is added again (so the original order is 
+preserved). 
 
 
 
