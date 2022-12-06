@@ -72,7 +72,14 @@ the order of the taken crates gets reversed when added). Part 2, is just as simp
 ```Crane```, which reverses the crate stack that was taken before it is added again (so the original order is 
 preserved). 
 
-
+## Day 6
+Created a ```Packet``` record to wrap a character sequence, and added a ```startOfPacket()``` method that iterated over 
+the sequence to find 4 unequal consecutive characters which I load into 4 characters. To validate the that the 
+characters are unequal, I added the characters to a ```Set<Integer>``` which must be of size 4. There is a clear pattern 
+in the solution with the value 4.
+I was surprised by the 2nd part which only changes the marker size from 4 to 14. I only needed to make the 
+```startOfPacket()``` flexible with the size. So, I added ```size``` as a parameter, and instead of 4 characters, I 
+used an array of the required size. For the rest, no change required.  
 
 
 
