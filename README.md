@@ -81,6 +81,30 @@ I was surprised by the 2nd part which only changes the marker size from 4 to 14.
 ```startOfPacket()``` flexible with the size. So, I added ```size``` as a parameter, and instead of 4 characters, I 
 used an array of the required size. For the rest, no change required.  
 
+## Day 7
+Two issues to solve, fist parse the log-data into a file system structure: a tree of ```Node```s (with a name and a 
+size) which can be a ```File``` or a ```Directory``` (containing a ```List<Node>```). Start with current working 
+directory being equal to "/" (```Directory.ROOT```). If a log line starts with 'd' it contains a directory name, when 
+it starts with a digit it contains a file size and name, and otherwise it's a command. Just ignore '$ ls' commands, 
+but  on a '$ cd' command you need to change the current directory to the directory with that name (which must be in the 
+node list of the current working directory).
+
+For part 1, I used the [visitor pattern](https://www.gofpatterns.com/behavioral/patterns/visitor-pattern.php). A visitor 
+is a ```Consumer<Node>```, and when handed to a node (```Node.visit(visitor)```), the node calls the visitors 
+```accep(this)``` method to do it's magic on the node, and in case of a ```Directory``` node the ```Directory.visit()``` 
+method passes the visitor on to it's children (nodes in its node list).  So, the visitor has no knowledge on the data 
+structure, and only knows what to do with the different types of node. the ```DirectorySizeFinder``` simply builds a 
+```List<Directory>``` with all ```Directory``` instances with the right size.
+
+For optimization, ```Directory.size()``` uses memoization, i.e. only the very first time it gets called, it calculates 
+the size (summing the size of all its child nodes) and stores the size in a property.
+
+For part 2, first calculate the disk size to free up (```NEEDED_DISK_SPACE - (TOTAL_DISK_SPACE - root.size())```), and 
+then use the ```DirectorySmallestFinder``` visitor to find the smallest directory to delete.
+
+There could have been some caveats in this challenge, like moving down a directory without first having performed a 'la'
+command, performing a 'cd'  command into a file, or performing a 'ls' command twice on the same directory. But none of
+that was in my puzzle input.
 
 
 

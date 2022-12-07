@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public class DirectorySmallestFinder implements Consumer<Node> {
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private Optional<Directory> smallest = Optional.empty();
     private final long minSize;
 
@@ -19,10 +20,6 @@ public class DirectorySmallestFinder implements Consumer<Node> {
 
             if (dir.size() >= minSize && dir.size() < smallest.get().size())
                 smallest = Optional.of(dir);
-
-            for (Node file : dir.files()) {
-                file.visit(this);
-            }
         }
     }
 

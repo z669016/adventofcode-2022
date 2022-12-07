@@ -17,10 +17,6 @@ public class DirectorySizeFinder implements Consumer<Node> {
         if (node instanceof Directory dir) {
             if (dir.size() <= maxSize)
                 folders.add(dir);
-
-            for (Node file : dir.files()) {
-                file.visit(this);
-            }
         }
     }
 

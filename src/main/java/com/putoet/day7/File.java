@@ -1,10 +1,12 @@
 package com.putoet.day7;
 
+import java.util.function.Consumer;
+
 public class File extends Node {
     private final long size;
 
     public File(String name, long size, Node parent) {
-        super(name, FileType.FILE, parent);
+        super(name, parent);
         this.size = size;
     }
     @Override
@@ -13,7 +15,12 @@ public class File extends Node {
     }
 
     @Override
+    public void visit(Consumer<Node> visitor) {
+        visitor.accept(this);
+    }
+
+    @Override
     public String print(String indent) {
-        return "%s- %s (%s, size=%d)%n".formatted(indent, name(), type(), size);
+        return "%s - %s (file, size=%d)%n".formatted(indent, name(), size);
     }
 }

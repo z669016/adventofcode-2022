@@ -4,12 +4,10 @@ import java.util.function.Consumer;
 
 public abstract class Node {
     private final String name;
-    private final FileType type;
     private final Node parent;
 
-    public Node(String name, FileType type, Node parent) {
+    public Node(String name, Node parent) {
         this.name = name;
-        this.type = type;
         this.parent = parent;
     }
 
@@ -17,17 +15,11 @@ public abstract class Node {
         return name;
     }
 
-    public FileType type() {
-        return type;
-    }
-
     public Node parent() {
         return parent;
     }
 
-    public void visit(Consumer<Node> visitor) {
-        visitor.accept(this);
-    }
+    public abstract void visit(Consumer<Node> visitor);
 
     public abstract long size();
 
