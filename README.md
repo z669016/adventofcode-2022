@@ -92,7 +92,7 @@ node list of the current working directory).
 For part 1, I used the [visitor pattern](https://www.gofpatterns.com/behavioral/patterns/visitor-pattern.php). A visitor 
 is a ```Consumer<Node>```, and when handed to a node (```Node.visit(visitor)```), the node calls the visitors 
 ```accep(this)``` method to do it's magic on the node, and in case of a ```Directory``` node the ```Directory.visit()``` 
-method passes the visitor on to it's children (nodes in its node list).  So, the visitor has no knowledge on the data 
+method passes the visitor on to its children (nodes in its node list).  So, the visitor has no knowledge on the data 
 structure, and only knows what to do with the different types of node. the ```DirectorySizeFinder``` simply builds a 
 ```List<Directory>``` with all ```Directory``` instances with the right size.
 
@@ -106,5 +106,12 @@ There could have been some caveats in this challenge, like moving down a directo
 command, performing a 'cd'  command into a file, or performing a 'ls' command twice on the same directory. But none of
 that was in my puzzle input.
 
-
+## Day 8
+Today looked a bit tricky, so I needed to read the instructions carefully. I created a ```Forrest``` class for the 
+actual work, which holds the input data in a ```char[][]``` grid. 
+For part 1, the ```visibleTrees()``` walks the entire forrest, and for each location, uses ```isVisible()``` and simply
+counts all visible trees. ```isVisible()``` walks to the left, right, up, and down to see if there is a higher tree 
+before the edge of the forrest.
+On part 2, I first populate a ```int[]] score``` grid, with the scenic score for each tree and then simply return the
+highest score in the score grid.
 
