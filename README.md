@@ -115,3 +115,19 @@ before the edge of the forrest.
 On part 2, I first populate a ```int[]] score``` grid, with the scenic score for each tree and then simply return the
 highest score in the score grid.
 
+## Day 9
+That was more complicated than it initially seemed to be. For Part 1 I created the ```Rope``` record from a head ```Point``` 
+and a tail ```Point```, with operations to ```move(Direction)``` which would return a new rope with an updated head and 
+tail, ```move(Instruction)``` which would return a list of ropes (one for each instruction step), and a 
+```move(List<Instruction))``` which again would return a list of ropes. The update of the tail, was easier than 
+expected, as soon as the combination new-head and old-tail would become invalid, the new-tail would be equal to the 
+old-head.
+
+For part 2, I first tried to construct a ```LongRope``` from a ```List<Rope>```, but that became too confusing (too 
+many points to keep up to date). Then I renamed ```Rope``` to ```ShortRope```, extracted its interface into ```Rope```, 
+created an AbstractRope (containing the move methods and head and tail methods), and implemented a ```LongRope``` 
+extending the ```AbstractRope``` and implementing the ```Rope``` interface wrapping a ```List<Point>```. This time 
+update of the consecutive points after update of the previous one, proved to be a bit nasty and required some 
+trial/error and careful checking in-between states and the samples provided...
+
+In the end everything worked well, and I'm pretty okay with the implementation as well.
