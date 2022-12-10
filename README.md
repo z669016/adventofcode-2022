@@ -131,3 +131,23 @@ update of the consecutive points after update of the previous one, proved to be 
 trial/error and careful checking in-between states and the samples provided...
 
 In the end everything worked well, and I'm pretty okay with the implementation as well.
+
+## Day 10
+Today, some kind of virtual machine again, which needs to process instructions. Each instruction runs in 1 or 2 cycles
+and during cycles some magic happens on the device. The instructions operate on the device, so modeled this with a 
+```Device``` class, an ```Instruction``` interface, and a ```Compiler``` which compiles the input into a 
+```List<Instruction>``` to be processed by the ```Device.process()```. ```Instruction.exec()``` receives a reference to
+the CPU to perform the internal updates. ```Device.process()``` keeps running the program until a certain stop condition
+was met (```Predicate<Integer>```) based on the cycle value.
+
+For part 1, the processing needs to end after at least 220 cycles. The **noop** instruction calls ```Device.cycle()``` 
+once and doesn't do anything else. The **addr** instruction calls ```Device.cycle()``` twice and then updates the value
+of the devices' X register. The actual work for the puzzle is done in the ```Device.cycle()``` method. For part 1, cycle 
+gathers ```SignalStrength```s values at cycles 20, 60, 100, 140, 180, and 220. Getting the updating of the cycle count 
+right was the most tricky part for today. Once I moved that into the ```Device.cycle()``` things became quite simple.
+
+For part 2, I added a ```char[][] crt``` to the device, and call ```Device.draw()``` from ```Device.cycle()``` before 
+increasing the cycle number. ```Device.draw()``` determines the sprite middle point (an x-axis value), calculates the 
+drawing position (y, x value), and if ```sprite-middle - 1 <= x <= sprite-middle + 1``` it puts a '#' on the crt,
+and otherwise it puts an '.'. ```Device.crt()``` returns the crt screen as a multi line string.
+
