@@ -1,4 +1,4 @@
-# Advent of code 2021
+# Advent of code 2022
 
 ## Convenience methods and classes
 I have a small library with some convenience methods used for other AoC exercises. Like the ```ResourceLines``` class 
