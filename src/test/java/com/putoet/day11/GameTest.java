@@ -18,7 +18,7 @@ class GameTest {
 
     @Test
     void rounds() {
-        Game.rounds(monkeys, 1);
+        Game.rounds(monkeys, 1, value -> value / 3);
 
         assertEquals(List.of(20L, 23L, 27L, 26L), monkeys.get(0).items());
         assertEquals(List.of(2080L, 25L, 167L, 207L, 401L, 1046L), monkeys.get(1).items());
@@ -28,7 +28,7 @@ class GameTest {
 
     @Test
     void rounds20() {
-        Game.rounds(monkeys, 20);
+        Game.rounds(monkeys, 20, value -> value / 3);
 
         assertEquals(List.of(10L, 12L, 14L, 26L, 34L), monkeys.get(0).items());
         assertEquals(List.of(245L, 93L, 53L, 199L, 115L), monkeys.get(1).items());
@@ -45,16 +45,10 @@ class GameTest {
 
     @Test
     void rounds10000() {
-        monkeys = Game.monkeys(ResourceLines.list("/day11-x.txt"), value -> value);
+        final var lcm = Game.lcm(monkeys);
+        Game.rounds(monkeys, 10_000, value -> value % lcm);
 
-        for (var monkey : monkeys) {
-            monkey.items(List.of());
-        }
 
-        Monkey.verbose = true;
-        monkeys.get(0).items(List.of(73L));
-        Game.rounds(monkeys, 200);
-
-        // assertEquals(2713310158L, Game.monkeyBusiness(monkeys));
+        assertEquals(2713310158L, Game.monkeyBusiness(monkeys));
     }
 }

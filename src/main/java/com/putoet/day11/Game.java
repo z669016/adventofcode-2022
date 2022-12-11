@@ -1,5 +1,6 @@
 package com.putoet.day11;
 
+import com.putoet.math.Factors;
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
@@ -11,20 +12,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Game {
-    private static final Function<Long, Long> BORED = value -> value / 3L;
-
-    public static void rounds(List<Monkey> monkeys, int count) {
+    public static void rounds(List<Monkey> monkeys, int count, Function<Long,Long> bored) {
         assert monkeys != null;
         assert count > 0;
 
         while (count-- > 0) {
-            round(monkeys);
+            round(monkeys, bored);
         }
     }
 
-    private static void round(List<Monkey> monkeys) {
+    private static void round(List<Monkey> monkeys, Function<Long,Long> bored) {
         for (var monkey : monkeys) {
-            monkey.round();
+            monkey.round(bored);
         }
     }
 
@@ -39,11 +38,15 @@ public class Game {
         return ordered.get(0).inspected() * ordered.get(1).inspected();
     }
 
-    public static List<Monkey> monkeys(List<String> input) {
-        return monkeys(input, BORED);
+    public static long lcm(List<Monkey> monkeys) {
+        long lcm = 1L;
+        for (var monkey : monkeys)
+            lcm = Factors.lcm(lcm, monkey.divisor());
+
+        return lcm;
     }
 
-    public static List<Monkey> monkeys(List<String> input, Function<Long, Long> bored) {
+    public static List<Monkey> monkeys(List<String> input) {
         final List<Monkey> monkeys = new ArrayList<>();
         final List<Pair<Integer, Integer>> next = new ArrayList<>();
 
@@ -59,7 +62,6 @@ public class Game {
                     parseId(input.get(i)),
                     parseItems(input.get(i + 1)),
                     parseOperation(input.get(i + 2)),
-                    bored,
                     parseTest(input.get(i + 3))
             );
             monkeys.add(monkey);
@@ -119,7 +121,7 @@ public class Game {
 
     private static final Pattern TEST_PATTERN = Pattern.compile("Test: divisible by (\\d+)");
 
-    public static Function<Long, Boolean> parseTest(String line) {
+    public static int parseTest(String line) {
         assert line != null;
 
         line = line.trim();
@@ -127,7 +129,7 @@ public class Game {
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid test line: " + line);
 
-        return value -> value % Long.parseLong(matcher.group(1)) == 0;
+        return Integer.parseInt(matcher.group(1));
     }
 
     private static final Pattern IFTRUE_PATTERN = Pattern.compile("If true: throw to monkey (\\d+)");

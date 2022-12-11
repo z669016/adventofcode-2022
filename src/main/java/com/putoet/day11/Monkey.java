@@ -6,13 +6,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Monkey {
-    public static boolean verbose = false;
-    public static int round = 0;
     private final int id;
     private List<Long> items;
     private final Function<Long,Long> operation;
-    private final Function<Long,Long> bored;
-    private final Function<Long,Boolean> test;
+    private final int divisor;
 
     private long inspected;
 
@@ -21,19 +18,16 @@ public class Monkey {
     public Monkey(int id,
                   List<Long> items,
                   Function<Long,Long> operation,
-                  Function<Long,Long> bored,
-                  Function<Long,Boolean> test
+                  int divisor
     ) {
         assert items != null;
-        assert items != operation;
-        assert items != bored;
-        assert items != test;
+        assert operation != null;
+        assert divisor != 0;
 
         this.id = id;
         this.items = new ArrayList<>(items);
         this.operation = operation;
-        this.bored = bored;
-        this.test = test;
+        this.divisor = divisor;
 
         ifTrue = ifFalse = null;
     }
@@ -49,25 +43,20 @@ public class Monkey {
         return this;
     }
 
-    public Monkey accept (Long value) {
+    public void accept (Long value) {
         items.add(value);
-
-        return this;
     }
 
-    public Monkey round() {
+    public void round(Function<Long,Long> bored) {
         assert ifTrue != null;
         assert ifFalse != null;
 
         for (var value : items) {
-            if (verbose)
-                System.out.println(round + " - " + id);
-
             inspected++;
 
             value = operation.apply(value);
             value = bored.apply(value);
-            if (test.apply(value)) {
+            if (value % divisor == 0) {
                 ifTrue.accept(value);
             } else {
                 ifFalse.accept(value);
@@ -75,9 +64,6 @@ public class Monkey {
         }
 
         items = new ArrayList<>();
-
-        round++;
-        return this;
     }
 
     public long inspected() {
@@ -86,6 +72,10 @@ public class Monkey {
 
     public List<Long> items() {
         return items;
+    }
+
+    public int divisor() {
+        return divisor;
     }
 
     public Monkey items(List<Long> items) {

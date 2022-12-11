@@ -151,3 +151,14 @@ increasing the cycle number. ```Device.draw()``` determines the sprite middle po
 drawing position (y, x value), and if ```sprite-middle - 1 <= x <= sprite-middle + 1``` it puts a '#' on the crt,
 and otherwise it puts an '.'. ```Device.crt()``` returns the crt screen as a multi line string.
 
+## Day 11
+Nice game to simulate, at least for part 1, there will be some caveat on part 2. Created a ```Monkey``` class, and a 
+```Game``` class. The ```Game``` class does the parsing, and can take ```rounds()``` on the list of monkeys. The 
+```Game.monkeyBusiness()``` simply sorts the List<Monkey> based on the number of inspections in reversed order, and 
+uses the top 2 to calculate the monkey business value.
+
+For part 2, you need to prevent numbers get too big. I tried using a ```BigInteger``` for the worry-values, but that 
+ran way too long. However, later I found that you can also reduce the values, by using the lowest-common-multiple of 
+all divider values. After each calculation, you can reduce the value again by taking the remainder after dividing the 
+value by the lcm of all divisors. For part 2, I replaced the default bored function (```value -> value -> 3```) with 
+the lcm version (```value -> value % lcm```). For the rest, the solution is identical.
