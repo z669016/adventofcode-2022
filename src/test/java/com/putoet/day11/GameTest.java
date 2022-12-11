@@ -45,9 +45,16 @@ class GameTest {
 
     @Test
     void rounds10000() {
-        monkeys = Game.monkeys(ResourceLines.list("/day11.txt"), value -> value);
+        monkeys = Game.monkeys(ResourceLines.list("/day11-x.txt"), value -> value);
 
-        Game.rounds(monkeys, 10_000);
+        for (var monkey : monkeys) {
+            monkey.items(List.of());
+        }
 
-        assertEquals(2713310158L, Game.monkeyBusiness(monkeys));
-    }}
+        Monkey.verbose = true;
+        monkeys.get(0).items(List.of(73L));
+        Game.rounds(monkeys, 200);
+
+        // assertEquals(2713310158L, Game.monkeyBusiness(monkeys));
+    }
+}

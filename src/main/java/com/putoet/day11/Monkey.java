@@ -1,27 +1,28 @@
 package com.putoet.day11;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Monkey {
+    public static boolean verbose = false;
+    public static int round = 0;
     private final int id;
-    private List<BigInteger> items;
-    private final Function<BigInteger,BigInteger> operation;
-    private final Function<BigInteger,BigInteger> bored;
-    private final Function<BigInteger,Boolean> test;
+    private List<Long> items;
+    private final Function<Long,Long> operation;
+    private final Function<Long,Long> bored;
+    private final Function<Long,Boolean> test;
 
     private long inspected;
 
     private Monkey ifTrue, ifFalse;
 
     public Monkey(int id,
-                  List<BigInteger> items,
-                  Function<BigInteger,BigInteger> operation,
-                  Function<BigInteger,BigInteger> bored,
-                  Function<BigInteger,Boolean> test
+                  List<Long> items,
+                  Function<Long,Long> operation,
+                  Function<Long,Long> bored,
+                  Function<Long,Boolean> test
     ) {
         assert items != null;
         assert items != operation;
@@ -48,7 +49,7 @@ public class Monkey {
         return this;
     }
 
-    public Monkey accept (BigInteger value) {
+    public Monkey accept (Long value) {
         items.add(value);
 
         return this;
@@ -59,6 +60,9 @@ public class Monkey {
         assert ifFalse != null;
 
         for (var value : items) {
+            if (verbose)
+                System.out.println(round + " - " + id);
+
             inspected++;
 
             value = operation.apply(value);
@@ -72,6 +76,7 @@ public class Monkey {
 
         items = new ArrayList<>();
 
+        round++;
         return this;
     }
 
@@ -79,8 +84,14 @@ public class Monkey {
         return inspected;
     }
 
-    public List<BigInteger> items() {
+    public List<Long> items() {
         return items;
+    }
+
+    public Monkey items(List<Long> items) {
+        this.items = new ArrayList<>(items);
+
+        return this;
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.putoet.day11;
 
 import org.javatuples.Pair;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -12,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Game {
-    private static final Function<BigInteger, BigInteger> BORED = value -> value.divide(BigInteger.valueOf(3));
+    private static final Function<Long, Long> BORED = value -> value / 3L;
 
     public static void rounds(List<Monkey> monkeys, int count) {
         assert monkeys != null;
@@ -44,7 +43,7 @@ public class Game {
         return monkeys(input, BORED);
     }
 
-    public static List<Monkey> monkeys(List<String> input, Function<BigInteger, BigInteger> bored) {
+    public static List<Monkey> monkeys(List<String> input, Function<Long, Long> bored) {
         final List<Monkey> monkeys = new ArrayList<>();
         final List<Pair<Integer, Integer>> next = new ArrayList<>();
 
@@ -80,7 +79,7 @@ public class Game {
         return monkeys;
     }
 
-    private static Pattern ID_PATTERN = Pattern.compile("Monkey (\\d+):");
+    private static final Pattern ID_PATTERN = Pattern.compile("Monkey (\\d+):");
 
     public static int parseId(String line) {
         assert line != null;
@@ -92,7 +91,7 @@ public class Game {
         return Integer.parseInt(matcher.group(1));
     }
 
-    public static List<BigInteger> parseItems(String line) {
+    public static List<Long> parseItems(String line) {
         assert line != null;
 
         line = line.trim();
@@ -100,12 +99,12 @@ public class Game {
             throw new IllegalArgumentException("Invalid items line: " + line);
 
         final String[] split = line.substring(16).split(", ");
-        return Arrays.stream(split).mapToLong(Long::parseLong).mapToObj(BigInteger::valueOf).toList();
+        return Arrays.stream(split).map(Long::parseLong).toList();
     }
 
-    private static Pattern OPERATION_PATTERN = Pattern.compile("Operation: new = old ([+|*]) (\\d+|old)");
+    private static final Pattern OPERATION_PATTERN = Pattern.compile("Operation: new = old ([+|*]) (\\d+|old)");
 
-    public static Function<BigInteger, BigInteger> parseOperation(String line) {
+    public static Function<Long, Long> parseOperation(String line) {
         assert line != null;
 
         line = line.trim();
@@ -114,13 +113,13 @@ public class Game {
             throw new IllegalArgumentException("Invalid operation line: " + line);
 
         return "+".equals(matcher.group(1)) ?
-                value -> value.add("old".equals(matcher.group(2)) ? value : BigInteger.valueOf(Long.parseLong(matcher.group(2)))):
-                value -> value.multiply("old".equals(matcher.group(2)) ? value : BigInteger.valueOf(Long.parseLong(matcher.group(2))));
+                value -> value + ("old".equals(matcher.group(2)) ? value : Long.parseLong(matcher.group(2))):
+                value -> value * ("old".equals(matcher.group(2)) ? value : Long.parseLong(matcher.group(2)));
     }
 
-    private static Pattern TEST_PATTERN = Pattern.compile("Test: divisible by (\\d+)");
+    private static final Pattern TEST_PATTERN = Pattern.compile("Test: divisible by (\\d+)");
 
-    public static Function<BigInteger, Boolean> parseTest(String line) {
+    public static Function<Long, Boolean> parseTest(String line) {
         assert line != null;
 
         line = line.trim();
@@ -128,10 +127,10 @@ public class Game {
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid test line: " + line);
 
-        return value -> value.mod(BigInteger.valueOf(Long.parseLong(matcher.group(1)))).compareTo(BigInteger.ZERO) == 0;
+        return value -> value % Long.parseLong(matcher.group(1)) == 0;
     }
 
-    private static Pattern IFTRUE_PATTERN = Pattern.compile("If true: throw to monkey (\\d+)");
+    private static final Pattern IFTRUE_PATTERN = Pattern.compile("If true: throw to monkey (\\d+)");
 
     public static int parseIfTrue(String line) {
         assert line != null;
@@ -144,7 +143,7 @@ public class Game {
         return Integer.parseInt(matcher.group(1));
     }
 
-    private static Pattern IFFALSE_PATTERN = Pattern.compile("If false: throw to monkey (\\d+)");
+    private static final Pattern IFFALSE_PATTERN = Pattern.compile("If false: throw to monkey (\\d+)");
 
     public static int parseIfFalse(String line) {
         assert line != null;
