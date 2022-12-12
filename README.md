@@ -162,3 +162,9 @@ ran way too long. However, later I found that you can also reduce the values, by
 all divider values. After each calculation, you can reduce the value again by taking the remainder after dividing the 
 value by the lcm of all divisors. For part 2, I replaced the default bored function (```value -> value -> 3```) with 
 the lcm version (```value -> value % lcm```). For the rest, the solution is identical.
+
+## Day 12
+A BFS today, and the rules for next possible step are determined by the height differences. Pretty straight forward. 
+For part one start in S, and move to E (where E is height z). For part 2, treat S as height a, and take the shortest
+route starting from any a.
+
