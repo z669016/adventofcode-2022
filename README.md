@@ -164,7 +164,10 @@ value by the lcm of all divisors. For part 2, I replaced the default bored funct
 the lcm version (```value -> value % lcm```). For the rest, the solution is identical.
 
 ## Day 12
-A BFS today, and the rules for next possible step are determined by the height differences. Pretty straight forward. 
-For part one start in S, and move to E (where E is height z). For part 2, treat S as height a, and take the shortest
-route starting from any a.
+A BFS today, and the rules for next possible step are determined by the height differences. Pretty straight forward.
+The ```HeightMap``` record holds the ```Grid``` and provides methods to find ```start()``` point, ```end()``` point, 
+and ```next()``` possible locations from a current position. The ```Finder.solve()``` finds the shortest path using
+breadth-search-first from a starting-point. For part one start in S, and move to E (where E is height z). 
+For part 2, added a ```HeightMap.findAllLowest()```, and find the shortest route for all of them. Then filter the 
+solutions (drop all empty solutions), and find the minimum length amongst the possible (non-empty) solutions.
 

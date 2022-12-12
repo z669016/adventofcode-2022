@@ -3,10 +3,7 @@ package com.putoet.day12;
 import com.putoet.grid.Grid;
 import com.putoet.grid.Point;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public record HeightMap(Grid grid) {
@@ -14,38 +11,18 @@ public record HeightMap(Grid grid) {
         assert grid != null;
     }
 
-    public Optional<Point> find(Predicate<Character> finding) {
-        for (var y = 0; y < grid.height(); y++) {
-            for (var x = 0; x < grid.width(); x++) {
-                if (finding.test(grid.get(x, y))) {
-                    return Optional.of(Point.of(x, y));
-                }
-            }
-        }
-        return Optional.empty();
-    }
-
     public Point start() {
-        return find(c -> c == 'S').orElseThrow();
+        return grid.findFirst(c -> c == 'S').orElseThrow();
     }
 
     public Point end() {
-        return find(c -> c == 'E').orElseThrow();
+        return grid.findFirst(c -> c == 'E').orElseThrow();
     }
 
     public List<Point> findAllLowest() {
-        final List<Point> all = new ArrayList<>();
-
-        for (var y = 0; y < grid.height(); y++) {
-            for (var x = 0; x < grid.width(); x++) {
-                char found = grid.get(x, y);
-                if (found == 'a' || found == 'S') {
-                    all.add(Point.of(x, y));
-                }
-            }
-        }
-        return all;
+        return grid.findAll(c -> c == 'a' || c == 'S');
     }
+
     public List<Point> next(Point current) {
         final char height = grid.get(current.x(), current.y());
         final Point start = start();
