@@ -171,3 +171,17 @@ breadth-search-first from a starting-point. For part one start in S, and move to
 For part 2, added a ```HeightMap.findAllLowest()```, and find the shortest route for all of them. Then filter the 
 solutions (drop all empty solutions), and find the minimum length amongst the possible (non-empty) solutions.
 
+## Day 13
+A day to really carefully read the description, and don't make any assumptions. The ```SignalPacket``` contains a single
+packet from the input. It wraps a ```List<Object>``` which can contain an ```Integer``` (value) or another 
+```List<Object>``` which allows for nesting of structures. The factory method ```SignalPacket.from()``` uses the classes
+of the tokenizer package, to translate the input into ```SignalPacket```s. Tokenization is pretty straight forward. The 
+```SignalPacket.test()``` compares two values and returns an ```IN_ORDER```, ```NOT_IN_ORDER``` or ```CONTINUE```.
+For part 1, ```SignalPacketPair```s are created from the input, and the ```compare()``` method returns the comparison 
+result. The result can be calculated from streaming and filtering in ```List<SignalPacketPair>```.
+For part 2, I've implemented ```Comparable<T>``` on the ```SignalPacket```. Then I created a new 
+```List<SignalPacket>``` from the input, added the two additional packets, and sorted list. Then search for the 2-packet 
+and 6-packet and calculated the decoder key. Using record as a type for SignalPacket made the search easier as you get
+the ```equals()``` for free.
+
+
