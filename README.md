@@ -184,4 +184,15 @@ For part 2, I've implemented ```Comparable<T>``` on the ```SignalPacket```. Then
 and 6-packet and calculated the decoder key. Using record as a type for SignalPacket made the search easier as you get
 the ```equals()``` for free.
 
+## Day 14
+Okay, let's address this one step by step. The input must be converted into lines, and lines can consist of multiple 
+parts (which are lines in itself). Created a record ```Line``` which can provide an Iterator<Line> which takes you 
+through the individual parts (which are ```Line```s in itself).
+Then, I created a class Lines, with the method ```asSmallGrid(List<Line>)``` which determines the min/max X and Y and 
+creates a ```Grid```, and then ```draw(line)``` all the individual lines-parts into the grid. The ```Sand``` class has 
+a ```Sand.poor(grid)``` which pours sand into the grid from the starting position, and returns the number of sand units
+that could be poured into the grid.
+For part 2, I created a ```asLargeGrid(List<Line>)``` which is just 4 times as wide and one line deeper. Then added a 
+```Sand.fill(grid)``` based on the ```Sand.pour(grid)``` method with a slightly changed end-condition.  
+
 
