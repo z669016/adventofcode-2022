@@ -195,4 +195,27 @@ that could be poured into the grid.
 For part 2, I created a ```asLargeGrid(List<Line>)``` which is just 4 times as wide and one line deeper. Then added a 
 ```Sand.fill(grid)``` based on the ```Sand.pour(grid)``` method with a slightly changed end-condition.  
 
+## Day 15
+That's been an interesting challenge ... started with a ```Beacon``` and a ```Sensor``` record including factory 
+methods to extract ```Beacon```s and ```Sensor```s from the input data.
+Initially I converted the test data into a grid, places the beacons and sensors on the grid, set the grid-cells that 
+were covered by a beacon (set all the cells in range of a sensor according to the sensors distance to its connected
+beacon). That worked great for the sample, but end in an ```OutOfMemory``` exception on the actual input data.
+
+Changed the approach, and added a ```Range``` record, to hold a range along a Y axis of the area wrapping a lower and 
+upper X value. And added methods to determine overlap between ranges (partially, fully, or adjacent), and to combine
+overlapping ranges into a single range.
+
+Then implemented a ```Sensor.rangeForRow()``` which would return the X-range for a certain row that 
+would be covered by that sensor (based on the Manhattan distance of the sensor to that row). The 
+```Day15.usedPositionsInRangeForRow()``` would get all the sensor-covered ranges for the specific row, combines them,
+gets the size, and deducts the total size with the number of sensors and beacons on that row (as sensor and beacon 
+positions cannot be used, so should also not be counted for). That solves part 1.
+
+For part 2, first the min-Y and max-Y values were calculated from all beacons in with an X and Y value in the given 
+range (0 - 4.000.000). As there was only one possibility, it would mean that in that min-Y to max-Y range, there would
+be only one row, which would have two cover ranges (with only a single X position not covered). So, simply check the  
+covered ranges for all Y values in that range, and the first row with 2 ranges is the one we need. Then create a beacon
+for the specific x/y location, and return its ```Beacon.turingFrequency()```.
+
 
