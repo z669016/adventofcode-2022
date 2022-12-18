@@ -29,7 +29,6 @@ public class Valve implements Comparable<Valve> {
         return flowRate;
     }
 
-
     public Valve flowRate(int flowRate) {
         this.flowRate = flowRate;
         return this;

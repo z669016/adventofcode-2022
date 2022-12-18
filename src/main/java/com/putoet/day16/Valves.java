@@ -25,10 +25,6 @@ public class Valves {
             }
             return path;
         }
-
-        int steps() {
-            return path().size() - 1;
-        }
     }
 
     public static Optional<List<Valve>> shortestPath(Valve from, Valve to) {

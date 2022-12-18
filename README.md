@@ -218,4 +218,32 @@ be only one row, which would have two cover ranges (with only a single X positio
 covered ranges for all Y values in that range, and the first row with 2 ranges is the one we need. Then create a beacon
 for the specific x/y location, and return its ```Beacon.turingFrequency()```.
 
+## Day 16
+Started with the easy part, to buy some thinking time ... a ```Valve``` class and a ```Valves``` class containing some
+convenience methods. ```Valves.valuedValves()``` gets you a list of all valves that, once opened, release additional 
+flow. ```Valves.shortestPath(from, to)``` provides you a list with the shortest path between to valves.
+The ```PathFinder``` class does the heavy work. ```PathFinder.paths(...)``` creates an overview of all shortest paths
+between any valve and the valuable valves, as the distance is required to solve the path search.
+```PathFinder.bestPath``` does a BFS to find the solution for part 1. Some optimizations have been implemented, and it 
+runs kind of okay. Part 2 was a nightmare. ```PathFinder.bestPathWithElephant()``` does again a BFS, but runs for over
+20 minutes on my Mac. No doubt can many paths be pruned as they don't deliver any different outcome. 
+When time available in the future, I'll see what other approaches are possible. This one took too much code, and runs 
+way to long.
+
+## Day 17
+Yes, Tetris ... Started with a ```Rock``` class to represent the different types of falling rock, and a convenience
+class ```Rocks```, that contains the static Rock instances to drop, and implements ```Supplier<Rock>``` to deliver an
+endless stream of rocks to be dropped into the cave. The ```Push``` class produces gas pushes to the left and right, to
+be used during the drop.
+The ```Cave``` class does the actual work. ```Cave.run()``` simply drops the required number of rocks. ```Cave.drop()```
+determines the position of the next rock, using the ```Push``` while the rock is falling. Beware, when a rock cannot be 
+pushed, it can still fall further down. ```drop()``` performs a ```draw()``` or the rock in its rest position, and 
+returns the increase of the height of the tower of rock. This is enough for part1.
+Part 2, the solution of part 1, cannot be used (I immediately got an out-of-memory when I tried). There solution must 
+be based on repetition. I extended ```Cave``` int ```CaveAnalytics```  which does the same, but collects 
+analytical data during falling of the rock. It looks for a pattern in the increases, and indeed finds a pattern which 
+with the test data starts after dropping rock 26 and lasts for 35 drops. In order to solve part two, you now only need 
+to know the content of that repeating block (the increases during that sequence of 3). The ```CaveSequence``` is another
+extension of ```Cave``` that uses the input data to get the sequence and the height at the start of the repeating 
+sequence. Now you have all ingredients to calculate the height for any ridiculous number of dropping rock.
 
