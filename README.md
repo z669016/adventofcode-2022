@@ -247,3 +247,9 @@ to know the content of that repeating block (the increases during that sequence 
 extension of ```Cave``` that uses the input data to get the sequence and the height at the start of the repeating 
 sequence. Now you have all ingredients to calculate the height for any ridiculous number of dropping rock.
 
+## Day 18
+Created a ```Droplet``` class that contained the list of lava points. Calculated the surface points by adding 6 for 
+every point minus every time the Manhattan-distance to another point equals 1. Lost a lot of time on part 2, doing it
+without a grid. Finally implemented a grid, and refactored part 1. Then I screwed up with changing exterior air into 
+steam. Never try to be too smart ... clearly...
+
