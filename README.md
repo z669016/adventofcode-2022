@@ -253,3 +253,19 @@ every point minus every time the Manhattan-distance to another point equals 1. L
 without a grid. Finally implemented a grid, and refactored part 1. Then I screwed up with changing exterior air into 
 steam. Never try to be too smart ... clearly...
 
+
+
+
+## Day 21
+This was fun ... build a tree from the input, where a node is either an ```Operation```, with a left and right operand
+and an operator, or a ```Value```. I've chosen for each node to implement ```Supplier<Long>```, so it could return its
+value. A ```Value``` just returns it's ... value, while an ```Operation``` calculates the result, from the values of 
+its operands. I did add a cache to the nodes, not sure if that was required (why did I go against the YAGNI principle?).
+I gave every node access to a ```Values``` object, which holds a map of all nodes (as you cannot build the actual tree
+before all input has been parsed). This works like a charm for part 1.
+For part 2, I changed the nodes and made them implement ```Supplier<String>```, so in case a value is not a long, the 
+node would return a string version of the nodes expression like ```(((4 + (2 * (humn - 3))) / 4) + 150)```. To find the
+value for ```humn```, take the value of the parent node (which is known, even for the root where the value of the 
+comparison is ```true```), and using the parent value, you can reverse the operation of the child node to determine the
+value of the node that does not return a long value (as string). Using the value for the unknown node, recursively 
+drill down to the ```humn``` node.
