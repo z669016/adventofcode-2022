@@ -254,7 +254,18 @@ without a grid. Finally implemented a grid, and refactored part 1. Then I screwe
 steam. Never try to be too smart ... clearly...
 
 
+## Day 20
+It took me a while before I realized that the position where to insert (at the beginning or the end) didn't matter at 
+all. So I ditched my solution and started all over again. I created a ```Value``` class in which I store the value, 
+and build an array of ```Value``` objects. The value objects get connected in a double linked list, and the array can 
+be used to run through the list in the original order. The mixin has one caveat, move ```count % (list.size - 1)```
+because the number you move wont "jump over" himself. The ```mix()``` method, simply goes over the array, and moves 
+the ```Value``` object the required number of positions forward or backward. To get the coordinates, use 1000, 2000, 
+3000 modulo ```list.size()``` to find the right values. 
 
+For part 2, I changed the factory method, to multiply the values with the key given. and added a count parameter to 
+the mix method. Finally, just to be sure, I changed the value from type ```int``` into type ```long```. For the rest no 
+change required to solve part 2. 
 
 ## Day 21
 This was fun ... build a tree from the input, where a node is either an ```Operation```, with a left and right operand

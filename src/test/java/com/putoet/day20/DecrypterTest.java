@@ -1,7 +1,6 @@
 package com.putoet.day20;
 
 import com.putoet.resources.ResourceLines;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -9,21 +8,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DecrypterTest {
-    private static final List<String> list = ResourceLines.list("/day20.txt");
-    private static final int[] input = list.stream()
-            .mapToInt(Integer::parseInt)
-            .toArray();
 
     @Test
     void mix() {
-        final Decrypter decrypter = new Decrypter(input);
-        final int[] expected = {1, 2, -3, 4, 0, 3, -2};
-        assertArrayEquals(expected, decrypter.mix().numbers());
+        final Decrypter decrypter = Decrypter.from(ResourceLines.intList("/day20.txt"));
+        decrypter.mix();
     }
 
     @Test
     void groveCoordinates() {
-        final Decrypter decrypter = new Decrypter(input);
-        assertEquals(List.of(4, -3, 2), decrypter.mix().groveCoordinates());
+        final Decrypter decrypter = Decrypter.from(ResourceLines.intList("/day20.txt"));
+        decrypter.mix();
+        assertEquals(List.of(4L, -3L, 2L), decrypter.groveCoordinates());
+    }
+
+    @Test
+    void groveCoordinates2() {
+        final Decrypter decrypter = Decrypter.from(ResourceLines.intList("/day20.txt"), 811589153L);
+        decrypter.mix(10);
+        assertEquals(List.of(811589153L, 2434767459L, -1623178306L), decrypter.groveCoordinates());
     }
 }
