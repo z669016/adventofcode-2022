@@ -1,7 +1,7 @@
 package com.putoet.day22;
 
 public class PasswordResolver {
-    public static int resolve(StrangeBoard board, String instructions) {
+    public static int resolve(StrangeBoard board, MoveStrategy strategy, String instructions) {
         final Path path = new Path(instructions);
         board.start();
 
@@ -10,7 +10,7 @@ public class PasswordResolver {
             switch (action) {
                 case "L" -> board.turnLeft();
                 case "R" -> board.turnRight();
-                default -> board.move(Integer.parseInt(action));
+                default -> board.move(strategy, Integer.parseInt(action));
             }
         }
 

@@ -3,11 +3,9 @@ package com.putoet.day22;
 import com.putoet.grid.Point;
 import org.javatuples.Pair;
 
-public class BoardStrategy implements MoveStrategy {
-    private final char[][] grid;
-
-    public BoardStrategy(char[][] grid) {
-        this.grid = grid;
+public record BoardStrategy(char[][] grid) implements MoveStrategy {
+    public BoardStrategy {
+        assert grid != null;
     }
 
     @Override

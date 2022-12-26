@@ -8,14 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Day22 extends Day {
-    private final List<String> boardInput;
-    private final String pathInput;
 
     public Day22(String[] args) {
         super(args);
-
-        boardInput = boardInput();
-        pathInput = pathInput();
     }
 
     public static void main(String[] args) {
@@ -26,19 +21,17 @@ public class Day22 extends Day {
     @Override
     public void part1() {
         final char[][] grid = GridUtils.of(boardInput());
-        final StrangeBoard board = new StrangeBoard(grid, new BoardStrategy(grid));
-        final int password = PasswordResolver.resolve(board, pathInput());
+        final StrangeBoard board = new StrangeBoard(grid);
+        final int password = PasswordResolver.resolve(board, new BoardStrategy(grid), pathInput());
         System.out.println("The final password is " + password);
     }
 
     @Override
     public void part2() {
         final char[][] grid = GridUtils.of(boardInput());
-        final StrangeBoard board = new StrangeBoard(grid, new CubeStrategy(grid));
-//        final int password = PasswordResolver.resolve(board, pathInput());
-//        System.out.println("The final password on the cube is " + password);
-
-        // 1274 is too low
+        final StrangeBoard board = new StrangeBoard(grid);
+        final int password = PasswordResolver.resolve(board, new CubeStrategy(grid), pathInput());
+        System.out.println("The final password on the cube is " + password);
     }
 
     public static List<String> boardInput() {

@@ -280,3 +280,15 @@ value for ```humn```, take the value of the parent node (which is known, even fo
 comparison is ```true```), and using the parent value, you can reverse the operation of the child node to determine the
 value of the node that does not return a long value (as string). Using the value for the unknown node, recursively 
 drill down to the ```humn``` node.
+
+## Day 22
+SO, I have a ```StrangeBoard``` class, and I have to move across the board, and make turns. The strange board class 
+holds the current location (a ```Point```) and the ```Facing```. It can ```move(strategy)``` one position into the 
+direction of the facing, or multiple steps ```move(strategy, distance)```. ```move(strategy)``` won't change the 
+current location if a wall is hit. The ```MoveStrategy``` handles how to move across the board, and for part 1 this is 
+done using ```BoardStrategy```.
+The ```Path``` class provides an ```Iterator<String>``` to split the path input into separate tokens. The 
+```PasswordResolver.resolve(board, strategy, path)``` takes the board, and uses the provided strategy to walk the path.
+For part 2, I created a ```CubeStrategy```, and getting the jumps and directions right was hard. I cut a paper cube to
+visualize it for myself. The actual puzzle input had a different folded cube compared to the sample, so my approach
+didn't work for the sample as the wrapping depends on the way the map is folded.

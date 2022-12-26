@@ -7,14 +7,12 @@ import org.javatuples.Pair;
 public class StrangeBoard {
 
     protected final char[][] grid;
-    private final MoveStrategy strategy;
 
     protected Point location;
     protected Facing facing = Facing.WEST;
 
-    public StrangeBoard(char[][] grid, MoveStrategy strategy) {
+    public StrangeBoard(char[][] grid) {
         this.grid = grid;
-        this.strategy = strategy;
         start();
     }
 
@@ -61,13 +59,9 @@ public class StrangeBoard {
         };
     }
 
-    public Pair<Point,Facing> move(int distance) {
-        var next = move();
-
-        location = next.getValue0();
-        facing = next.getValue1();
-        while (--distance > 0) {
-            next = move();
+    public Pair<Point,Facing> move(MoveStrategy strategy, int distance) {
+        while (distance-- > 0) {
+            var next = move(strategy);
 
             location = next.getValue0();
             facing = next.getValue1();
@@ -76,7 +70,7 @@ public class StrangeBoard {
         return Pair.with(location, facing);
     }
 
-    public Pair<Point,Facing> move() {
+    public Pair<Point,Facing> move(MoveStrategy strategy) {
         // find the next valid grid location (i.e. non void)
         Pair<Point,Facing> next = strategy.nextLocation(location, facing);
 
