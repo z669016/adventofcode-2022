@@ -259,7 +259,7 @@ It took me a while before I realized that the position where to insert (at the b
 all. So I ditched my solution and started all over again. I created a ```Value``` class in which I store the value, 
 and build an array of ```Value``` objects. The value objects get connected in a double linked list, and the array can 
 be used to run through the list in the original order. The mixin has one caveat, move ```count % (list.size - 1)```
-because the number you move wont "jump over" himself. The ```mix()``` method, simply goes over the array, and moves 
+because the number you move won't "jump over" himself. The ```mix()``` method, simply goes over the array, and moves 
 the ```Value``` object the required number of positions forward or backward. To get the coordinates, use 1000, 2000, 
 3000 modulo ```list.size()``` to find the right values. 
 
@@ -295,7 +295,7 @@ didn't work for the sample as the wrapping depends on the way the map is folded.
 
 ## Day 23
 First I've created the mechanism to generate the ```ValidDirection``` options for each round, which would return the 
-right (ever changing) order. A ```ValidDirection``` holds a ```List<Point>``` of 3 points to check amd the ```Point``` 
+right (ever-changing) order. A ```ValidDirection``` holds a ```List<Point>``` of 3 points to check amd the ```Point``` 
 to move to in case all are unused. ```ValidDirections``` implements ```Supplier<List<ValidDirection>``` and returns 
 the changed order on every ```get()``` request. I decided not to use an  actual grid, because that would have to expand
 on each round, but did wrap each ```Elf``` position (a ```Point```). An ```Elf``` can 
@@ -307,4 +307,27 @@ elves moving to the same position) and them moves the elves that move into uniqu
 grid containing the map of the current elves positions.
 Part 1 is solved by calling ```Elves.move()``` 10 times, then create the map (```toString()```) and count the open
 places. Thanks to ```Elves.move()``` returning the number of moved elves, part 2 just loops until ```move()``` 
-returns 0. 
+returns 0.
+
+## Day 24
+This sounds like a BSF problem again, although the state in between also depends on teh contents of the board (location
+of the blizzards). Created a ```Blizzard``` record to store the state of a blizzard (location, facing, symbol, max,
+and reset). ```Blizzard.next()``` returns the next blizzard state, wrapping the valley if required.
+The ```Valley``` record holds a ```List<Blizzard>```, and the in and out location, and also a ```next()``` method, that
+returns the next state of the valley with all blizzards moved one step. To support BSF, ```Valley``` also contains a
+```contains(point)``` method (determines if the point is in the Valley or equals in/out location), and an ```isOpen()``` 
+method, which indicates if a certain position is free to enter. The ```toString()``` and ```toString(point)``` are used
+for visualization and storing state.
+
+```PathFinder.solve()``` performs a BFS from the initial point (```valley.in()```) towards the end (```valley.out()```),
+and that will do for part 1. For part 2, I added a ```PathFinder.solve(initialState, found)``` to start a BSF to a 
+goal, using a specific initial state. To solve part 2, reuse the result of part 1 as the initial-state to a second BFS
+and find the ```valley.in()```. Then use that end-state to again perform a BSF towards the end (```valley.out()```). 
+Reusing the end-state of the previous search ensures the minute count is continued, and the blizzard states are correct
+when moving to the start and end again. 
+
+Learned something new on remembering history during the search: it appeared to be very memory efficient to store state 
+as a ```String```. I ran out-of-memory, when I initially stored history as a```Pair<Valley,Point>```, where ```Valley```
+contained a ```List<Blizzard>```, and a ```Blizzard``` was a record containing to method references: one method to 
+determine wrapping (```Predicate<Point>```) and one method returning a new starting point for the blizzard 
+(```Supplier<Point>```). 
