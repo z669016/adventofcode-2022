@@ -282,7 +282,7 @@ value of the node that does not return a long value (as string). Using the value
 drill down to the ```humn``` node.
 
 ## Day 22
-SO, I have a ```StrangeBoard``` class, and I have to move across the board, and make turns. The strange board class 
+So, I have a ```StrangeBoard``` class, and I have to move across the board, and make turns. The strange board class 
 holds the current location (a ```Point```) and the ```Facing```. It can ```move(strategy)``` one position into the 
 direction of the facing, or multiple steps ```move(strategy, distance)```. ```move(strategy)``` won't change the 
 current location if a wall is hit. The ```MoveStrategy``` handles how to move across the board, and for part 1 this is 
@@ -292,3 +292,19 @@ The ```Path``` class provides an ```Iterator<String>``` to split the path input 
 For part 2, I created a ```CubeStrategy```, and getting the jumps and directions right was hard. I cut a paper cube to
 visualize it for myself. The actual puzzle input had a different folded cube compared to the sample, so my approach
 didn't work for the sample as the wrapping depends on the way the map is folded.
+
+## Day 23
+First I've created the mechanism to generate the ```ValidDirection``` options for each round, which would return the 
+right (ever changing) order. A ```ValidDirection``` holds a ```List<Point>``` of 3 points to check amd the ```Point``` 
+to move to in case all are unused. ```ValidDirections``` implements ```Supplier<List<ValidDirection>``` and returns 
+the changed order on every ```get()``` request. I decided not to use an  actual grid, because that would have to expand
+on each round, but did wrap each ```Elf``` position (a ```Point```). An ```Elf``` can 
+```propose(validDirections,elves)```  (find a proposed new position) and ```move()``` (to the proposed position). The
+```ELves``` class holds a list of all ```Elf``` instances, and can ```move(validDirections)```, which first makes
+a proposal for each elf (using a ```Map<Point,List<Elf>``` to collect info of elves and their proposal to identify
+elves moving to the same position) and them moves the elves that move into unique positions. I decided 
+```Elves.move()``` to return the number of elves that actually moves in each round. ```ELves.toString()``` creates a 
+grid containing the map of the current elves positions.
+Part 1 is solved by calling ```Elves.move()``` 10 times, then create the map (```toString()```) and count the open
+places. Thanks to ```Elves.move()``` returning the number of moved elves, part 2 just loops until ```move()``` 
+returns 0. 
