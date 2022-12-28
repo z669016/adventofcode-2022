@@ -3,11 +3,11 @@ package com.putoet.day19;
 public record Prod(int ore, int clay, int obsidian, int geode) {
     public static final Prod init = new Prod(0, 0, 0, 0);
 
-    public Prod add(Robots robots) {
+    public Prod add(Robots robots, int maxOre, int maxClay, int maxObsidian) {
         return new Prod(
-                ore + robots.ore(),
-                clay + robots.clay(),
-                obsidian + robots.obsidian(),
+                Math.min(ore + robots.ore(), maxOre),
+                Math.min(clay + robots.clay(), maxClay),
+                Math.min(obsidian + robots.obsidian(), maxObsidian),
                 geode + robots.geode()
         );
     }

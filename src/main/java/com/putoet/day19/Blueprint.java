@@ -1,8 +1,6 @@
 package com.putoet.day19;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -21,26 +19,22 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
         assert costs.size() == 4;
     }
 
-    public int geodeCost() {
-        return costs.get(RobotType.GEODE_ROBOT.key()).obsidian();
-    }
-
     public List<BlueprintState> affordable(BlueprintState state) {
         if (canAfford(RobotType.GEODE_ROBOT, state.prod())) {
             return List.of(manufacture(RobotType.GEODE_ROBOT, state));
         }
 
         final List<BlueprintState> affordable = new ArrayList<>();
-            if (state.robots().ore() <= maxOre && canAfford(RobotType.ORE_ROBOT, state.prod()))
-                affordable.add(manufacture(RobotType.ORE_ROBOT, state));
+        if (state.robots().ore() <= maxOre && canAfford(RobotType.ORE_ROBOT, state.prod()))
+            affordable.add(manufacture(RobotType.ORE_ROBOT, state));
 
-            if (state.robots().clay() <= maxClay && canAfford(RobotType.CLAY_ROBOT, state.prod()))
-                affordable.add(manufacture(RobotType.CLAY_ROBOT, state));
+        if (state.robots().clay() <= maxClay && canAfford(RobotType.CLAY_ROBOT, state.prod()))
+            affordable.add(manufacture(RobotType.CLAY_ROBOT, state));
 
-            if (state.robots().obsidian() <= maxObsidian && canAfford(RobotType.OBSIDIAN_ROBOT, state.prod()))
-                affordable.add(manufacture(RobotType.OBSIDIAN_ROBOT, state));
+        if (state.robots().obsidian() <= maxObsidian && canAfford(RobotType.OBSIDIAN_ROBOT, state.prod()))
+            affordable.add(manufacture(RobotType.OBSIDIAN_ROBOT, state));
 
-        affordable.add(state.next());
+        affordable.add(next(state));
 
         return affordable;
     }
@@ -54,12 +48,27 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
     }
 
     private BlueprintState manufacture(RobotType type, BlueprintState state) {
+        final int maxOre = (24 - state.minutes()) * this.maxOre;
+        final int maxClay = (24 - state.minutes()) * this.maxClay;
+        final int maxObsidian = (24 - state.minutes()) * this.maxObsidian;
+
         return new BlueprintState(
                 state.blueprint(),
                 state.minutes() + 1,
-                state.prod().add(state.robots()).sub(costs.get(type.key())),
+                state.prod().add(state.robots(), maxOre, maxClay, maxObsidian).sub(costs.get(type.key())),
                 state.robots().add(type)
         );
+    }
+
+    public BlueprintState next(BlueprintState state) {
+        final int maxOre = (24 - state.minutes()) * this.maxOre;
+        final int maxClay = (24 - state.minutes()) * this.maxClay;
+        final int maxObsidian = (24 - state.minutes()) * this.maxObsidian;
+
+        return new BlueprintState(state.blueprint(),
+                state.minutes() + 1,
+                state.prod().add(state.robots(), maxOre, maxClay, maxObsidian),
+                state.robots());
     }
 
     public static final Pattern INPUT_PATTERN = Pattern.compile(
@@ -86,4 +95,39 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
                 .map(Blueprint::from)
                 .collect(Collectors.toMap(Blueprint::id, blueprint -> blueprint));
     }
+
+    public Optional<BlueprintState> max() {
+        final Set<BlueprintState> history = new HashSet<>();
+        final Map<Integer,BlueprintState> max = new HashMap<>();
+        final Deque<BlueprintState> queue = new LinkedList<>();
+
+        var init = BlueprintState.init(this);
+        max.put(0, init);
+        queue.offer(init);
+        while (!queue.isEmpty()) {
+            var current = queue.poll();
+
+            if (current.prod().geode() > max.computeIfAbsent(current.minutes(), k -> current).prod().geode())
+                max.put(current.minutes(), current);
+
+            if (current.minutes() == 24) {
+                continue;
+            }
+
+            if (history.size() % 10_000 == 0)
+                System.out.println(history.size() + " - " + current);
+
+            var affordable = affordable(current);
+            affordable.stream()
+                    .filter(state -> state.prod().geode() >= max.computeIfAbsent(state.minutes(), k -> state).prod().geode())
+                    .filter(history::add)
+                    .forEach(queue::offer);
+        }
+
+        if (max.containsKey(24))
+            System.out.println("MAX: " + max.get(24));
+
+        return max.containsKey(24) ? Optional.of(max.get(24)) : Optional.empty();
+    }
+
 }

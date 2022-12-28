@@ -6,13 +6,6 @@ public record BlueprintState(int blueprint, int minutes, Prod prod, Robots robot
         assert robots != null;
     }
 
-    public BlueprintState next() {
-        return new BlueprintState(blueprint,
-                minutes + 1,
-                prod.add(robots),
-                robots);
-    }
-
     public int qualityLevel() {
         return blueprint * prod().geode();
     }
