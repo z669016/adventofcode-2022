@@ -331,3 +331,9 @@ as a ```String```. I ran out-of-memory, when I initially stored history as a```P
 contained a ```List<Blizzard>```, and a ```Blizzard``` was a record containing to method references: one method to 
 determine wrapping (```Predicate<Point>```) and one method returning a new starting point for the blizzard 
 (```Supplier<Point>```). 
+
+## Day 25
+This one  took me some time to wrap my head around it. The normal mathematics on numbers doesn't apply, because 
+although the radix is 5, there are no symbols for values 3 and 4 as you would normally have. So, the max value for a 
+value of 4 positions is not 5^4 - 1, but 2 * 5^3 + 2 * 5^2 + 2 * 5^1 + 2 * 5^0. But okay, when I got that clear, it 
+wasn't difficult anymore. 
