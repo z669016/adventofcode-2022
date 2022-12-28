@@ -10,6 +10,7 @@ public abstract class Day {
     }
 
     public void challenge() {
+        System.out.println("Running solution for " + name());
         final StopWatch part1Timer = StopWatch.createStarted();
         part1();
         part1Timer.stop();
@@ -20,6 +21,11 @@ public abstract class Day {
         part2Timer.stop();
         System.out.println("Part two ran for " + part2Timer.getTime() + " ms");
         System.out.println("Running the entire challenge took " + (part1Timer.getTime() + part2Timer.getTime()) + " ms");
+    }
+
+    private String name() {
+        final String[] name = this.getClass().getName().split("\\.");
+        return name[name.length - 1];
     }
 
     public void part1() {
