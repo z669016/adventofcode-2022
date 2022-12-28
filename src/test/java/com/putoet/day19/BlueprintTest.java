@@ -17,14 +17,22 @@ class BlueprintTest {
     }
 
     @Test
-    void max() {
+    void max24() {
         final var max = blueprints.values().stream()
                 .map(Blueprint::max)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .toList();
 
-        assertEquals(33, max.stream().mapToInt(BlueprintState::qualityLevel).sum());
+        assertEquals(33, max.stream().peek(System.out::println).mapToInt(BlueprintState::qualityLevel).sum());
     }
 
+    @Test
+    void max32() {
+        var max = blueprints.get(2).max(32).orElseThrow();
+        assertEquals(62, max.prod().geode());
+
+        max = blueprints.get(1).max(32).orElseThrow();
+        assertEquals(56, max.prod().geode());
+    }
 }

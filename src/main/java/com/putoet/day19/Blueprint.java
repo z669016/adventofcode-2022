@@ -19,22 +19,22 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
         assert costs.size() == 4;
     }
 
-    public List<BlueprintState> affordable(BlueprintState state) {
+    public List<BlueprintState> affordable(BlueprintState state, int maxMinutes) {
         if (canAfford(RobotType.GEODE_ROBOT, state.prod())) {
-            return List.of(manufacture(RobotType.GEODE_ROBOT, state));
+            return List.of(manufacture(RobotType.GEODE_ROBOT, state, maxMinutes));
         }
 
         final List<BlueprintState> affordable = new ArrayList<>();
-        if (state.robots().ore() <= maxOre && canAfford(RobotType.ORE_ROBOT, state.prod()))
-            affordable.add(manufacture(RobotType.ORE_ROBOT, state));
+        if (canAfford(RobotType.ORE_ROBOT, state.prod()) && state.robots().ore() <= maxOre)
+            affordable.add(manufacture(RobotType.ORE_ROBOT, state, maxMinutes));
 
-        if (state.robots().clay() <= maxClay && canAfford(RobotType.CLAY_ROBOT, state.prod()))
-            affordable.add(manufacture(RobotType.CLAY_ROBOT, state));
+        if (canAfford(RobotType.CLAY_ROBOT, state.prod()) && state.robots().clay() <= maxClay )
+            affordable.add(manufacture(RobotType.CLAY_ROBOT, state, maxMinutes));
 
-        if (state.robots().obsidian() <= maxObsidian && canAfford(RobotType.OBSIDIAN_ROBOT, state.prod()))
-            affordable.add(manufacture(RobotType.OBSIDIAN_ROBOT, state));
+        if (canAfford(RobotType.OBSIDIAN_ROBOT, state.prod()) && state.robots().obsidian() <= maxObsidian)
+            affordable.add(manufacture(RobotType.OBSIDIAN_ROBOT, state, maxMinutes));
 
-        affordable.add(next(state));
+        affordable.add(next(state, maxMinutes));
 
         return affordable;
     }
@@ -47,10 +47,10 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
                prod.obsidian() >= cost.obsidian();
     }
 
-    private BlueprintState manufacture(RobotType type, BlueprintState state) {
-        final int maxOre = (24 - state.minutes()) * this.maxOre;
-        final int maxClay = (24 - state.minutes()) * this.maxClay;
-        final int maxObsidian = (24 - state.minutes()) * this.maxObsidian;
+    private BlueprintState manufacture(RobotType type, BlueprintState state, int maxMinutes) {
+        final int maxOre = (maxMinutes - state.minutes()) * this.maxOre;
+        final int maxClay = (maxMinutes - state.minutes()) * this.maxClay;
+        final int maxObsidian = (maxMinutes - state.minutes()) * this.maxObsidian;
 
         return new BlueprintState(
                 state.blueprint(),
@@ -60,10 +60,10 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
         );
     }
 
-    public BlueprintState next(BlueprintState state) {
-        final int maxOre = (24 - state.minutes()) * this.maxOre;
-        final int maxClay = (24 - state.minutes()) * this.maxClay;
-        final int maxObsidian = (24 - state.minutes()) * this.maxObsidian;
+    public BlueprintState next(BlueprintState state, int maxMinutes) {
+        final int maxOre = (maxMinutes - state.minutes()) * this.maxOre;
+        final int maxClay = (maxMinutes - state.minutes()) * this.maxClay;
+        final int maxObsidian = (maxMinutes - state.minutes()) * this.maxObsidian;
 
         return new BlueprintState(state.blueprint(),
                 state.minutes() + 1,
@@ -97,37 +97,46 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
     }
 
     public Optional<BlueprintState> max() {
+        return max(24);
+    }
+
+    public Optional<BlueprintState> max(int maxMinutes) {
         final Set<BlueprintState> history = new HashSet<>();
-        final Map<Integer,BlueprintState> max = new HashMap<>();
-        final Deque<BlueprintState> queue = new LinkedList<>();
+        final Map<Integer,BlueprintState> maxGeodes = new HashMap<>();
+        final Map<Integer, Integer> geodeBots = new HashMap<>();
+        final PriorityQueue<BlueprintState> queue = new PriorityQueue<>(Comparator.comparing((BlueprintState state) -> state.prod().geode()).reversed());
 
         var init = BlueprintState.init(this);
-        max.put(0, init);
+        maxGeodes.put(0, init);
+        geodeBots.put(0, 0);
+
         queue.offer(init);
         while (!queue.isEmpty()) {
             var current = queue.poll();
 
-            if (current.prod().geode() > max.computeIfAbsent(current.minutes(), k -> current).prod().geode())
-                max.put(current.minutes(), current);
+            if (current.prod().geode() > maxGeodes.computeIfAbsent(current.minutes(), k -> current).prod().geode())
+                maxGeodes.put(current.minutes(), current);
 
-            if (current.minutes() == 24) {
+            if (current.minutes() == maxMinutes) {
                 continue;
             }
 
-            if (history.size() % 10_000 == 0)
-                System.out.println(history.size() + " - " + current);
+            if (current.robots().geode() > geodeBots.computeIfAbsent(current.minutes(), k -> 0))
+                geodeBots.put(current.minutes(), current.robots().geode());
 
-            var affordable = affordable(current);
+            if (current.robots().geode() < geodeBots.get(current.minutes()) - 1)
+                continue;
+
+            var affordable = affordable(current, maxMinutes);
             affordable.stream()
-                    .filter(state -> state.prod().geode() >= max.computeIfAbsent(state.minutes(), k -> state).prod().geode())
+                    .filter(state -> state.prod().geode() >= maxGeodes.computeIfAbsent(state.minutes(), k -> state).prod().geode())
                     .filter(history::add)
                     .forEach(queue::offer);
         }
 
-        if (max.containsKey(24))
-            System.out.println("MAX: " + max.get(24));
+        if (maxGeodes.containsKey(maxMinutes))
+            System.out.println("MAX: " + maxGeodes.get(maxMinutes));
 
-        return max.containsKey(24) ? Optional.of(max.get(24)) : Optional.empty();
+        return maxGeodes.containsKey(maxMinutes) ? Optional.of(maxGeodes.get(maxMinutes)) : Optional.empty();
     }
-
 }

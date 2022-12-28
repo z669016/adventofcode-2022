@@ -36,5 +36,11 @@ public class Day19 extends Day {
 
     @Override
     public void part2() {
+        final var maxOne = blueprints.get(1).max(32).orElseThrow();
+        final var maxTwo = blueprints.get(2).max(32).orElseThrow();
+        final var maxThree = blueprints.get(3).max(32).orElseThrow();
+
+        System.out.println("The max number of geodes of the first three blueprints multiplied is " +
+            maxOne.prod().geode() * maxTwo.prod().geode() * maxThree.prod().geode());
     }
 }
