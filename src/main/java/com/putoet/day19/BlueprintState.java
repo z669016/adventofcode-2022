@@ -7,14 +7,20 @@ public record BlueprintState(int blueprint, int minutes, Prod prod, Robots robot
     }
 
     public BlueprintState next() {
-        return new BlueprintState(blueprint, minutes + 1, prod.add(robots), robots);
+        return new BlueprintState(blueprint,
+                minutes + 1,
+                prod.add(robots),
+                robots);
     }
 
     public int qualityLevel() {
         return blueprint * prod().geode();
     }
 
-    public static final BlueprintState init(Blueprint blueprint) {
-        return new BlueprintState(blueprint.id(), 0, Prod.init, Robots.init);
+    public static BlueprintState init(Blueprint blueprint) {
+        return new BlueprintState(blueprint.id(),
+                0,
+                Prod.init,
+                Robots.init);
     }
 }

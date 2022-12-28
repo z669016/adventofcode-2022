@@ -54,9 +54,6 @@ public class Day19 extends Day {
                 continue;
             }
 
-            if (max.get(current.minutes()).prod().geode() > current.prod().geode())
-                continue;
-
             if (history.size() % 10_000 == 0)
                 System.out.println(history.size() + " - " + current);
 
