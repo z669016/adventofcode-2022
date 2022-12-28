@@ -253,6 +253,18 @@ every point minus every time the Manhattan-distance to another point equals 1. L
 without a grid. Finally implemented a grid, and refactored part 1. Then I screwed up with changing exterior air into 
 steam. Never try to be too smart ... clearly...
 
+## Day 19
+This feels like a BSF. Created a ```Blueprint``` record, to handle ... blueprints, and search for a max using BSF. 
+BlueprintState record, to check for history and manage search state, a ```Prod``` record to record produced items, and 
+a ```Robots``` record to maintain the manufactured robots.
+
+Some optimizations are required:
+- always create a Geode Cracking robot when possible and ignore the other options (impacts variation)
+- never create more robots than the amount of products you can actually consume in one minute (impacts variation)
+- maximize the production to the max amount you can use in the remaining time (reduces history)
+- keep the max geodes collected during a specific minute, and purge options with fewer geodes manufactured at that point 
+in time (purge variation)
+- use a priority queue ordered by cracked geodes in reversed order (more efficient purging of variation)  
 
 ## Day 20
 It took me a while before I realized that the position where to insert (at the beginning or the end) didn't matter at 
