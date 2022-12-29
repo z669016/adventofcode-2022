@@ -4,9 +4,10 @@ import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Day19 extends Day {
-    private final Map<Integer,Blueprint> blueprints;
+    private final Map<Integer, Blueprint> blueprints;
 
     public Day19(String[] args) {
         super(args);
@@ -26,6 +27,7 @@ public class Day19 extends Day {
     @Override
     public void part1() {
         final var max = blueprints().stream()
+                .parallel()
                 .map(Blueprint::max)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -36,11 +38,12 @@ public class Day19 extends Day {
 
     @Override
     public void part2() {
-        final var maxOne = blueprints.get(1).max(32).orElseThrow();
-        final var maxTwo = blueprints.get(2).max(32).orElseThrow();
-        final var maxThree = blueprints.get(3).max(32).orElseThrow();
+        var mul = Stream.of(1, 2, 3)
+                .parallel()
+                .map(i -> blueprints.get(i).max(32).orElseThrow())
+                .mapToInt(state -> state.prod().geode())
+                .reduce(1, (a,b) -> a * b);
 
-        System.out.println("The max number of geodes of the first three blueprints multiplied is " +
-            maxOne.prod().geode() * maxTwo.prod().geode() * maxThree.prod().geode());
+        System.out.println("The max number of geodes of the first three blueprints multiplied is " + mul);
     }
 }
