@@ -64,9 +64,6 @@ public class Forrest {
 
         for (int y = 0; y < forrest.length; y++) {
             for (int x = 0; x < forrest[y].length; x++) {
-                if (y == 2 && x == 3)
-                    System.out.println("found");
-
                 score[y][x] = scenicScoreFor(x, y);
             }
         }

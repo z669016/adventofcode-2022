@@ -31,6 +31,7 @@ public class Day12 extends Day {
     public void part2() {
         final List<Point> starts = heights.findAllLowest();
         final int shortest = starts.stream()
+                .parallel()
                 .map(s -> Finder.solve(heights, s))
                 .filter(l -> l.size() > 0)
                 .mapToInt(l -> l.size() - 1)

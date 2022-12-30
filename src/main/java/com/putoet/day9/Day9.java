@@ -11,9 +11,7 @@ public class Day9 extends Day {
 
     public Day9(String[] args) {
         super(args);
-        instructions = ResourceLines.stream("/day9.txt")
-                .map(Instruction::of)
-                .toList();
+        instructions = ResourceLines.list("/day9.txt", Instruction::of);
     }
 
     public static void main(String[] args) {

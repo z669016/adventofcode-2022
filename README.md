@@ -319,7 +319,7 @@ elves moving to the same position) and them moves the elves that move into uniqu
 grid containing the map of the current elves positions.
 Part 1 is solved by calling ```Elves.move()``` 10 times, then create the map (```toString()```) and count the open
 places. Thanks to ```Elves.move()``` returning the number of moved elves, part 2 just loops until ```move()``` 
-returns 0.
+returns 0 (it runs in 87 seconds, which is indeed too much)
 
 ## Day 24
 This sounds like a BSF problem again, although the state in between also depends on teh contents of the board (location
@@ -337,6 +337,8 @@ goal, using a specific initial state. To solve part 2, reuse the result of part 
 and find the ```valley.in()```. Then use that end-state to again perform a BSF towards the end (```valley.out()```). 
 Reusing the end-state of the previous search ensures the minute count is continued, and the blizzard states are correct
 when moving to the start and end again. 
+
+A single shortest path search takes ~30 seconds, which is too much, optimization is required.
 
 Learned something new on remembering history during the search: it appeared to be very memory efficient to store state 
 as a ```String```. I ran out-of-memory, when I initially stored history as a```Pair<Valley,Point>```, where ```Valley```

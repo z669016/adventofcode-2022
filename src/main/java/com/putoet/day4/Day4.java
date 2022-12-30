@@ -11,9 +11,7 @@ public class Day4 extends Day {
     public Day4(String[] args) {
         super(args);
 
-        rangePairs = ResourceLines.stream("/day4.txt")
-                .map(RangePair::of)
-                .toList();
+        rangePairs = ResourceLines.list("/day4.txt", RangePair::of);
     }
 
     public static void main(String[] args) {
@@ -42,5 +40,4 @@ public class Day4 extends Day {
                 .filter(RangePair::overlap)
                 .count();
     }
-
 }

@@ -5,6 +5,10 @@ import org.apache.commons.lang3.time.StopWatch;
 public abstract class Day {
     protected final String[] args;
 
+    protected Day() {
+        this.args = null;
+    }
+
     protected Day(String[] args) {
         this.args = args;
     }

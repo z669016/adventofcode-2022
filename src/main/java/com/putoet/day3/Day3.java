@@ -11,9 +11,7 @@ public class Day3 extends Day {
     public Day3(String[] args) {
         super(args);
 
-        rucksacks = ResourceLines.stream("/day3.txt")
-                .map(Rucksack::of)
-                .toList();
+        rucksacks = ResourceLines.list("/day3.txt", Rucksack::of);
     }
 
     public static void main(String[] args) {

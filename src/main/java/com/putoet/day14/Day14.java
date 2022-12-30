@@ -12,7 +12,7 @@ public class Day14 extends Day {
     public Day14(String[] args) {
         super(args);
 
-        lines = ResourceLines.stream("/day14.txt").map(Line::from).toList();
+        lines = ResourceLines.list("/day14.txt", Line::from);
     }
 
     public static void main(String[] args) {

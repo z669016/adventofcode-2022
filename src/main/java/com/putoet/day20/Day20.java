@@ -10,7 +10,7 @@ public class Day20 extends Day {
 
     public Day20(String[] args) {
         super(args);
-        input = ResourceLines.intList("/day20.txt");
+        input = ResourceLines.list("/day20.txt", Integer::parseInt);
     }
 
     public static void main(String[] args) {
