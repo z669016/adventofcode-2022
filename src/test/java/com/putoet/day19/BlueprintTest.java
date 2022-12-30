@@ -19,12 +19,13 @@ class BlueprintTest {
     @Test
     void max24() {
         final var max = blueprints.values().stream()
+                .parallel()
                 .map(Blueprint::max)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .toList();
 
-        assertEquals(33, max.stream().peek(System.out::println).mapToInt(BlueprintState::qualityLevel).sum());
+        assertEquals(33, max.stream().mapToInt(BlueprintState::qualityLevel).sum());
     }
 
     @Test

@@ -9,9 +9,7 @@ import java.util.stream.Stream;
 public class Day19 extends Day {
     private final Map<Integer, Blueprint> blueprints;
 
-    public Day19(String[] args) {
-        super(args);
-
+    public Day19() {
         blueprints = Blueprint.from(ResourceLines.list("/day19.txt"));
     }
 
@@ -20,7 +18,7 @@ public class Day19 extends Day {
     }
 
     public static void main(String[] args) {
-        final var day = new Day19(args);
+        final var day = new Day19();
         day.challenge();
     }
 

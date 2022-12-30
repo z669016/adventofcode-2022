@@ -260,8 +260,10 @@ Some optimizations are required:
 - never create more robots than the amount of products you can actually consume in one minute (impacts variation)
 - maximize the production to the max amount you can use in the remaining time (reduces history)
 - keep the max geodes collected during a specific minute, and purge options with fewer geodes manufactured at that point 
-in time (purge variation)
-- use a priority queue ordered by cracked geodes in reversed order (more efficient purging of variation)  
+in time (purge variation). This one is a bit risky, especially when you change the queue order (I tried a priority queue) but that made it fail on the test data)
+
+
+Part one runs in ~25 seconds, and part 2 takes ~105 seconds. 
 
 ## Day 20
 It took me a while before I realized that the position where to insert (at the beginning or the end) didn't matter at 

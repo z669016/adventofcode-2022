@@ -133,7 +133,7 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
 
             var affordable = affordable(current, maxMinutes);
             affordable.stream()
-                    .filter(state -> state.prod().geode() >= maxGeodes.computeIfAbsent(state.minutes(), k -> state).prod().geode())
+                    .filter(state -> state.prod().geode() >= maxGeodes.computeIfAbsent(state.minutes(), k -> state).prod().geode() - 1)
                     .filter(history::add)
                     .forEach(queue::offer);
         }
