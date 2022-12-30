@@ -9,13 +9,12 @@ import java.util.stream.Collectors;
 public class Day9 extends Day {
     private final List<Instruction> instructions;
 
-    public Day9(String[] args) {
-        super(args);
+    public Day9() {
         instructions = ResourceLines.list("/day9.txt", Instruction::of);
     }
 
     public static void main(String[] args) {
-        final var day = new Day9(args);
+        final var day = new Day9();
         day.challenge();
     }
 

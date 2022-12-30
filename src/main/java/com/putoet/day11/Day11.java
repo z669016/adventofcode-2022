@@ -4,12 +4,8 @@ import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
 
 public class Day11 extends Day {
-    public Day11(String[] args) {
-        super(args);
-    }
-
     public static void main(String[] args) {
-        final var day = new Day11(args);
+        final var day = new Day11();
         day.challenge();
     }
 

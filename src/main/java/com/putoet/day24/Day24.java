@@ -7,12 +7,8 @@ import org.javatuples.Triplet;
 public class Day24 extends Day {
     private Triplet<Valley, Point,Integer> endPoint;
 
-    public Day24(String[] args) {
-        super(args);
-    }
-
     public static void main(String[] args) {
-        final var day = new Day24(args);
+        final var day = new Day24();
         day.challenge();
     }
 

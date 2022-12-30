@@ -17,7 +17,6 @@ class FinderTest {
     void solve() {
         final List<Point> found = Finder.solve(heights);
         assertEquals(31, found.size() - 1);
-        assertEquals(31, found);
     }
 
     @Test

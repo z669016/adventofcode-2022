@@ -8,12 +8,8 @@ import java.util.List;
 public class Day1 extends Day {
     private final List<Elf> elves = Elves.from(ResourceLines.list("/day1.txt"));
 
-    public Day1(String[] args) {
-        super(args);
-    }
-
     public static void main(String[] args) {
-        final var day = new Day1(args);
+        final var day = new Day1();
         day.challenge();
     }
 

@@ -6,15 +6,12 @@ import com.putoet.resources.ResourceLines;
 public class Day18 extends Day {
     private final Droplet droplet;
 
-    public Day18(String[] args) {
-        super(args);
-
-        final var input = ResourceLines.list("/day18.txt");
-        droplet = Droplet.from(input);
+    public Day18() {
+        droplet = Droplet.from(ResourceLines.list("/day18.txt"));
     }
 
     public static void main(String[] args) {
-        final var day = new Day18(args);
+        final var day = new Day18();
         day.challenge();
     }
 

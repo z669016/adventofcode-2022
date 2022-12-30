@@ -9,14 +9,12 @@ import java.util.stream.IntStream;
 public class Day13 extends Day {
     private final List<SignalPacketPair> pairs;
 
-    public Day13(String[] args) {
-        super(args);
-
+    public Day13() {
         pairs = SignalPacketPair.from(ResourceLines.list("/day13.txt"));
     }
 
     public static void main(String[] args) {
-        final var day = new Day13(args);
+        final var day = new Day13();
         day.challenge();
     }
 

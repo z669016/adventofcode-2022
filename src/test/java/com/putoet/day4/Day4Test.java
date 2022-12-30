@@ -8,13 +8,13 @@ class Day4Test {
 
     @Test
     void containingPairs() {
-        final var day4 = new Day4(null);
+        final var day4 = new Day4();
         assertEquals(2, day4.containingPairs());
     }
 
     @Test
     void overlappingPairs() {
-        final var day4 = new Day4(null);
+        final var day4 = new Day4();
         assertEquals(4, day4.overlappingPairs());
     }
 }

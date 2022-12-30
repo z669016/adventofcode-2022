@@ -8,13 +8,13 @@ class Day3Test {
 
     @Test
     void part1() {
-        final var day3 = new Day3(null);
+        final var day3 = new Day3();
         assertEquals(157, day3.sharedPrioritySum());
     }
 
     @Test
     void part2() {
-        final var day3 = new Day3(null);
+        final var day3 = new Day3();
         assertEquals(70, day3.batchPrioritySum());
     }
 }

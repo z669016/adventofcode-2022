@@ -11,15 +11,14 @@ public class Day15 extends Day {
     private final Set<Sensor> sensors;
     private final Set<Beacon> beacons;
 
-    public Day15(String[] args) {
-        super(args);
+    public Day15() {
         final List<String> input = ResourceLines.list("/day15.txt");
         beacons = Beacon.from(input);
         sensors = Sensor.from(input, beacons);
     }
 
     public static void main(String[] args) {
-        final var day = new Day15(args);
+        final var day = new Day15();
         day.challenge();
     }
 

@@ -15,9 +15,7 @@ public class Day5 extends Day {
     protected static final Crane crateMover9001 = (stack, count) -> stack.take(count).reverse();
 
 
-    public Day5(String[] args) {
-        super(args);
-
+    public Day5() {
         boolean layout = true;
         final var input = ResourceLines.list("/day5.txt");
         final List<String> stack = new ArrayList<>();
@@ -70,7 +68,7 @@ public class Day5 extends Day {
     }
 
     public static void main(String[] args) {
-        final var day = new Day5(args);
+        final var day = new Day5();
         day.challenge();
     }
 

@@ -10,12 +10,8 @@ import java.util.function.Supplier;
 public class Day21 extends Day {
     private final List<String> input = ResourceLines.list("/day21.txt");
 
-    public Day21(String[] args) {
-        super(args);
-    }
-
     public static void main(String[] args) {
-        final var day = new Day21(args);
+        final var day = new Day21();
         day.challenge();
     }
 

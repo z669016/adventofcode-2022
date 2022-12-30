@@ -11,8 +11,7 @@ public class Day7 extends Day {
     private static final long NEEDED_DISK_SPACE = 30_000_000;
     private final Directory root;
 
-    public Day7(String[] args) {
-        super(args);
+    public Day7() {
         root = parseLog(ResourceLines.list("/day7.txt"));
     }
 
@@ -47,7 +46,7 @@ public class Day7 extends Day {
     }
 
     public static void main(String[] args) {
-        final var day = new Day7(args);
+        final var day = new Day7();
         day.challenge();
     }
 

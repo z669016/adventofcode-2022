@@ -5,12 +5,9 @@ import com.putoet.resources.ResourceLines;
 
 public class Day17 extends Day {
     private final String input = ResourceLines.line("/day17.txt");
-    public Day17(String[] args) {
-        super(args);
-    }
 
     public static void main(String[] args) {
-        final var day = new Day17(args);
+        final var day = new Day17();
         day.challenge();
     }
 

@@ -8,14 +8,12 @@ import java.util.List;
 public class Day3 extends Day {
     private final List<Rucksack> rucksacks;
 
-    public Day3(String[] args) {
-        super(args);
-
+    public Day3() {
         rucksacks = ResourceLines.list("/day3.txt", Rucksack::of);
     }
 
     public static void main(String[] args) {
-        final var day = new Day3(args);
+        final var day = new Day3();
         day.challenge();
     }
 

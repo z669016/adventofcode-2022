@@ -11,13 +11,12 @@ import java.util.List;
 public class Day12 extends Day {
     private final HeightMap heights;
 
-    public Day12(String[] args) {
-        super(args);
+    public Day12() {
         heights = new HeightMap(new Grid(GridUtils.of(ResourceLines.list("/day12.txt"))));
     }
 
     public static void main(String[] args) {
-        final var day = new Day12(args);
+        final var day = new Day12();
         day.challenge();
     }
 

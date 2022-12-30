@@ -6,14 +6,12 @@ import com.putoet.resources.ResourceLines;
 public class Day6 extends Day {
     private final Packet packet;
 
-    public Day6(String[] args) {
-        super(args);
-
+    public Day6() {
         packet = new Packet(ResourceLines.line("/day6.txt"));
     }
 
     public static void main(String[] args) {
-        final var day = new Day6(args);
+        final var day = new Day6();
         day.challenge();
     }
 

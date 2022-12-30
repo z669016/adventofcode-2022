@@ -25,7 +25,7 @@ class LinesTest {
 
     @Test
     void full() {
-        final List<Line> lines = ResourceLines.stream("/day14-x.txt").map(Line::from).toList();
+        final List<Line> lines = ResourceLines.stream("/day14.txt").map(Line::from).toList();
         final Grid grid = Lines.asSmallGrid(lines);
         System.out.println(grid);
     }

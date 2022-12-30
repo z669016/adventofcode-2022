@@ -10,7 +10,7 @@ class Day17Test {
 
     @BeforeEach
     void setup() {
-        day17 = new Day17(null);
+        day17 = new Day17();
     }
 
     @Test

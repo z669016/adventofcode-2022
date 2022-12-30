@@ -10,12 +10,8 @@ public class Day25 extends Day {
             .map(Snafu::new)
             .toList();
 
-    public Day25(String[] args) {
-        super(args);
-    }
-
     public static void main(String[] args) {
-        final var day = new Day25(args);
+        final var day = new Day25();
         day.challenge();
     }
 

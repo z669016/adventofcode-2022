@@ -8,13 +8,12 @@ import java.util.List;
 public class Day20 extends Day {
     private final List<Integer> input;
 
-    public Day20(String[] args) {
-        super(args);
+    public Day20() {
         input = ResourceLines.list("/day20.txt", Integer::parseInt);
     }
 
     public static void main(String[] args) {
-        final var day = new Day20(args);
+        final var day = new Day20();
         day.challenge();
     }
 

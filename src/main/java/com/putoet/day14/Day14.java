@@ -9,14 +9,12 @@ import java.util.List;
 public class Day14 extends Day {
     final private List<Line> lines;
 
-    public Day14(String[] args) {
-        super(args);
-
+    public Day14() {
         lines = ResourceLines.list("/day14.txt", Line::from);
     }
 
     public static void main(String[] args) {
-        final var day = new Day14(args);
+        final var day = new Day14();
         day.challenge();
     }
 

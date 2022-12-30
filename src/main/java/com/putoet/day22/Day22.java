@@ -9,12 +9,8 @@ import java.util.List;
 
 public class Day22 extends Day {
 
-    public Day22(String[] args) {
-        super(args);
-    }
-
     public static void main(String[] args) {
-        final var day = new Day22(args);
+        final var day = new Day22();
         day.challenge();
     }
 
