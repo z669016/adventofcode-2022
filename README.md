@@ -219,19 +219,16 @@ covered ranges for all Y values in that range, and the first row with 2 ranges i
 for the specific x/y location, and return its ```Beacon.turingFrequency()```.
 
 ## Day 16
-Started with the easy part, to buy some thinking time ... a ```Valve``` class and a ```Valves``` class containing some
-convenience methods. ```Valves.valuedValves()``` gets you a list of all valves that, once opened, release additional 
-flow. ```Valves.shortestPath(from, to)``` provides you a list with the shortest path between to valves.
-The ```PathFinder``` class does the heavy work. ```PathFinder.paths(...)``` creates an overview of all shortest paths
-between any valve and the valuable valves, as the distance is required to solve the path search.
-```PathFinder.bestPath``` does a BFS to find the solution for part 1. Some optimizations have been implemented, and it 
-runs kind of okay. Part 2 was a nightmare. ```PathFinder.bestPathWithElephant()``` does again a BFS, but runs for over
-20 minutes on my Mac. No doubt can many paths be pruned as they don't deliver any different outcome. 
-When time available in the future, I'll see what other approaches are possible. This one took too much code, and runs 
-way to long.
+Inspired by [Johannes](https://github.com/jerchende), I refactored my solution to use the 
+[Floyd-Warshall](https://www.baeldung.com/cs/floyd-warshall-shortest-path) algorithm for shortest path. This reduced 
+the runtime for part 2 from 20 minutes to 90 seconds. The ```Valve``` class is just a record with a factory method for
+parsing the input. The ```Routes``` class creates a map for all shortest routes between valuable valves (valves with
+a flow rate > 0) using the Floyd-Warshall algorithm. The ```Valves``` class contains the ```maximumPressure()``` to 
+solve part 1. ```maximumPressureWithHelp()``` solves part 2, by generating a set of half of the possible routes, and
+finds the max pressure when those are visited bby me while the others get visited by an elephant (helper).
 
 ## Day 17
-Yes, Tetris ... Started with a ```Rock``` class to represent the different types of falling rock, and a convenience
+Yes, Tetris! ... Started with a ```Rock``` class to represent the different types of falling rock, and a convenience
 class ```Rocks```, that contains the static Rock instances to drop, and implements ```Supplier<Rock>``` to deliver an
 endless stream of rocks to be dropped into the cave. The ```Push``` class produces gas pushes to the left and right, to
 be used during the drop.

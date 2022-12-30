@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PathFinderTest {
+class ValvesTest {
 
     @Test
     void solve() {
