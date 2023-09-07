@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record Valley(@NotNull Point in, @NotNull Point out, @NotNull List<Blizzard> blizzards) {
+record Valley(@NotNull Point in, @NotNull Point out, @NotNull List<Blizzard> blizzards) {
     public Valley next() {
         return new Valley(in, out, blizzards.stream().map(Blizzard::next).toList());
     }
@@ -105,9 +105,9 @@ public record Valley(@NotNull Point in, @NotNull Point out, @NotNull List<Blizza
                                     symbol,
                                     symbol == '<' || symbol == '>' ? maxx : maxy,
                                     switch (symbol) {
-                                        case '^' -> Point.of(x,maxy);
-                                        case '>' -> Point.of(1,y);
-                                        case 'v' -> Point.of(x,1);
+                                        case '^' -> Point.of(x, maxy);
+                                        case '>' -> Point.of(1, y);
+                                        case 'v' -> Point.of(x, 1);
                                         case '<' -> Point.of(maxx, y);
                                         default -> throw new IllegalStateException("Cannot get here");
                                     }
