@@ -1,18 +1,19 @@
 package com.putoet.day16;
 
+import org.jetbrains.annotations.NotNull;
 import org.paukov.combinatorics3.Generator;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Valves {
+class Valves {
     public static final String STARTING_VALVE = "AA";
 
     private final Collection<Valve> valves;
     private final Map<String, Valve> valveMap;
     private final Map<Route, Integer> costs;
 
-    public Valves(Collection<Valve> valves) {
+    public Valves(@NotNull Collection<Valve> valves) {
         this.valves = valves;
         this.valveMap = relevantValves(valves).stream().collect(Collectors.toMap(Valve::id, v -> v));
         this.costs = Routes.shortestPaths(valves);
@@ -22,13 +23,13 @@ public class Valves {
         return valves;
     }
 
-    public static List<Valve> irrelevantValves(Collection<Valve> valves) {
+    public static List<Valve> irrelevantValves(@NotNull Collection<Valve> valves) {
         return valves.stream()
                 .filter(valve -> valve.flowRate() == 0 && !valve.id().equals(STARTING_VALVE))
                 .toList();
     }
 
-    public static List<Valve> relevantValves(Collection<Valve> valves) {
+    public static List<Valve> relevantValves(@NotNull Collection<Valve> valves) {
         return valves.stream()
                 .filter(valve -> valve.flowRate() != 0 || valve.id().equals(STARTING_VALVE))
                 .toList();
@@ -39,7 +40,7 @@ public class Valves {
     }
 
     private State maximumPressure(State initialState) {
-        final Queue<State> queue = new LinkedList<>();
+        final var queue = new LinkedList<State>();
         queue.offer(initialState);
 
         State max = null;
@@ -52,7 +53,7 @@ public class Valves {
                     .map(route -> state.moveTo(route.to(), costs.get(route), valveMap.get(route.to()).flowRate()))
                     .toList();
 
-            if (newStates.size() == 0) {
+            if (newStates.isEmpty()) {
                 if (max == null || state.totalFlow > max.totalFlow) {
                     max = state;
                 }
@@ -64,7 +65,9 @@ public class Valves {
     }
 
     public int maximumPressureWithHelp() {
-        final var targets = valveMap.keySet().stream().filter(id -> !id.equals(STARTING_VALVE)).collect(Collectors.toSet());
+        final var targets = valveMap.keySet().stream()
+                .filter(id -> !id.equals(STARTING_VALVE))
+                .collect(Collectors.toSet());
 
         // find the max for any combination of valves visited by me/elephant
         // (each taking half of the possible combinations)
