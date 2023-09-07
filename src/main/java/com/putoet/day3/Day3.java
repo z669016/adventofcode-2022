@@ -1,40 +1,26 @@
 package com.putoet.day3;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 
 import java.util.List;
 
-public class Day3 extends Day {
-    private final List<Rucksack> rucksacks;
-
-    public Day3() {
-        rucksacks = ResourceLines.list("/day3.txt", Rucksack::of);
-    }
-
+public class Day3  {
     public static void main(String[] args) {
-        final var day = new Day3();
-        day.challenge();
+        final var rucksacks = ResourceLines.list("/day3.txt", Rucksack::of);
+
+        Timer.run(() -> System.out.println("The sum of shared priorities is " + sharedPrioritySum(rucksacks)));
+        Timer.run(() -> System.out.println("The sum of batch priorities is " + batchPrioritySum(rucksacks)));
     }
 
-    @Override
-    public void part1() {
-        System.out.println("The sum of shared priorities is " + sharedPrioritySum());
-    }
-
-    public int sharedPrioritySum() {
+    static int sharedPrioritySum(List<Rucksack> rucksacks) {
         return rucksacks.stream()
                 .map(Rucksack::shared)
                 .mapToInt(RucksackItem::priority)
                 .sum();
     }
 
-    @Override
-    public void part2() {
-        System.out.println("The sum of batch priorities is " + batchPrioritySum());
-    }
-
-    public int batchPrioritySum() {
+    static int batchPrioritySum(List<Rucksack> rucksacks) {
        var sum = 0;
 
        for (var i = 0; i < rucksacks.size() - 2; i += 3) {

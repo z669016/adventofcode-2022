@@ -1,6 +1,6 @@
 package com.putoet.day3;
 
-public record RucksackItem(char id) {
+record RucksackItem(char id) {
     public RucksackItem {
         assert Character.isLetter(id);
     }

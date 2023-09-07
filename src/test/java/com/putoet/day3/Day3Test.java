@@ -1,20 +1,23 @@
 package com.putoet.day3;
 
+import com.putoet.resources.ResourceLines;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day3Test {
+    private static final List<Rucksack> rucksacks = ResourceLines.list("/day3.txt", Rucksack::of);
+
 
     @Test
     void part1() {
-        final var day3 = new Day3();
-        assertEquals(157, day3.sharedPrioritySum());
+        assertEquals(157, Day3.sharedPrioritySum(rucksacks));
     }
 
     @Test
     void part2() {
-        final var day3 = new Day3();
-        assertEquals(70, day3.batchPrioritySum());
+        assertEquals(70, Day3.batchPrioritySum(rucksacks));
     }
 }
