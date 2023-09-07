@@ -1,8 +1,6 @@
 package com.putoet.day13;
 
-import java.awt.desktop.OpenURIEvent;
-
-public enum Order {
+enum Order {
     IN_ORDER,
     NOT_IN_ORDER,
     CONTINUE;

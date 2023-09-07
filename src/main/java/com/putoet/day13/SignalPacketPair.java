@@ -1,16 +1,13 @@
 package com.putoet.day13;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public record SignalPacketPair(SignalPacket first, SignalPacket second) {
-    public SignalPacketPair {
-        assert first != null;
-        assert second != null;
-    }
-
-    public static List<SignalPacketPair> from(List<String> input) {
-        final List<SignalPacketPair> pairs = new ArrayList<>();
+record SignalPacketPair(@NotNull SignalPacket first, @NotNull SignalPacket second) {
+    public static List<SignalPacketPair> of(@NotNull List<String> input) {
+        final var pairs = new ArrayList<SignalPacketPair>();
         for (var i = 0; i < input.size(); i += 3) {
             pairs.add(new SignalPacketPair(SignalPacket.from(input.get(i)), SignalPacket.from(input.get(i+1))));
         }

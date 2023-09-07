@@ -1,12 +1,14 @@
 package com.putoet.day13.tokenizer;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Iterator;
 
 public class PacketTokenizer implements Iterator<Token> {
     private final String input;
     private int offset;
 
-    public PacketTokenizer(String input) {
+    public PacketTokenizer(@NotNull String input) {
         this.input = input;
     }
 
@@ -30,7 +32,7 @@ public class PacketTokenizer implements Iterator<Token> {
         if (c == ']')
             return new Token(TokenType.END_LIST, String.valueOf(c));
 
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         while (Character.isDigit(c)) {
             sb.append(c);
             c = input.charAt(offset++);

@@ -1,42 +1,28 @@
 package com.putoet.day13;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class Day13 extends Day {
-    private final List<SignalPacketPair> pairs;
-
-    public Day13() {
-        pairs = SignalPacketPair.from(ResourceLines.list("/day13.txt"));
-    }
-
+public class Day13 {
     public static void main(String[] args) {
-        final var day = new Day13();
-        day.challenge();
+        final var pairs = SignalPacketPair.of(ResourceLines.list("/day13.txt"));
+
+        Timer.run(() -> System.out.println("The sum of the indices of those pairs is: " + rightOrdered(pairs)));
+        Timer.run(() -> System.out.println("The decoder key is: " + decoderKey(pairs)));
     }
 
-    @Override
-    public void part1() {
-        System.out.println("The sum of the indices of those pairs is: " + rightOrdered());
-    }
-
-    public int rightOrdered() {
+    static int rightOrdered(List<SignalPacketPair> pairs) {
         return IntStream.range(0, pairs.size())
                 .filter(i -> pairs.get(i).compared() != Order.NOT_IN_ORDER)
                 .map(i -> i + 1)
                 .sum();
     }
 
-    @Override
-    public void part2() {
-        System.out.println("The decoder key is: " + decoderKey());
-    }
-
-    public int decoderKey() {
-        final List<SignalPacket> packets = new ArrayList<>(pairs.stream()
+    static int decoderKey(List<SignalPacketPair> pairs) {
+        final var packets = new ArrayList<>(pairs.stream()
                 .map(SignalPacketPair::asList)
                 .flatMap(List::stream)
                 .toList()
@@ -49,8 +35,8 @@ public class Day13 extends Day {
 
         packets.sort(Comparator.naturalOrder());
 
-        int twoIndex = indexOf(packets, two);
-        int sixIndex = indexOf(packets, six);
+        final var twoIndex = indexOf(packets, two);
+        final var sixIndex = indexOf(packets, six);
 
         return twoIndex * sixIndex;
     }
@@ -59,6 +45,7 @@ public class Day13 extends Day {
         return IntStream.range(0, packets.size())
                 .filter(i -> packet.equals(packets.get(i)))
                 .map(i -> i + 1)
-                .findAny().orElseThrow();
+                .findAny()
+                .orElseThrow();
     }
 }

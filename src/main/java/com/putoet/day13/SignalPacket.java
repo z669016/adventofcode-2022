@@ -2,13 +2,11 @@ package com.putoet.day13;
 
 import com.putoet.day13.tokenizer.PacketTokenizer;
 import com.putoet.day13.tokenizer.Token;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public record SignalPacket(List<Object> values) implements Comparable<SignalPacket> {
-    public SignalPacket {
-        assert values != null;
-    }
+record SignalPacket(@NotNull List<Object> values) implements Comparable<SignalPacket> {
 
     public SignalPacket(int value) {
         this(List.of(value));
@@ -22,11 +20,12 @@ public record SignalPacket(List<Object> values) implements Comparable<SignalPack
         return values.size();
     }
 
-    public Order test(SignalPacket second) {
+    public Order test(@NotNull SignalPacket second) {
         return test(this.values, second.values);
     }
 
-    public static Order test(Object first, Object second) {
+    @SuppressWarnings("rawtypes")
+    public static Order test(@NotNull Object first, @NotNull Object second) {
 
         if (first instanceof Integer firstInteger && second instanceof Integer secondInteger)
             return Order.from(firstInteger.compareTo(secondInteger));
@@ -56,8 +55,8 @@ public record SignalPacket(List<Object> values) implements Comparable<SignalPack
         throw new IllegalStateException("Can't get here!");
     }
 
-    public static SignalPacket from(String line) {
-        final PacketTokenizer tokenizer = new PacketTokenizer(line);
+    public static SignalPacket from(@NotNull String line) {
+        final var tokenizer = new PacketTokenizer(line);
         List<Object> values = new ArrayList<>();
         final Stack<List<Object>> stack = new Stack<>();
 
@@ -77,12 +76,13 @@ public record SignalPacket(List<Object> values) implements Comparable<SignalPack
             }
         }
 
+        //noinspection unchecked
         return new SignalPacket((List<Object>) values.get(0));
     }
 
+    @SuppressWarnings("ComparatorMethodParameterNotUsed")
     @Override
-    public int compareTo(SignalPacket second) {
-        assert second != null;
+    public int compareTo(@NotNull SignalPacket second) {
         return this.test(second) == Order.IN_ORDER ? -1 : +1;
     }
 }
