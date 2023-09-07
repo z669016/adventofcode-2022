@@ -2,15 +2,12 @@ package com.putoet.day12;
 
 import com.putoet.grid.Grid;
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-public record HeightMap(Grid grid) {
-    public HeightMap {
-        assert grid != null;
-    }
-
+record HeightMap(@NotNull Grid grid) {
     public Point start() {
         return grid.findFirst(c -> c == 'S').orElseThrow();
     }
@@ -23,9 +20,9 @@ public record HeightMap(Grid grid) {
         return grid.findAll(c -> c == 'a' || c == 'S');
     }
 
-    public List<Point> next(Point current) {
-        final char height = grid.get(current.x(), current.y());
-        final Point start = start();
+    public List<Point> next(@NotNull Point current) {
+        final var height = grid.get(current.x(), current.y());
+        final var start = start();
 
         return Stream.of(Point.NORTH, Point.EAST, Point.SOUTH, Point.WEST)
                 .map(current::add)

@@ -1,17 +1,14 @@
 package com.putoet.day12;
 
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class Finder {
-    public record Node(Point at, Node prev) {
-        public Node {
-            assert at != null;
-        }
-
+class Finder {
+    public record Node(@NotNull Point at, Node prev) {
         public List<Point> list() {
-            final List<Point> list = new ArrayList<>();
+            final var list = new ArrayList<Point>();
             Node current = this;
             while (current != null) {
                 list.add(current.at);
@@ -22,18 +19,18 @@ public class Finder {
         }
     }
 
-    public static List<Point> solve(HeightMap heights) {
+    public static List<Point> solve(@NotNull HeightMap heights) {
         return solve(heights, heights.start());
     }
 
-    public static List<Point> solve(HeightMap heights, Point start) {
-        final Set<Point> history = new HashSet<>();
-        final Queue<Node> queue = new LinkedList<>();
-        final Point end = heights.end();
+    public static List<Point> solve(@NotNull HeightMap heights, @NotNull Point start) {
+        final var history = new HashSet<Point>();
+        final var queue = new LinkedList<Node>();
+        final var end = heights.end();
 
         queue.offer(new Node(start, null));
         while (!queue.isEmpty()) {
-            final Node current = queue.poll();
+            final var current = queue.poll();
 
             if (current.at().equals(end))
                 return current.list();
