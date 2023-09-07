@@ -1,6 +1,7 @@
 package com.putoet.day24;
 
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,35 +9,25 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record Valley(Point in, Point out, List<Blizzard> blizzards) {
-    public Valley {
-        assert in != null;
-        assert out != null;
-        assert blizzards != null;
-    }
-
+public record Valley(@NotNull Point in, @NotNull Point out, @NotNull List<Blizzard> blizzards) {
     public Valley next() {
         return new Valley(in, out, blizzards.stream().map(Blizzard::next).toList());
     }
 
-    public boolean contains(Point point) {
-        assert point != null;
-
+    public boolean contains(@NotNull Point point) {
         return (point.x() >= in.x() && point.x() <= out.x() &&
                 point.y() > in.y() && point.y() < out.y()) ||
                point.equals(out) ||
                point.equals(in);
     }
 
-    public boolean isOpen(Point point) {
-        assert point != null;
-
+    public boolean isOpen(@NotNull Point point) {
         return blizzards.stream().noneMatch(b -> b.location().equals(point));
     }
 
-    public String toString(Point elf) {
-        final char[] string = toString().toCharArray();
-        final int length = out.x() + 3;
+    public String toString(@NotNull Point elf) {
+        final var string = toString().toCharArray();
+        final var length = out.x() + 3;
         string[elf.y() * length + elf.x()] = 'E';
 
         return String.valueOf(string);
@@ -44,14 +35,14 @@ public record Valley(Point in, Point out, List<Blizzard> blizzards) {
 
     @Override
     public String toString() {
-        final int minx = in.x() - 1;
-        final int maxx = out.x() + 2;
-        final int miny = in.y();
-        final int maxy = out.y() + 1;
+        final var minx = in.x() - 1;
+        final var maxx = out.x() + 2;
+        final var miny = in.y();
+        final var maxy = out.y() + 1;
 
-        final char[][] grid = new char[maxy][maxx];
-        for (int y = miny; y < maxy; y++) {
-            for (int x = minx; x < maxx; x++) {
+        final var grid = new char[maxy][maxx];
+        for (var y = miny; y < maxy; y++) {
+            for (var x = minx; x < maxx; x++) {
                 if (y == 0 || y == grid.length - 1)
                     grid[y][x] = '#';
                 else if (x == 0 || x == grid[0].length - 1)
@@ -64,7 +55,7 @@ public record Valley(Point in, Point out, List<Blizzard> blizzards) {
         grid[out.y()][out.x()] = '.';
 
         blizzards.forEach(blizzard -> {
-            final Point p = blizzard.location();
+            final var p = blizzard.location();
             if (grid[p.y()][p.x()] == '#')
                 throw new IllegalStateException("Blizzard is in a wall " + blizzard);
 
@@ -88,26 +79,25 @@ public record Valley(Point in, Point out, List<Blizzard> blizzards) {
                 .collect(Collectors.joining("\n"));
     }
 
-    public static Valley from(List<String> input) {
-        assert input != null;
-        assert input.size() > 0;
+    public static Valley of(@NotNull List<String> input) {
+        assert !input.isEmpty();
 
         final var symbols = Set.of('^', '>', 'v', '<');
-        final int maxx = input.get(0).length() - 2;
-        final int maxy = input.size() - 2;
+        final var maxx = input.get(0).length() - 2;
+        final var maxy = input.size() - 2;
 
         Point in = null, out = null;
 
-        final List<Blizzard> blizzards = new ArrayList<>();
-        for (int y = 0; y < input.size(); y++) {
-            final String line = input.get(y);
-            for (int x = 0; x < line.length(); x++) {
+        final var blizzards = new ArrayList<Blizzard>();
+        for (var y = 0; y < input.size(); y++) {
+            final var line = input.get(y);
+            for (var x = 0; x < line.length(); x++) {
                 if (y == 0 && line.charAt(x) == '.')
                     in = Point.of(x, y);
                 if (y == input.size() - 1 && line.charAt(x) == '.')
                     out = Point.of(x, y);
 
-                final char symbol = line.charAt(x);
+                final var symbol = line.charAt(x);
                 if (symbols.contains(line.charAt(x))) {
                     final var location = Point.of(x, y);
                     blizzards.add(new Blizzard(

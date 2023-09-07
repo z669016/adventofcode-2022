@@ -1,6 +1,9 @@
 package com.putoet.day;
 
+import com.putoet.day24.Valley;
+import com.putoet.grid.Point;
 import org.apache.commons.lang3.time.StopWatch;
+import org.javatuples.Triplet;
 
 public abstract class Day {
     protected final String[] args;
@@ -32,8 +35,9 @@ public abstract class Day {
         return name[name.length - 1];
     }
 
-    public void part1() {
+    public Triplet<Valley, Point, Integer> part1() {
         System.out.println("Not yet implemented");
+        return null;
     }
 
     public void part2() {

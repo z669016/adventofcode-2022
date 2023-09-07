@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class PathFinder {
     private static Triplet<Valley, Point, Integer> init() {
-        final var valley = Valley.from(ResourceLines.list("/day24.txt"));
+        final var valley = Valley.of(ResourceLines.list("/day24.txt"));
         return Triplet.with(valley, valley.in(), 0);
     }
 

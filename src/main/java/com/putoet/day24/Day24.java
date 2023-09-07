@@ -1,26 +1,24 @@
 package com.putoet.day24;
 
-import com.putoet.day.Day;
 import com.putoet.grid.Point;
+import com.putoet.utils.Timer;
 import org.javatuples.Triplet;
 
-public class Day24 extends Day {
-    private Triplet<Valley, Point,Integer> endPoint;
-
+public class Day24 {
     public static void main(String[] args) {
-        final var day = new Day24();
-        day.challenge();
+        final var endPoint = Timer.run(Day24::part1);
+        Timer.run(() -> part2(endPoint));
     }
 
-    @Override
-    public void part1() {
-        endPoint = PathFinder.solve().orElseThrow();
+    static Triplet<Valley, Point, Integer> part1() {
+        final var endPoint = PathFinder.solve().orElseThrow();
         System.out.println("The fewest number of minutes required to avoid the blizzards and reach the goal is "
                            + endPoint.getValue2());
+
+        return endPoint;
     }
 
-    @Override
-    public void part2() {
+    static void part2(Triplet<Valley, Point, Integer> endPoint) {
         System.out.println("Made it to the end in " + endPoint.getValue2() + " minutes.");
         var startingPoint = PathFinder.solve(endPoint, state -> state.getValue0().in().equals(state.getValue1())).orElseThrow();
         System.out.println("Made it back to the beginning in " + startingPoint.getValue2() + " minutes.");

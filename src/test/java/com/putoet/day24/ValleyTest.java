@@ -18,7 +18,7 @@ class ValleyTest {
                 #...v.#
                 #.....#
                 #####.#""";
-        final var valley = Valley.from(Arrays.stream(map.split("\n")).toList());
+        final var valley = Valley.of(Arrays.stream(map.split("\n")).toList());
         assertEquals(map, valley.toString());
     }
 
@@ -32,7 +32,7 @@ class ValleyTest {
                 #...v.#
                 #.....#
                 #####.#""";
-        var valley = Valley.from(Arrays.stream(map.split("\n")).toList());
+        var valley = Valley.of(Arrays.stream(map.split("\n")).toList());
 
         valley = valley.next();
         assertEquals("""
