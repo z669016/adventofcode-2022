@@ -1,9 +1,11 @@
 package com.putoet.day7;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class DirectorySmallestFinder implements Consumer<Node> {
+class DirectorySmallestFinder implements Consumer<Node> {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private Optional<Directory> smallest = Optional.empty();
     private final long minSize;
@@ -13,7 +15,7 @@ public class DirectorySmallestFinder implements Consumer<Node> {
     }
 
     @Override
-    public void accept(Node node) {
+    public void accept(@NotNull Node node) {
         if (node instanceof Directory dir) {
             if (smallest.isEmpty())
                 smallest = Optional.of(dir);
@@ -27,8 +29,8 @@ public class DirectorySmallestFinder implements Consumer<Node> {
         return smallest;
     }
 
-    public static Optional<Directory> find(long minSize, Directory root) {
-        final DirectorySmallestFinder finder = new DirectorySmallestFinder(minSize);
+    public static Optional<Directory> find(long minSize, @NotNull Directory root) {
+        final var finder = new DirectorySmallestFinder(minSize);
         root.visit(finder);
         return finder.smallest();
     }

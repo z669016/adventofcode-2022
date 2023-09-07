@@ -1,29 +1,25 @@
 package com.putoet.day7;
 
+import com.putoet.resources.ResourceLines;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day7Test {
+    private static final Directory root = Day7.parseLog(ResourceLines.list("/day7.txt"));
 
     @Test
     void totalSize() {
-        final Day7 day7 = new Day7();
-
-        assertEquals(95437, day7.totalSize());
+        assertEquals(95437, Day7.totalSize(root));
     }
 
     @Test
     void feeUp() {
-        final Day7 day7 = new Day7();
-
-        assertEquals(8381165, day7.freeUp());
+        assertEquals(8381165, Day7.freeUp(root));
     }
 
     @Test
     void smallestToDelete() {
-        final Day7 day7 = new Day7();
-
-        assertEquals(24933642, day7.smallestToDelete().orElseThrow().size());
+        assertEquals(24933642, Day7.smallestToDelete(root).orElseThrow().size());
     }
 }

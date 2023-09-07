@@ -1,16 +1,19 @@
 package com.putoet.day7;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class Directory extends Node {
+class Directory extends Node {
     public static final Directory ROOT = new Directory("/", null);
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private Optional<Long> size = Optional.empty();
 
     private final List<Node> files = new ArrayList<>();
+
     public Directory(String name, Node parent) {
         super(name, parent);
     }
@@ -24,7 +27,7 @@ public class Directory extends Node {
     }
 
     @Override
-    public void visit(Consumer<Node> visitor) {
+    public void visit(@NotNull Consumer<Node> visitor) {
         visitor.accept(this);
         files.forEach(file -> file.visit(visitor));
     }
@@ -42,7 +45,7 @@ public class Directory extends Node {
         return files;
     }
 
-    public String print(String indent) {
+    public String print(@NotNull String indent) {
         final StringBuilder sb = new StringBuilder();
 
         sb.append("%s - %s (di)%n".formatted(indent, name()));
