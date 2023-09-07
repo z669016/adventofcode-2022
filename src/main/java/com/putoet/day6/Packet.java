@@ -1,25 +1,23 @@
 package com.putoet.day6;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public record Packet(String sequence) {
-    public Packet {
-        assert sequence != null;
-    }
-
+record Packet(@NotNull String sequence) {
     public int startOfPacket(int size) {
         assert sequence.length() > size;
 
-        Integer[] c = new Integer[size];
+        var c = new int[size];
         for (var i = 0; i < size - 1; i++) {
-            c[i] = (int) sequence.charAt(i);
+            c[i] = sequence.charAt(i);
         }
 
         for (var i = size - 1; i < sequence.length(); i++) {
-            c[size - 1] = (int) sequence.charAt(i);
+            c[size - 1] = sequence.charAt(i);
 
-            if (Arrays.stream(c).collect(Collectors.toSet()).size() == size) {
+            if (Arrays.stream(c).boxed().collect(Collectors.toSet()).size() == size) {
                 return i + 1;
             }
 
