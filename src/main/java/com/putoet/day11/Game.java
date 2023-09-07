@@ -1,6 +1,7 @@
 package com.putoet.day11;
 
 import com.putoet.math.Factors;
+import org.apache.commons.math3.util.ArithmeticUtils;
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class Game {
     public static long lcm(List<Monkey> monkeys) {
         long lcm = 1L;
         for (var monkey : monkeys)
-            lcm = Factors.lcm(lcm, monkey.divisor());
+            lcm = ArithmeticUtils.lcm(lcm, monkey.divisor());
 
         return lcm;
     }
