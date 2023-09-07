@@ -1,17 +1,15 @@
 package com.putoet.day9;
 
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class ShortRope extends AbstractRope {
+class ShortRope extends AbstractRope {
     private final Point head;
     private final Point tail;
 
-    public ShortRope(Point head, Point tail)  {
-        assert head != null;
-        assert tail != null;
-
+    public ShortRope(@NotNull Point head, @NotNull Point tail) {
         if (isNotValid(head, tail)) {
             throw new IllegalStateException("Invalid rope head and tail: " + head + " " + tail);
         }
@@ -21,10 +19,10 @@ public class ShortRope extends AbstractRope {
     }
 
     @Override
-    public Rope move(Direction direction) {
-        final Point newHead = move(head, direction);
+    public Rope move(@NotNull Direction direction) {
+        final var newHead = move(head, direction);
 
-        Point newTail = tail;
+        var newTail = tail;
         if (isNotValid(newHead, newTail)) {
             newTail = head;
         }
@@ -55,7 +53,7 @@ public class ShortRope extends AbstractRope {
         return new ShortRope(Point.ORIGIN, Point.ORIGIN);
     }
 
-    public static boolean isNotValid(Point head, Point tail) {
+    public static boolean isNotValid(@NotNull Point head, @NotNull Point tail) {
         return head.x() == tail.x() || head.y() == tail.y() ? head.manhattanDistance(tail) >= 2 : head.manhattanDistance(tail) >= 3;
     }
 

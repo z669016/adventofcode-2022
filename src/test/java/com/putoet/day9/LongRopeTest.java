@@ -16,13 +16,13 @@ class LongRopeTest {
 
     @Test
     void move() {
-        final List<Rope> ropes = LongRope.start(10).move(instructions);
+        final var ropes = LongRope.start(10).move(instructions);
         assertEquals(1, ropes.stream().map(Rope::tail).collect(Collectors.toSet()).size());
     }
 
     @Test
     void bigMove() {
-        final String input = """
+        final var input = """
                 R 5
                 U 8
                 L 8
@@ -31,12 +31,10 @@ class LongRopeTest {
                 D 10
                 L 25
                 U 20""";
-        final List<Instruction> instructions = Arrays.stream(input.split("\n"))
+        final var instructions = Arrays.stream(input.split("\n"))
                 .map(Instruction::of)
                 .toList();
-        final List<Rope> ropes = LongRope.start(10).move(instructions);
+        final var ropes = LongRope.start(10).move(instructions);
         assertEquals(36, ropes.stream().map(Rope::tail).collect(Collectors.toSet()).size());
-//        }
     }
-
 }

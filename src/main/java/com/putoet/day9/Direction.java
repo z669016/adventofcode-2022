@@ -1,9 +1,11 @@
 package com.putoet.day9;
 
-public enum Direction {
+import org.jetbrains.annotations.NotNull;
+
+enum Direction {
     UP, DOWN, LEFT, RIGHT;
 
-    static Direction of(String direction) {
+    static Direction of(@NotNull String direction) {
         return switch (direction) {
             case "U" -> UP;
             case "D" -> DOWN;

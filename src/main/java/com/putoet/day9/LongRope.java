@@ -1,11 +1,12 @@
 package com.putoet.day9;
 
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LongRope extends AbstractRope implements Rope {
+class LongRope extends AbstractRope implements Rope {
     private final List<Point> points;
 
     public LongRope(List<Point> points) {
@@ -13,18 +14,17 @@ public class LongRope extends AbstractRope implements Rope {
     }
 
     @Override
-    public Rope move(Direction direction) {
-        final List<Point> newPoints = new ArrayList<>(points);
+    public Rope move(@NotNull Direction direction) {
+        final var newPoints = new ArrayList<>(points);
 
-        final Rope rope = new ShortRope(points.get(0), points.get(1)).move(direction);
+        final var rope = new ShortRope(points.get(0), points.get(1)).move(direction);
         newPoints.set(0, rope.head());
         newPoints.set(1, rope.tail());
 
         int idx = 2;
         while (idx < newPoints.size() && ShortRope.isNotValid(newPoints.get(idx - 1), newPoints.get(idx))) {
-            final Point first = newPoints.get(idx - 1);
-            Point second = newPoints.get(idx); // point to move, when applicable
-
+            final var first = newPoints.get(idx - 1);
+            var second = newPoints.get(idx); // point to move, when applicable
             if (Math.abs(first.x() - second.x()) > 1 && Math.abs(first.y() - second.y()) > 1) {
                 // move along x and y
                 second = Point.of(first.x() > second.x() ? first.x() - 1 : first.x() + 1, first.y() > second.y() ? first.y() - 1 : first.y() + 1);
@@ -52,7 +52,7 @@ public class LongRope extends AbstractRope implements Rope {
     }
 
     public static LongRope start(int size) {
-        final List<Point> points = new ArrayList<>();
+        final var points = new ArrayList<Point>();
         while (size-- > 0)
             points.add(Point.ORIGIN);
 
@@ -61,10 +61,10 @@ public class LongRope extends AbstractRope implements Rope {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         sb.append("LongRope[head=");
         sb.append(points.get(0));
-        for (int i = 1; i < points.size(); i++) {
+        for (var i = 1; i < points.size(); i++) {
             sb.append(", ");
             sb.append(i);
             sb.append("=");

@@ -16,14 +16,14 @@ class ShortRopeTest {
 
     @Test
     void move() {
-        final List<Rope> ropes = ShortRope.start().move(instructions);
+        final var ropes = ShortRope.start().move(instructions);
         assertEquals(new ShortRope(Point.of(2, 2), Point.of(1, 2)), ropes.get(ropes.size() - 1));
         assertEquals(13, ropes.stream().map(Rope::tail).collect(Collectors.toSet()).size());
     }
 
     @Test
     void moves() {
-        final List<Instruction> instructions = List.of(
+        final var instructions = List.of(
                 new Instruction(Direction.RIGHT, 1),
                 new Instruction(Direction.UP, 1),
                 new Instruction(Direction.LEFT, 2),
@@ -32,12 +32,12 @@ class ShortRopeTest {
                 new Instruction(Direction.UP, 1),
                 new Instruction(Direction.LEFT, 1)
         );
-        List<Rope> ropes = ShortRope.start().move(instructions);
+        var ropes = ShortRope.start().move(instructions);
         assertEquals(11, ropes.size());
         assertEquals(ShortRope.start(), ropes.get(0));
         assertEquals(ShortRope.start(), ropes.get(10));
 
-        Rope rope = new ShortRope(Point.of(1, 1), Point.ORIGIN);
+        var rope = new ShortRope(Point.of(1, 1), Point.ORIGIN);
         ropes = rope.move(new Instruction(Direction.UP, 1));
         assertEquals(new ShortRope(Point.of(1, 2), Point.of(1,1)), ropes.get(0));
         ropes = rope.move(new Instruction(Direction.RIGHT, 1));

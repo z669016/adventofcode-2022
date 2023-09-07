@@ -1,19 +1,20 @@
 package com.putoet.day9;
 
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractRope implements Rope {
+abstract class AbstractRope implements Rope {
     @Override
-    public List<Rope> move(List<Instruction> instructions) {
-        final List<Rope> ropes = new ArrayList<>();
+    public List<Rope> move(@NotNull List<Instruction> instructions) {
+        final var ropes = new ArrayList<Rope>();
         ropes.add(this);
 
         Rope rope = this;
         for (var instruction : instructions) {
-            List<Rope> toAdd = rope.move(instruction);
+            final var toAdd = rope.move(instruction);
             ropes.addAll(toAdd);
             rope = ropes.get(ropes.size() - 1);
         }
@@ -22,8 +23,8 @@ public abstract class AbstractRope implements Rope {
     }
 
     @Override
-    public List<Rope> move(Instruction instruction) {
-        final List<Rope> ropes = new ArrayList<>();
+    public List<Rope> move(@NotNull Instruction instruction) {
+        final var ropes = new ArrayList<Rope>();
         Rope rope = this;
         for (var i = 0; i < instruction.distance(); i++) {
             rope = rope.move(instruction.direction());
@@ -34,7 +35,7 @@ public abstract class AbstractRope implements Rope {
     }
 
     @Override
-    public abstract Rope move(Direction direction);
+    public abstract Rope move(@NotNull Direction direction);
 
     @Override
     public abstract Point head();
