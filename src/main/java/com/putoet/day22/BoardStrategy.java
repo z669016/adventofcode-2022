@@ -2,16 +2,13 @@ package com.putoet.day22;
 
 import com.putoet.grid.Point;
 import org.javatuples.Pair;
+import org.jetbrains.annotations.NotNull;
 
-public record BoardStrategy(char[][] grid) implements MoveStrategy {
-    public BoardStrategy {
-        assert grid != null;
-    }
-
+record BoardStrategy(char[][] grid) implements MoveStrategy {
     @Override
-    public Pair<Point, Facing> nextLocation(Point location, Facing facing) {
+    public Pair<Point, Facing> nextLocation(@NotNull Point location, @NotNull Facing facing) {
         // move one step in the facing direction
-        final Point next = location.add(facing.point());
+        final var next = location.add(facing.point());
 
         // wrap x/y if necessary
         if (next.y() >= grid.length)

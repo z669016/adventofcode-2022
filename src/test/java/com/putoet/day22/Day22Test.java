@@ -10,7 +10,7 @@ class Day22Test {
 
     @Test
     void boardInput() {
-        final List<String> boardInput = Day22.boardInput();
+        final var boardInput = Day22.boardInput();
         for (var line : boardInput)
             assertEquals(16, line.length());
     }

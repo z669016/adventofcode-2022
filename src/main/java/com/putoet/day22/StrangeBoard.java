@@ -3,9 +3,9 @@ package com.putoet.day22;
 import com.putoet.grid.GridUtils;
 import com.putoet.grid.Point;
 import org.javatuples.Pair;
+import org.jetbrains.annotations.NotNull;
 
-public class StrangeBoard {
-
+class StrangeBoard {
     protected final char[][] grid;
 
     protected Point location;
@@ -59,7 +59,7 @@ public class StrangeBoard {
         };
     }
 
-    public Pair<Point,Facing> move(MoveStrategy strategy, int distance) {
+    public Pair<Point, Facing> move(@NotNull MoveStrategy strategy, int distance) {
         while (distance-- > 0) {
             var next = move(strategy);
 
@@ -70,10 +70,9 @@ public class StrangeBoard {
         return Pair.with(location, facing);
     }
 
-    public Pair<Point,Facing> move(MoveStrategy strategy) {
+    public Pair<Point, Facing> move(@NotNull MoveStrategy strategy) {
         // find the next valid grid location (i.e. non void)
-        Pair<Point,Facing> next = strategy.nextLocation(location, facing);
-
+        var next = strategy.nextLocation(location, facing);
         while (grid[next.getValue0().y()][next.getValue0().x()] == MoveStrategy.VOID) {
             next = strategy.nextLocation(next.getValue0(), next.getValue1());
         }

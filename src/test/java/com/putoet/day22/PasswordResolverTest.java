@@ -9,8 +9,8 @@ class PasswordResolverTest {
 
     @Test
     void resolve() {
-        final char[][] grid = GridUtils.of(Day22.boardInput());
-        final StrangeBoard board = new StrangeBoard(grid);
+        final var grid = GridUtils.of(Day22.boardInput());
+        final var board = new StrangeBoard(grid);
         assertEquals(6032, PasswordResolver.resolve(board, new BoardStrategy(grid), Day22.pathInput()));
     }
 }

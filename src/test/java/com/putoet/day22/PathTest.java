@@ -8,7 +8,7 @@ class PathTest {
 
     @Test
     void next() {
-        final Path path = new Path("10R5L5R10L4R5L5");
+        final var path = new Path("10R5L5R10L4R5L5");
         assertEquals("10", path.next());
         assertEquals("R", path.next());
         assertEquals("5", path.next());

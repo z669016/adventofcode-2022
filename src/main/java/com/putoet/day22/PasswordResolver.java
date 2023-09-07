@@ -1,12 +1,14 @@
 package com.putoet.day22;
 
-public class PasswordResolver {
-    public static int resolve(StrangeBoard board, MoveStrategy strategy, String instructions) {
-        final Path path = new Path(instructions);
+import org.jetbrains.annotations.NotNull;
+
+class PasswordResolver {
+    public static int resolve(@NotNull StrangeBoard board, @NotNull MoveStrategy strategy, @NotNull String instructions) {
+        final var path = new Path(instructions);
         board.start();
 
         while (path.hasNext()) {
-            final String action = path.next();
+            final var action = path.next();
             switch (action) {
                 case "L" -> board.turnLeft();
                 case "R" -> board.turnRight();

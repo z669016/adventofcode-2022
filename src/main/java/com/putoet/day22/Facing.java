@@ -1,8 +1,9 @@
 package com.putoet.day22;
 
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
-public enum Facing {
+enum Facing {
     WEST(Point.of(1, 0)),
     EAST(Point.of(-1, 0)),
     NORTH(Point.of(0, -1)),
@@ -10,7 +11,7 @@ public enum Facing {
 
     private final Point point;
 
-    Facing(Point point) {
+    Facing(@NotNull Point point) {
         this.point = point;
     }
 
