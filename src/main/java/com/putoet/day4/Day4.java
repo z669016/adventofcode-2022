@@ -1,39 +1,25 @@
 package com.putoet.day4;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 
 import java.util.List;
 
-public class Day4 extends Day {
-    private final List<RangePair> rangePairs;
-
-    public Day4() {
-        rangePairs = ResourceLines.list("/day4.txt", RangePair::of);
-    }
-
+public class Day4 {
     public static void main(String[] args) {
-        final var day = new Day4();
-        day.challenge();
+        final var rangePairs = ResourceLines.list("/day4.txt", RangePair::of);
+
+        Timer.run(() -> System.out.println("Containing pairs on the input are " + containingPairs(rangePairs)));
+        Timer.run(() -> System.out.println("Overlapping pairs on the input are " + overlappingPairs(rangePairs)));
     }
 
-    @Override
-    public void part1() {
-        System.out.println("Containing pairs on the input are " + containingPairs());
-    }
-
-    public long containingPairs() {
+    static long containingPairs(List<RangePair> rangePairs) {
         return rangePairs.stream()
                 .filter(RangePair::containment)
                 .count();
     }
 
-    @Override
-    public void part2() {
-        System.out.println("Overlapping pairs on the input are " + overlappingPairs());
-    }
-
-    public long overlappingPairs() {
+    static long overlappingPairs(List<RangePair> rangePairs) {
         return rangePairs.stream()
                 .filter(RangePair::overlap)
                 .count();

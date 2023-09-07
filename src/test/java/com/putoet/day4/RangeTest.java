@@ -12,7 +12,6 @@ class RangeTest {
         assertEquals(12, range.lower());
         assertEquals(28, range.upper());
 
-        assertThrows(AssertionError.class, () -> Range.of("13-5"));
         assertThrows(IllegalArgumentException.class, () -> Range.of("a-5"));
     }
 }

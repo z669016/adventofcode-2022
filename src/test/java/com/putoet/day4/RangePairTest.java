@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RangePairTest {
-    final static Range first = new Range(3,7);
-    final static Range second = new Range(4,5);
-    final static Range third = new Range(6,12);
-    final RangePair pairContains = new RangePair(first,second);
-    final RangePair pairNotContains = new RangePair(first,third);
+    private static final Range first = new Range(3, 7);
+    private final static Range second = new Range(4, 5);
+    private final static Range third = new Range(6, 12);
+    private final RangePair pairContains = new RangePair(first, second);
+    private final RangePair pairNotContains = new RangePair(first, third);
 
     @Test
     void fullContainment() {
@@ -17,7 +17,8 @@ class RangePairTest {
         assertFalse(pairNotContains.containment());
     }
 
-    @Test void overlap() {
+    @Test
+    void overlap() {
         assertTrue(pairContains.overlap());
         assertTrue(pairNotContains.overlap());
     }

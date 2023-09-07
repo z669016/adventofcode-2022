@@ -1,20 +1,23 @@
 package com.putoet.day4;
 
+import com.putoet.resources.ResourceLines;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day4Test {
+    private static final List<RangePair> rangePairs = ResourceLines.list("/day4.txt", RangePair::of);
+
 
     @Test
     void containingPairs() {
-        final var day4 = new Day4();
-        assertEquals(2, day4.containingPairs());
+        assertEquals(2, Day4.containingPairs(rangePairs));
     }
 
     @Test
     void overlappingPairs() {
-        final var day4 = new Day4();
-        assertEquals(4, day4.overlappingPairs());
+        assertEquals(4, Day4.overlappingPairs(rangePairs));
     }
 }
