@@ -18,8 +18,8 @@ class DeviceTest {
 
     @Test
     void process() {
-        final Device device = new Device();
-        final List<SignalStrength> signalStrengths = device.process(program, cycle -> cycle >= 220);
+        final var device = new Device();
+        final var signalStrengths = device.process(program, cycle -> cycle >= 220);
         assertEquals(13140L, signalStrengths.stream().mapToLong(SignalStrength::strength).sum());
     }
 }

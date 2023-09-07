@@ -1,12 +1,13 @@
 package com.putoet.day10;
 
 import com.putoet.grid.GridUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class Device {
+class Device {
     private int x;
     private int cycle;
     private List<SignalStrength> signalStrengths;
@@ -34,9 +35,9 @@ public class Device {
     }
 
     private void draw() {
-        final int spriteCentre = x % 40;
-        final int y = line(cycle);
-        final int x = column(cycle);
+        final var spriteCentre = x % 40;
+        final var y = line(cycle);
+        final var x = column(cycle);
 
         crt[y][x] = (x >= spriteCentre - 1 && x <= spriteCentre + 1) ? '#' : '.';
     }
@@ -56,10 +57,10 @@ public class Device {
         crt = GridUtils.of(0, 40, 0, 6, ' ');
     }
 
-    public List<SignalStrength> process(List<Instruction> program, Predicate<Integer> stop) {
+    public List<SignalStrength> process(@NotNull List<Instruction> program, @NotNull Predicate<Integer> stop) {
         init();
 
-        int ip = 0;
+        var ip = 0;
         while (!stop.test(cycle)) {
             ip += program.get(ip).exec(this);
             if (ip >= program.size())
@@ -74,7 +75,7 @@ public class Device {
     }
 
     public String crt() {
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         for (var row : crt) {
             for (var c : row)
                 sb.append(c);
