@@ -1,20 +1,18 @@
 package com.putoet.day11;
 
-import com.putoet.math.Factors;
 import org.apache.commons.math3.util.ArithmeticUtils;
 import org.javatuples.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Game {
-    public static void rounds(List<Monkey> monkeys, int count, Function<Long,Long> bored) {
-        assert monkeys != null;
+class Game {
+    public static void rounds(@NotNull List<Monkey> monkeys, int count, @NotNull Function<Long,Long> bored) {
         assert count > 0;
 
         while (count-- > 0) {
@@ -28,28 +26,27 @@ public class Game {
         }
     }
 
-    public static long monkeyBusiness(List<Monkey> monkeys) {
-        assert monkeys != null;
+    public static long monkeyBusiness(@NotNull List<Monkey> monkeys) {
         assert monkeys.size() > 1;
 
-        List<Monkey> ordered = monkeys.stream()
+        final var ordered = monkeys.stream()
                 .sorted(Comparator.comparing(Monkey::inspected).reversed())
                 .toList();
 
         return ordered.get(0).inspected() * ordered.get(1).inspected();
     }
 
-    public static long lcm(List<Monkey> monkeys) {
-        long lcm = 1L;
+    public static long lcm(@NotNull List<Monkey> monkeys) {
+        var lcm = 1L;
         for (var monkey : monkeys)
             lcm = ArithmeticUtils.lcm(lcm, monkey.divisor());
 
         return lcm;
     }
 
-    public static List<Monkey> monkeys(List<String> input) {
-        final List<Monkey> monkeys = new ArrayList<>();
-        final List<Pair<Integer, Integer>> next = new ArrayList<>();
+    public static List<Monkey> monkeys(@NotNull List<String> input) {
+        final var monkeys = new ArrayList<Monkey>();
+        final var next = new ArrayList<Pair<Integer, Integer>>();
 
 //        Monkey 0:
 //          Starting items: 79, 98
@@ -59,7 +56,7 @@ public class Game {
 //          If false: throw to monkey 3
 
         for (var i = 0; i < input.size(); i += 7) {
-            final Monkey monkey = new Monkey(
+            final var monkey = new Monkey(
                     parseId(input.get(i)),
                     parseItems(input.get(i + 1)),
                     parseOperation(input.get(i + 2)),
@@ -83,35 +80,27 @@ public class Game {
     }
 
     private static final Pattern ID_PATTERN = Pattern.compile("Monkey (\\d+):");
-
-    public static int parseId(String line) {
-        assert line != null;
-
-        final Matcher matcher = ID_PATTERN.matcher(line);
+    public static int parseId(@NotNull String line) {
+        final var matcher = ID_PATTERN.matcher(line);
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid id line: " + line);
 
         return Integer.parseInt(matcher.group(1));
     }
 
-    public static List<Long> parseItems(String line) {
-        assert line != null;
-
+    public static List<Long> parseItems(@NotNull String line) {
         line = line.trim();
         if (!line.startsWith("Starting items: "))
             throw new IllegalArgumentException("Invalid items line: " + line);
 
-        final String[] split = line.substring(16).split(", ");
+        final var split = line.substring(16).split(", ");
         return Arrays.stream(split).map(Long::parseLong).toList();
     }
 
     private static final Pattern OPERATION_PATTERN = Pattern.compile("Operation: new = old ([+|*]) (\\d+|old)");
-
-    public static Function<Long, Long> parseOperation(String line) {
-        assert line != null;
-
+    public static Function<Long, Long> parseOperation(@NotNull String line) {
         line = line.trim();
-        final Matcher matcher = OPERATION_PATTERN.matcher(line);
+        final var matcher = OPERATION_PATTERN.matcher(line);
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid operation line: " + line);
 
@@ -121,12 +110,9 @@ public class Game {
     }
 
     private static final Pattern TEST_PATTERN = Pattern.compile("Test: divisible by (\\d+)");
-
-    public static int parseTest(String line) {
-        assert line != null;
-
+    public static int parseTest(@NotNull String line) {
         line = line.trim();
-        final Matcher matcher = TEST_PATTERN.matcher(line);
+        final var matcher = TEST_PATTERN.matcher(line);
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid test line: " + line);
 
@@ -134,12 +120,9 @@ public class Game {
     }
 
     private static final Pattern IFTRUE_PATTERN = Pattern.compile("If true: throw to monkey (\\d+)");
-
-    public static int parseIfTrue(String line) {
-        assert line != null;
-
+    public static int parseIfTrue(@NotNull String line) {
         line = line.trim();
-        final Matcher matcher = IFTRUE_PATTERN.matcher(line);
+        final var matcher = IFTRUE_PATTERN.matcher(line);
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid if-true line: " + line);
 
@@ -147,12 +130,9 @@ public class Game {
     }
 
     private static final Pattern IFFALSE_PATTERN = Pattern.compile("If false: throw to monkey (\\d+)");
-
-    public static int parseIfFalse(String line) {
-        assert line != null;
-
+    public static int parseIfFalse(@NotNull String line) {
         line = line.trim();
-        final Matcher matcher = IFFALSE_PATTERN.matcher(line);
+        final var matcher = IFFALSE_PATTERN.matcher(line);
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid if-false line: " + line);
 

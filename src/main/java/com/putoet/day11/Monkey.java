@@ -1,11 +1,13 @@
 package com.putoet.day11;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Monkey {
+class Monkey {
     private final int id;
     private List<Long> items;
     private final Function<Long,Long> operation;
@@ -16,12 +18,10 @@ public class Monkey {
     private Monkey ifTrue, ifFalse;
 
     public Monkey(int id,
-                  List<Long> items,
-                  Function<Long,Long> operation,
+                  @NotNull List<Long> items,
+                  @NotNull Function<Long,Long> operation,
                   int divisor
     ) {
-        assert items != null;
-        assert operation != null;
         assert divisor != 0;
 
         this.id = id;
@@ -32,9 +32,7 @@ public class Monkey {
         ifTrue = ifFalse = null;
     }
 
-    public Monkey next(boolean whatIf, Monkey to) {
-        assert to != null;
-
+    public Monkey next(boolean whatIf, @NotNull Monkey to) {
         if (whatIf)
             ifTrue = to;
         else
@@ -43,11 +41,11 @@ public class Monkey {
         return this;
     }
 
-    public void accept (Long value) {
+    public void accept (@NotNull Long value) {
         items.add(value);
     }
 
-    public void round(Function<Long,Long> bored) {
+    public void round(@NotNull Function<Long,Long> bored) {
         assert ifTrue != null;
         assert ifFalse != null;
 
@@ -78,7 +76,7 @@ public class Monkey {
         return divisor;
     }
 
-    public Monkey items(List<Long> items) {
+    public Monkey items(@NotNull List<Long> items) {
         this.items = new ArrayList<>(items);
 
         return this;

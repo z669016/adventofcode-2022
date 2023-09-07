@@ -1,16 +1,15 @@
 package com.putoet.day11;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 
-public class Day11 extends Day {
+public class Day11 {
     public static void main(String[] args) {
-        final var day = new Day11();
-        day.challenge();
+        Timer.run(Day11::part1);
+        Timer.run(Day11::part2);
     }
 
-    @Override
-    public void part1() {
+    static void part1() {
         final var monkeys = Game.monkeys(ResourceLines.list("/day11.txt"));
         Game.rounds(monkeys, 20,  value -> value / 3L);
 
@@ -18,8 +17,7 @@ public class Day11 extends Day {
             + Game.monkeyBusiness(monkeys));
     }
 
-    @Override
-    public void part2() {
+    static void part2() {
         final var monkeys = Game.monkeys(ResourceLines.list("/day11.txt"));
         final var lcm = Game.lcm(monkeys);
         Game.rounds(monkeys, 10_000, value -> value % lcm);
