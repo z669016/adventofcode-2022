@@ -1,8 +1,10 @@
 package com.putoet.day1;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
-public record Elf(int id, List<Integer> foodCalories) {
+record Elf(int id, @NotNull List<Integer> foodCalories) {
     public int calories() {
         return foodCalories.stream().mapToInt(i -> i).sum();
     }

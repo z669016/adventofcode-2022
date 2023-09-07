@@ -8,7 +8,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ElvesTest {
-    private static final List<Elf> elves = Elves.from(ResourceLines.list("/day1.txt"));
+    private static final List<Elf> elves = Elves.of(ResourceLines.list("/day1.txt"));
 
     @Test
     void from() {

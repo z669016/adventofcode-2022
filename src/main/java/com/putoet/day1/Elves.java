@@ -1,10 +1,11 @@
 package com.putoet.day1;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
-public class Elves {
-    public static List<Elf> from(List<String> input) {
-        assert input != null;
+class Elves {
+    public static List<Elf> of(@NotNull List<String> input) {
         final var elves = new ArrayList<Elf>();
         var id = 1;
         var foodCalories = new ArrayList<Integer>();
@@ -16,7 +17,7 @@ public class Elves {
                 foodCalories.add(Integer.parseInt(line.trim()));
             }
         }
-        elves.add(new Elf(id++, foodCalories));
+        elves.add(new Elf(id, foodCalories));
         return Collections.unmodifiableList(elves);
     }
 
