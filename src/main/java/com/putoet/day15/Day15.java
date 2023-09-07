@@ -1,37 +1,33 @@
 package com.putoet.day15;
 
-import com.putoet.day.Day;
 import com.putoet.grid.Point;
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Day15 extends Day {
-    private final Set<Sensor> sensors;
-    private final Set<Beacon> beacons;
-
-    public Day15() {
-        final List<String> input = ResourceLines.list("/day15.txt");
-        beacons = Beacon.from(input);
-        sensors = Sensor.from(input, beacons);
-    }
-
+public class Day15 {
     public static void main(String[] args) {
-        final var day = new Day15();
-        day.challenge();
+        final var input = ResourceLines.list("/day15.txt");
+        final var beacons = Beacon.of(input);
+        final var sensors = Sensor.of(input, beacons);
+
+        Timer.run(() -> {
+            final var count = 2_000_000;
+            System.out.println("The number of positions that cannot contain a beacon at row " + count + " is: " +
+                               usedPositionsInRangeForRow(beacons, sensors, count));
+        });
+
+        Timer.run(() -> {
+            final var min = 0L;
+            final var max = 4_000_000L;
+            System.out.println("The distress beacon tuning frequency is: " + tuningFrequencies(beacons, sensors, min, max));
+        });
     }
 
-    @Override
-    public void part1() {
-        final int row = 2_000_000;
-        final long count = usedPositionsInRangeForRow(row);
-
-        System.out.println("The number of positions that cannot contain a beacon at row " + row + " is: " + count);
-    }
-
-    public long usedPositionsInRangeForRow(int row) {
-        final var combined = usedRanges(row);
+    static long usedPositionsInRangeForRow(Set<Beacon> beacons, Set<Sensor> sensors, int row) {
+        final var combined = usedRanges(sensors, row);
         long count = combined.stream()
                 .mapToInt(Range::count)
                 .sum();
@@ -42,7 +38,7 @@ public class Day15 extends Day {
         return count;
     }
 
-    private Set<Range> usedRanges(int row) {
+    static Set<Range> usedRanges(Set<Sensor> sensors, int row) {
         final var ranges = sensors.stream()
                 .map(sensor -> sensor.rangeForRow(row))
                 .filter(Optional::isPresent)
@@ -55,14 +51,8 @@ public class Day15 extends Day {
         return combined;
     }
 
-    @Override
-    public void part2() {
-        final long min = 0;
-        final long max = 4_000_000;
-        System.out.println("The distress beacon tuning frequency is: " + tuningFrequencies(min, max));
-    }
 
-    public long tuningFrequencies(long min, long max) {
+    static long tuningFrequencies(Set<Beacon> beacons, Set<Sensor> sensors, long min, long max) {
         final var miny = beacons.stream()
                 .filter(beacon -> beacon.location().x() >= min && beacon.location().x() <= max)
                 .filter(beacon -> beacon.location().y() >= min && beacon.location().y() <= max)
@@ -76,8 +66,8 @@ public class Day15 extends Day {
                 .max()
                 .orElseThrow();
 
-        for (int y = miny; y <= maxy; y++) {
-            final var used = usedRanges(y).stream()
+        for (var y = miny; y <= maxy; y++) {
+            final var used = usedRanges(sensors, y).stream()
                     .sorted(Comparator.comparing(Range::lower))
                     .toList();
             if (used.size() > 1) {

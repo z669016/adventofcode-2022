@@ -12,6 +12,6 @@ class BeaconTest {
 
     @Test
     void from() {
-        assertEquals(6, Beacon.from(input).size());
+        assertEquals(6, Beacon.of(input).size());
     }
 }

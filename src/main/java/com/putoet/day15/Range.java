@@ -1,13 +1,15 @@
 package com.putoet.day15;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public record Range(int lower, int upper) {
-    static Set<Range> combine(Set<Range> ranges, Range toCombine) {
-        final Set<Range> newSet = new HashSet<>();
+record Range(int lower, int upper) {
+    static Set<Range> combine(@NotNull Set<Range> ranges, @NotNull Range toCombine) {
+        final var newSet = new HashSet<Range>();
 
-        for (Range range : ranges) {
+        for (var range : ranges) {
             if (!range.overlaps(toCombine)) {
                 newSet.add(range);
             } else {
@@ -23,16 +25,13 @@ public record Range(int lower, int upper) {
         return upper - lower + 1;
     }
 
-    public Range combine(Range toCombine) {
-        assert toCombine != null;
+    public Range combine(@NotNull Range toCombine) {
         assert overlaps(toCombine);
 
         return new Range(Math.min(lower, toCombine.lower), Math.max(upper, toCombine.upper));
     }
 
-    public boolean overlaps(Range other) {
-        assert other != null;
-
+    public boolean overlaps(@NotNull Range other) {
         return (lower <= other.lower && other.lower <= upper) ||
                (lower <= other.upper && other.upper <= upper) ||
                (other.lower <= lower && lower <= other.upper) ||

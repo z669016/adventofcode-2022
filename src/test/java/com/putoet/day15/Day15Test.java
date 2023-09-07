@@ -1,20 +1,26 @@
 package com.putoet.day15;
 
+import com.putoet.resources.ResourceLines;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day15Test {
+    private static final List<String> input = ResourceLines.list("/day15.txt");
+    private static final Set<Beacon> beacons = Beacon.of(input);
+    private static final Set<Sensor> sensors = Sensor.of(input, beacons);
+
 
     @Test
     void usedPositionsInRangeForRow() {
-        final Day15 day15 = new Day15();
-        assertEquals(26, day15.usedPositionsInRangeForRow(10));
+        assertEquals(26, Day15.usedPositionsInRangeForRow(beacons, sensors, 10));
     }
 
     @Test
     void tuningFrequencies() {
-        final Day15 day15 = new Day15();
-        assertEquals(56000011, day15.tuningFrequencies(0, 20));
+        assertEquals(56000011, Day15.tuningFrequencies(beacons, sensors, 0, 20));
     }
 }
