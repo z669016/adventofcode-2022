@@ -9,7 +9,7 @@ class Day21Test {
 
     @Test
     void findHumn() {
-        final var values = Values.from(ResourceLines.list("/day21.txt"));
+        final var values = Values.of(ResourceLines.list("/day21.txt"));
         values.setOperation(Values.HUMN, new Value(Values.HUMN));
         final var root = (Operation) values.getOperation(Values.ROOT);
         values.setOperation(Values.ROOT, new Operation(values, root.left(), Operator.EQUALS, root.right()));

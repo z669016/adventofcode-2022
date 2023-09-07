@@ -2,7 +2,7 @@ package com.putoet.day21;
 
 import java.util.function.Supplier;
 
-public class Value implements Supplier<String> {
+class Value implements Supplier<String> {
 
     private final String value;
 
@@ -13,6 +13,7 @@ public class Value implements Supplier<String> {
     public Value(String value) {
         this.value = value;
     }
+
     @Override
     public String get() {
         return value;

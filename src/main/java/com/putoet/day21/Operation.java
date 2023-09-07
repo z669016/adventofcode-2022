@@ -1,11 +1,11 @@
 package com.putoet.day21;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Optional;
-import java.util.OptionalLong;
 import java.util.function.Supplier;
 
-public class Operation implements Supplier<String> {
-
+class Operation implements Supplier<String> {
     private final Values values;
     private final String left;
     private final Operator operator;
@@ -14,8 +14,7 @@ public class Operation implements Supplier<String> {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private Optional<String> cachedValue = Optional.empty();
 
-    public Operation(Values values, String left, Operator operator,
-                     String right) {
+    public Operation(@NotNull Values values, @NotNull String left, @NotNull Operator operator, @NotNull String right) {
         this.values = values;
         this.left = left;
         this.operator = operator;
@@ -39,11 +38,11 @@ public class Operation implements Supplier<String> {
         if (cachedValue.isPresent())
             return cachedValue.get();
 
-        final String op1s = values.get(left);
-        final OptionalLong op1 = Values.tryParse(op1s);
+        final var op1s = values.get(left);
+        final var op1 = Values.tryParse(op1s);
 
-        final String op2s = values.get(right);
-        final OptionalLong op2 = Values.tryParse(op2s);
+        final var op2s = values.get(right);
+        final var op2 = Values.tryParse(op2s);
 
         if (op1.isEmpty() || op2.isEmpty())
             return "(%s %s %s)".formatted(op1.isEmpty() ? op1s : op1.getAsLong(), operator, op2.isEmpty() ? op2s : op2.getAsLong());

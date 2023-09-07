@@ -1,6 +1,6 @@
 package com.putoet.day21;
 
-public enum Operator {
+enum Operator {
     PLUS, MINUS, PRODUCT, DIVIDE, EQUALS;
 
     @Override
