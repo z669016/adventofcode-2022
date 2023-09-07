@@ -2,8 +2,6 @@ package com.putoet.day22;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day22Test {

@@ -102,7 +102,7 @@ record Blueprint(int id, @NotNull List<RobotCost> costs, int maxOre, int maxClay
         final var history = new HashSet<BlueprintState>();
         final var maxGeodes = new HashMap<Integer, BlueprintState>();
         final var geodeBots = new HashMap<Integer, Integer>();
-        final var queue = new PriorityQueue<BlueprintState>(
+        final var queue = new PriorityQueue<>(
                 Comparator.comparing((BlueprintState state) -> state.prod().geode())
                         .thenComparing((BlueprintState state) -> state.prod().obsidian())
                         .reversed()
