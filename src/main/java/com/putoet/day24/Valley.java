@@ -3,10 +3,7 @@ package com.putoet.day24;
 import com.putoet.grid.Point;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 record Valley(@NotNull Point in, @NotNull Point out, @NotNull List<Blizzard> blizzards) {
@@ -117,6 +114,6 @@ record Valley(@NotNull Point in, @NotNull Point out, @NotNull List<Blizzard> bli
             }
         }
 
-        return new Valley(in, out, blizzards);
+        return new Valley(Objects.requireNonNull(in), Objects.requireNonNull(out), blizzards);
     }
 }

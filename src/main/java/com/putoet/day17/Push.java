@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 class Push implements Supplier<Character> {
-    public static Character LEFT = '<';
-    public static Character RIGHT = '>';
+    public static final Character LEFT = '<';
+    public static final Character RIGHT = '>';
 
     private final char[] instructions;
     private int offset = 0;

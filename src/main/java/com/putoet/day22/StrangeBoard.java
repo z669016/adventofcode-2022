@@ -71,7 +71,7 @@ class StrangeBoard {
     }
 
     public Pair<Point, Facing> move(@NotNull MoveStrategy strategy) {
-        // find the next valid grid location (i.e. non void)
+        // find the next valid grid location (i.e. non-void)
         var next = strategy.nextLocation(location, facing);
         while (grid[next.getValue0().y()][next.getValue0().x()] == MoveStrategy.VOID) {
             next = strategy.nextLocation(next.getValue0(), next.getValue1());

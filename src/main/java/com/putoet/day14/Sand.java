@@ -8,7 +8,7 @@ class Sand {
     public static final char OPEN = '.';
     public static final char SAND = 'o';
 
-    public static Point START = Point.of(500, 0);
+    public static final Point START = Point.of(500, 0);
 
     public static long pour(@NotNull Grid grid) {
         var count = 0L;
