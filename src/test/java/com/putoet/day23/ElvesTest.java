@@ -10,9 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ElvesTest {
 
     @Test
-    void from() {
-        final Elves elves = Elves.from(ResourceLines.list("/day23.txt"));
-
+    void of() {
+        final var elves = Elves.of(ResourceLines.list("/day23.txt"));
         assertEquals("""
                 ....#..
                 ..###.#
@@ -33,8 +32,8 @@ class ElvesTest {
                 ..##.
                 .....""".split("\n")).toList();
 
-        final ValidDirections validDirections = new ValidDirections();
-        final Elves elves = Elves.from(input);
+        final var validDirections = new ValidDirections();
+        final var elves = Elves.of(input);
 
         elves.move(validDirections.get());
         assertEquals("""
@@ -64,8 +63,8 @@ class ElvesTest {
 
     @Test
     void move() {
-        final ValidDirections validDirections = new ValidDirections();
-        final Elves elves = Elves.from(ResourceLines.list("/day23.txt"));
+        final var validDirections = new ValidDirections();
+        final var elves = Elves.of(ResourceLines.list("/day23.txt"));
 
         elves.move(validDirections.get());
         assertEquals("""
@@ -91,7 +90,7 @@ class ElvesTest {
                 .#.#.#.##..
                 ...#..#....""", elves.toString());
 
-        for (int i = 3; i <= 10; i++)
+        for (var i = 3; i <= 10; i++)
             elves.move(validDirections.get());
 
         assertEquals("""
@@ -112,8 +111,8 @@ class ElvesTest {
 
     @Test
     void noMoves() {
-        final ValidDirections validDirections = new ValidDirections();
-        final Elves elves = Elves.from(ResourceLines.list("/day23.txt"));
+        final var validDirections = new ValidDirections();
+        final var elves = Elves.of(ResourceLines.list("/day23.txt"));
 
         int i = 1;
         while (elves.move(validDirections.get()) != 0)

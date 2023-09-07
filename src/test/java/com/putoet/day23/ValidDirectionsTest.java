@@ -10,7 +10,7 @@ class ValidDirectionsTest {
 
     @Test
     void get() {
-        final ValidDirections validDirections = new ValidDirections();
+        final var validDirections = new ValidDirections();
         assertEquals(List.of(ValidDirection.NORTH, ValidDirection.SOUTH, ValidDirection.WEST, ValidDirection.EAST), validDirections.get());
         assertEquals(List.of(ValidDirection.SOUTH, ValidDirection.WEST, ValidDirection.EAST, ValidDirection.NORTH), validDirections.get());
         assertEquals(List.of(ValidDirection.WEST, ValidDirection.EAST, ValidDirection.NORTH, ValidDirection.SOUTH), validDirections.get());

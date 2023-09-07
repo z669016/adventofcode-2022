@@ -1,34 +1,32 @@
 package com.putoet.day23;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 
 import java.util.List;
 
-public class Day23 extends Day {
-    private final List<String> input = ResourceLines.list("/day23.txt");
-
+public class Day23  {
     public static void main(String[] args) {
-        final var day = new Day23();
-        day.challenge();
+         final List<String> input = ResourceLines.list("/day23.txt");
+
+        Timer.run(() -> part1(input));
+        Timer.run(() -> part2(input));
     }
 
-    @Override
-    public void part1() {
-        final ValidDirections validDirections = new ValidDirections();
-        final Elves elves = Elves.from(input);
-        for (int i = 0; i < 10; i++)
+    static void part1(List<String> input) {
+        final var validDirections = new ValidDirections();
+        final var elves = Elves.of(input);
+        for (var i = 0; i < 10; i++)
             elves.move(validDirections.get());
 
         System.out.println("Empty ground tiles is " + elves.emptyGrounds());
     }
 
-    @Override
-    public void part2() {
-        final ValidDirections validDirections = new ValidDirections();
-        final Elves elves = Elves.from(ResourceLines.list("/day23.txt"));
+    static void part2(List<String> input) {
+        final var validDirections = new ValidDirections();
+        final var elves = Elves.of(input);
 
-        int i = 1;
+        var i = 1;
         while (elves.move(validDirections.get()) != 0)
             i++;
 

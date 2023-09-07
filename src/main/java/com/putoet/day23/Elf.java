@@ -1,6 +1,7 @@
 package com.putoet.day23;
 
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -8,13 +9,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Elf {
+class Elf {
     private Point location;
     private Point proposal;
 
-    public Elf(Point location) {
-        assert location != null;
-
+    public Elf(@NotNull Point location) {
         this.location = location;
         this.proposal = null;
     }
@@ -28,7 +27,7 @@ public class Elf {
         this.proposal = null;
     }
 
-    public Optional<Point> propose(List<ValidDirection> validDirections, List<Elf> elves) {
+    public Optional<Point> propose(@NotNull List<ValidDirection> validDirections, @NotNull List<Elf> elves) {
         this.proposal = null;
 
         final Set<Point> neighbours = elves.stream()
@@ -38,7 +37,7 @@ public class Elf {
                 .collect(Collectors.toSet());
 
         // If no other Elves are in one of those eight positions, the Elf does not do anything during this round.
-        if (neighbours.size() == 0)
+        if (neighbours.isEmpty())
             return Optional.empty();
 
         for (var proposal : validDirections) {

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ValidDirections implements Supplier<List<ValidDirection>> {
+class ValidDirections implements Supplier<List<ValidDirection>> {
     private final List<ValidDirection> order;
 
     public ValidDirections() {
