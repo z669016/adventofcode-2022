@@ -1,12 +1,11 @@
 package com.putoet.day10;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
 import com.putoet.utils.Timer;
 
 import java.util.List;
 
-public class Day10 extends Day {
+public class Day10 {
     public static void main(String[] args) {
         final var program = Compiler.compile(ResourceLines.list("/day10.txt"));
 
