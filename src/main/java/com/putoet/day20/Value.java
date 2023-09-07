@@ -1,9 +1,11 @@
 package com.putoet.day20;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class Value implements Supplier<Long> {
+class Value implements Supplier<Long> {
     private final int id;
     private final long value;
     private Value next;
@@ -23,7 +25,7 @@ public class Value implements Supplier<Long> {
         return prev;
     }
 
-    public void prev(Value value) {
+    public void prev(@NotNull Value value) {
         this.prev = value;
     }
 
@@ -31,7 +33,7 @@ public class Value implements Supplier<Long> {
         return next;
     }
 
-    public void next(Value value) {
+    public void next(@NotNull Value value) {
         this.next = value;
     }
 
