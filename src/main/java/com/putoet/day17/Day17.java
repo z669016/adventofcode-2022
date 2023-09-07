@@ -1,10 +1,9 @@
 package com.putoet.day17;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
 import com.putoet.utils.Timer;
 
-public class Day17 extends Day {
+public class Day17 {
     public static void main(String[] args) {
         final var input = ResourceLines.line("/day17.txt");
 
