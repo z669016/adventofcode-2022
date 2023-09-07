@@ -1,17 +1,13 @@
 package com.putoet.day14;
 
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public record Line(List<Point> edges) {
-    public Line {
-        assert edges != null;
-        assert !edges.isEmpty();
-    }
-
+record Line(@NotNull List<Point> edges) {
     public Iterator<Line> parts() {
         return new Iterator<>() {
             int offset = 0;
@@ -61,7 +57,7 @@ public record Line(List<Point> edges) {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         sb.append(edges.get(0).x()).append(",").append(edges.get(0).y());
 
         for (var i = 1; i < edges.size(); i++) {
@@ -71,11 +67,9 @@ public record Line(List<Point> edges) {
         return sb.toString();
     }
 
-    public static Line from(String input) {
-        assert input != null;
-
-        final List<Point> edges = new ArrayList<>();
-        final String[] split = input.split(" -> ");
+    public static Line from(@NotNull String input) {
+        final var edges = new ArrayList<Point>();
+        final var split = input.split(" -> ");
         for (var p : split) {
             edges.add(asPoint(p));
         }
@@ -83,10 +77,8 @@ public record Line(List<Point> edges) {
         return new Line(edges);
     }
 
-    private static Point asPoint(String point) {
-        assert point != null;
-        point = point.trim();
-        final String[] split = point.split(",");
+    private static Point asPoint(@NotNull String point) {
+        final var split = point.trim().split(",");
 
         assert split.length == 2;
 

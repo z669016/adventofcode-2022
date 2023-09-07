@@ -2,17 +2,18 @@ package com.putoet.day14;
 
 import com.putoet.grid.Grid;
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
-public class Sand {
+class Sand {
     public static final char OPEN = '.';
     public static final char SAND = 'o';
 
     public static Point START = Point.of(500, 0);
 
-    public static long pour(Grid grid) {
-        long count = 0;
+    public static long pour(@NotNull Grid grid) {
+        var count = 0L;
 
-        Point next = next(grid, START);
+        var next = next(grid, START);
         while (next != null && next.y() < grid.maxY() - 1) {
             count++;
             grid.set(next.x(), next.y(), SAND);
@@ -23,10 +24,10 @@ public class Sand {
         return count;
     }
 
-    public static long fill(Grid grid) {
-        long count = 0;
+    public static long fill(@NotNull Grid grid) {
+        var count = 0L;
 
-        Point next = next(grid, START);
+        var next = next(grid, START);
         while (next != null && next.y() < grid.maxY()) {
             count++;
             grid.set(next.x(), next.y(), SAND);
@@ -39,7 +40,7 @@ public class Sand {
 
     private static Point next(Grid grid, Point sand) {
         Point prev = null;
-        Point next = sand;
+        var next = sand;
 
         while (grid.contains(next.x(), next.y()) && grid.get(next.x(), next.y()) == OPEN) {
             prev = next;
