@@ -1,11 +1,8 @@
 package com.putoet.day2;
 
-public record Game(RPS player1, RPS player2) {
-    public Game {
-        assert player1 != null;
-        assert player2 != null;
-    }
+import org.jetbrains.annotations.NotNull;
 
+record Game(@NotNull RPS player1, @NotNull RPS player2) {
     public int score() {
         if (player1 == player2)
             return 3 + player2.score();
@@ -16,18 +13,14 @@ public record Game(RPS player1, RPS player2) {
         return player2().score();
     }
 
-    public static Game of(String line) {
-        assert line != null;
-
+    public static Game of(@NotNull String line) {
         final var split = line.trim().split(" ");
         assert split.length == 2;
 
         return new Game(RPS.of(split[0]), RPS.of(split[1]));
     }
 
-    public static Game of2(String line) {
-        assert line != null;
-
+    public static Game of2(@NotNull String line) {
         final var split = line.trim().split(" ");
         assert split.length == 2;
 

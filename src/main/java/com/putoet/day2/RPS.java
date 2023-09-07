@@ -1,6 +1,6 @@
 package com.putoet.day2;
 
-public enum RPS {
+enum RPS {
     ROCK, PAPER, SCISSORS;
 
     public int score() {
