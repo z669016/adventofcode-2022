@@ -1,30 +1,46 @@
 package com.putoet.day5;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
+import org.javatuples.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Day5 extends Day {
-    private final List<Instruction> instructions = new ArrayList<>();
-    private List<String> stacks;
+public class Day5 {
+    static final Crane crateMover9000 = Crates::take;
+    static final Crane crateMover9001 = (stack, count) -> stack.take(count).reverse();
 
-    protected static final Crane crateMover9000 = Crates::take;
-    protected static final Crane crateMover9001 = (stack, count) -> stack.take(count).reverse();
+    public static void main(String[] args) {
+        final var input = init(ResourceLines.list("/day5.txt"));
+        final var instructions = input.getValue0();
+        final var stacks = input.getValue1();
 
+        Timer.run(() -> {
+            final Cargo cargo = new Cargo(stacks.stream().map(Crates::new).toList());
+            System.out.println("Top crates after processing are: " + move(instructions, cargo, crateMover9000));
+        });
 
-    public Day5() {
-        boolean layout = true;
-        final var input = ResourceLines.list("/day5.txt");
-        final List<String> stack = new ArrayList<>();
+        Timer.run(() -> {
+            final Cargo cargo = new Cargo(stacks.stream().map(Crates::new).toList());
+            System.out.println("Top crates after processing with the 9001 crane are: " + move(instructions, cargo, crateMover9001));
+        });
+    }
+
+    static Pair<List<Instruction>, List<String>> init(List<String> input) {
+        final var instructions = new ArrayList<Instruction>();
+        List<String> stacks = List.of();
+
+        var layout = true;
+        final var stack = new ArrayList<String>();
         for (var line : input) {
             if (layout) {
-                if (line.length() > 0)
+                if (!line.isEmpty())
                     stack.add(line);
 
-                if (line.length() == 0) {
+                if (line.isEmpty()) {
                     stacks = createStacks(stack);
                     layout = false;
                 }
@@ -32,16 +48,18 @@ public class Day5 extends Day {
                 instructions.add(Instruction.of(line));
             }
         }
+
+        return Pair.with(instructions, stacks);
     }
 
-    private List<String> createStacks(List<String> stack) {
-        final int size = stack.size() - 1;
-        final int columnCount = columnCount(stack, size);
+    static List<String> createStacks(@NotNull List<String> stack) {
+        final var size = stack.size() - 1;
+        final var columnCount = columnCount(stack, size);
         return columns(stack, size, columnCount);
     }
 
-    private static List<String> columns(List<String> stack, int size, int columnCount) {
-        final StringBuilder[] columns = new StringBuilder[columnCount];
+    static List<String> columns(@NotNull List<String> stack, int size, int columnCount) {
+        final var columns = new StringBuilder[columnCount];
         for (var i = 0; i < columnCount; i++)
             columns[i] = new StringBuilder();
 
@@ -67,29 +85,9 @@ public class Day5 extends Day {
         return Integer.parseInt(columnsLine.substring(columnsLine.lastIndexOf(' ') + 1));
     }
 
-    public static void main(String[] args) {
-        final var day = new Day5();
-        day.challenge();
-    }
-
-    public Cargo initCargo() {
-        return new Cargo(stacks.stream().map(Crates::new).toList());
-    }
-
-    @Override
-    public void part1() {
-        final Cargo cargo = initCargo();
-        System.out.println("Top crates after processing are: " + move(cargo, crateMover9000));
-    }
-
-    public String move(Cargo cargo, Crane crane) {
+    static String move(List<Instruction> instructions, Cargo cargo, Crane crane) {
         instructions.forEach(instruction -> cargo.add(instruction.to(), cargo.take(instruction.from(), instruction.count(), crane)));
         return cargo.top();
     }
 
-    @Override
-    public void part2() {
-        final Cargo cargo = initCargo();
-        System.out.println("Top crates after processing with the 9001 crane are: " + move(cargo, crateMover9001));
-    }
 }

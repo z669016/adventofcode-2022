@@ -1,33 +1,35 @@
 package com.putoet.day5;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class Crates {
+class Crates {
     private final Stack<Crate> stack = new Stack<>();
 
     public Crates() {
         this(Collections.emptyList());
     }
 
-    public Crates(List<Crate> stack) {
+    public Crates(@NotNull List<Crate> stack) {
         stack.forEach(this.stack::push);
     }
 
-    public Crates(String stack) {
+    public Crates(@NotNull String stack) {
         stack.chars().forEach(c -> this.stack.push(new Crate((char) c)));
     }
 
     public Crates take(int n) {
-        final Stack<Crate> taken = new Stack<>();
+        final var taken = new Stack<Crate>();
         while (n-- > 0) {
             taken.push(stack.pop());
         }
         return new Crates(taken);
     }
 
-    public void add(Crates taken) {
+    public void add(@NotNull Crates taken) {
         taken.stack.forEach(stack::push);
     }
 
@@ -44,7 +46,7 @@ public class Crates {
     }
 
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         stack.forEach(c -> sb.append(c.id()));
         return sb.toString();
     }

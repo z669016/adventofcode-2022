@@ -1,5 +1,7 @@
 package com.putoet.day5;
 
-public interface Crane {
-    Crates take(Crates stack, int count);
+import org.jetbrains.annotations.NotNull;
+
+interface Crane {
+    Crates take(@NotNull Crates stack, int count);
 }

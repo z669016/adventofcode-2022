@@ -1,12 +1,13 @@
 package com.putoet.day5;
 
-import java.util.regex.Matcher;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.regex.Pattern;
 
-public record Instruction(int count, int from, int to) {
+record Instruction(int count, int from, int to) {
     private static final Pattern MOVE_PATTERN = Pattern.compile("move (\\d+) from (\\d+) to (\\d+)");
-    public static Instruction of(String instruction) {
-        final Matcher matcher = MOVE_PATTERN.matcher(instruction);
+    public static Instruction of(@NotNull String instruction) {
+        final var matcher = MOVE_PATTERN.matcher(instruction);
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid move instruction: " + instruction);
 
