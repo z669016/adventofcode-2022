@@ -1,19 +1,20 @@
 package com.putoet.day17;
 
 import org.javatuples.Triplet;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CaveAnalytics extends Cave{
+class CaveAnalytics extends Cave{
     private static final int BLOCK_SIZE = 12;
     private final Map<String, List<Integer>> signatures = new HashMap<>();
     private final Queue<Integer> block = new LinkedList<>();
 
-    public record Analytics(String key, int startRepeat, int repeatBlockSize) {}
+    public record Analytics(@NotNull String key, int startRepeat, int repeatBlockSize) {}
     private Analytics analytics;
 
-    public CaveAnalytics(Push push) {
+    public CaveAnalytics(@NotNull Push push) {
         super(push);
     }
 
@@ -23,7 +24,7 @@ public class CaveAnalytics extends Cave{
 
     @Override
     public void run() {
-        for (int i = 0; i < maxRocks(); i++) {
+        for (var i = 0; i < maxRocks(); i++) {
             final var block = signatureDrop(rocks().get(), push());
 
             if (block.isPresent()) {
@@ -42,7 +43,7 @@ public class CaveAnalytics extends Cave{
         analytics = new Analytics(triplet.getValue0(), triplet.getValue1(), triplet.getValue2());
     }
 
-    public Optional<Queue<Integer>> signatureDrop(Rock rock, Push push) {
+    public Optional<Queue<Integer>> signatureDrop(@NotNull Rock rock, @NotNull Push push) {
         block.offer(drop(rock, push));
         if (block.size() > BLOCK_SIZE)
             block.poll();

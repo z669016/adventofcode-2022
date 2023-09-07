@@ -2,8 +2,9 @@ package com.putoet.day17;
 
 import com.putoet.grid.GridUtils;
 import com.putoet.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
-public class Cave implements Runnable {
+class Cave implements Runnable {
     public static final int MAX_ROCKS = 2022;
     public static final char OPEN = '.';
     public static final char ROCK = '#';
@@ -14,11 +15,11 @@ public class Cave implements Runnable {
     private final int maxRocks;
     private int highestRock = 0;
 
-    public Cave(Push push) {
+    public Cave(@NotNull Push push) {
         this(push, MAX_ROCKS);
     }
 
-    public Cave(Push push, int maxRocks) {
+    public Cave(@NotNull Push push, int maxRocks) {
         this.push = push;
         this.rocks = new Rocks();
         this.maxRocks = maxRocks;
@@ -47,17 +48,16 @@ public class Cave implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i < maxRocks; i++)
+        for (var i = 0; i < maxRocks; i++)
             drop(rocks.get(), push);
     }
 
-    public int drop(Rock rock, Push push) {
-        boolean down = false;
-        Point next = Point.of(2, highestRock + 3);
-        Point prev = next;
+    public int drop(@NotNull Rock rock, @NotNull Push push) {
+        var down = false;
+        var next = Point.of(2, highestRock + 3);
+        var prev = next;
 
         while (fits(rock, next)) {
-
             prev = next;
 
             if (down) {
@@ -87,13 +87,10 @@ public class Cave implements Runnable {
     }
 
     private void draw(Rock rock, Point point) {
-        assert rock != null;
-        assert point != null;
+        final var shape = rock.grid();
 
-        final char[][] shape = rock.grid();
-
-        for (int y = 0; y < rock.height(); y++) {
-            for (int x = 0; x < rock.width(); x++) {
+        for (var y = 0; y < rock.height(); y++) {
+            for (var x = 0; x < rock.width(); x++) {
                 if (shape[y][x] != OPEN)
                     grid[point.y() + y][point.x() + x] = shape[y][x];
             }
@@ -102,17 +99,14 @@ public class Cave implements Runnable {
         highestRock = Math.max(point.y() + rock.height(), highestRock);
     }
 
-    public boolean fits(Rock rock, Point point) {
-        assert rock != null;
-        assert point != null;
-
+    public boolean fits(@NotNull Rock rock, @NotNull Point point) {
         if (point.y() < 0)
             return false;
 
-        final char[][] shape = rock.grid();
+        final var shape = rock.grid();
 
-        for (int y = 0; y < rock.height(); y++) {
-            for (int x = 0; x < rock.width(); x++) {
+        for (var y = 0; y < rock.height(); y++) {
+            for (var x = 0; x < rock.width(); x++) {
                 if (grid[point.y() + y][point.x() + x] == ROCK && shape[y][x] == ROCK)
                     return false;
             }
@@ -123,10 +117,10 @@ public class Cave implements Runnable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        final var sb = new StringBuilder();
         for (int y = highestRock + 1; y >= 0; y--) {
             sb.append("%4d |".formatted(y));
-            for (int x = 0; x < grid[0].length; x++)
+            for (var x = 0; x < grid[0].length; x++)
                 sb.append(grid[y][x]);
             sb.append("|\n");
         }

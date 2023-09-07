@@ -20,7 +20,7 @@ class CaveTest {
 
     @Test
     void drop() {
-        final Cave cave = new Cave(push);
+        final var cave = new Cave(push);
 
         cave.drop(rocks.get(), push);
         assertEquals(1, cave.highestRock());
@@ -48,7 +48,7 @@ class CaveTest {
 
     @Test
     void run() {
-        final Cave cave = new Cave(push);
+        final var cave = new Cave(push);
         cave.run();
 
         assertEquals(3068, cave.highestRock());

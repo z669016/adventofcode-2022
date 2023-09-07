@@ -1,11 +1,8 @@
 package com.putoet.day17;
 
-public record Rock(String name, char[][] grid) {
-    public Rock {
-        assert name != null;
-        assert grid != null;
-    }
+import org.jetbrains.annotations.NotNull;
 
+record Rock(@NotNull String name, char[][] grid) {
     @Override
     public String toString() {
         return name();

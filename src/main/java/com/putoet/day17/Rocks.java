@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class Rocks implements Supplier<Rock> {
+class Rocks implements Supplier<Rock> {
     public static final Rock BAR = new Rock("bar", GridUtils.of(List.of("####")));
     public static final Rock CROSS = new Rock("cross", GridUtils.of(List.of(".#.", "###", ".#.")));
     public static final Rock HOOK = new Rock("hook", GridUtils.of(List.of("###", "..#", "..#")));

@@ -1,15 +1,17 @@
 package com.putoet.day17;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Supplier;
 
-public class Push implements Supplier<Character> {
+class Push implements Supplier<Character> {
     public static Character LEFT = '<';
     public static Character RIGHT = '>';
 
     private final char[] instructions;
     private int offset = 0;
 
-    public Push(String instructions) {
+    public Push(@NotNull String instructions) {
         this.instructions = instructions.toCharArray();
     }
 

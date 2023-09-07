@@ -1,8 +1,10 @@
 package com.putoet.day17;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
-public class CaveSequence extends Cave{
+class CaveSequence extends Cave{
     private final int from;
     private final int size;
 
@@ -10,7 +12,7 @@ public class CaveSequence extends Cave{
 
     public record Sequence(int start, List<Integer> list) {}
 
-    public CaveSequence(Push push, int from, int size) {
+    public CaveSequence(@NotNull Push push, int from, int size) {
         super(push);
         this.from = from;
         this.size = size;
@@ -22,10 +24,10 @@ public class CaveSequence extends Cave{
 
     @Override
     public void run() {
-        final List<Integer> list = new ArrayList<>();
-        int start = -1;
+        final var list = new ArrayList<Integer>();
+        var start = -1;
 
-        for (int i = 0; i < from + size; i++) {
+        for (var i = 0; i < from + size; i++) {
             var value = drop(rocks().get(), push());
             if (i == from - 1)
                 start = highestRock();
