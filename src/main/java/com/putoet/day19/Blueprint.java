@@ -1,13 +1,15 @@
 package com.putoet.day19;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, int maxObsidian) {
+record Blueprint(int id, @NotNull List<RobotCost> costs, int maxOre, int maxClay, int maxObsidian) {
 
-    public Blueprint(int id, List<RobotCost> costs) {
+    public Blueprint(int id, @NotNull List<RobotCost> costs) {
         this(id, costs,
                 costs.stream().mapToInt(RobotCost::ore).max().orElseThrow(),
                 costs.stream().mapToInt(RobotCost::clay).max().orElseThrow(),
@@ -15,20 +17,19 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
     }
 
     public Blueprint {
-        assert costs != null;
         assert costs.size() == 4;
     }
 
-    public List<BlueprintState> affordable(BlueprintState state, int maxMinutes) {
+    public List<BlueprintState> affordable(@NotNull BlueprintState state, int maxMinutes) {
         if (canAfford(RobotType.GEODE_ROBOT, state.prod())) {
             return List.of(manufacture(RobotType.GEODE_ROBOT, state, maxMinutes));
         }
 
-        final List<BlueprintState> affordable = new ArrayList<>();
+        final var affordable = new ArrayList<BlueprintState>();
         if (canAfford(RobotType.ORE_ROBOT, state.prod()) && state.robots().ore() <= maxOre)
             affordable.add(manufacture(RobotType.ORE_ROBOT, state, maxMinutes));
 
-        if (canAfford(RobotType.CLAY_ROBOT, state.prod()) && state.robots().clay() <= maxClay )
+        if (canAfford(RobotType.CLAY_ROBOT, state.prod()) && state.robots().clay() <= maxClay)
             affordable.add(manufacture(RobotType.CLAY_ROBOT, state, maxMinutes));
 
         if (canAfford(RobotType.OBSIDIAN_ROBOT, state.prod()) && state.robots().obsidian() <= maxObsidian)
@@ -39,8 +40,8 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
         return affordable;
     }
 
-    public boolean canAfford(RobotType type, Prod prod) {
-        final RobotCost cost = costs.get(type.key());
+    public boolean canAfford(@NotNull RobotType type, @NotNull Prod prod) {
+        final var cost = costs.get(type.key());
 
         return prod.ore() >= cost.ore() &&
                prod.clay() >= cost.clay() &&
@@ -48,9 +49,9 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
     }
 
     private BlueprintState manufacture(RobotType type, BlueprintState state, int maxMinutes) {
-        final int maxOre = (maxMinutes - state.minutes()) * this.maxOre;
-        final int maxClay = (maxMinutes - state.minutes()) * this.maxClay;
-        final int maxObsidian = (maxMinutes - state.minutes()) * this.maxObsidian;
+        final var maxOre = (maxMinutes - state.minutes()) * this.maxOre;
+        final var maxClay = (maxMinutes - state.minutes()) * this.maxClay;
+        final var maxObsidian = (maxMinutes - state.minutes()) * this.maxObsidian;
 
         return new BlueprintState(
                 state.blueprint(),
@@ -60,10 +61,10 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
         );
     }
 
-    public BlueprintState next(BlueprintState state, int maxMinutes) {
-        final int maxOre = (maxMinutes - state.minutes()) * this.maxOre;
-        final int maxClay = (maxMinutes - state.minutes()) * this.maxClay;
-        final int maxObsidian = (maxMinutes - state.minutes()) * this.maxObsidian;
+    public BlueprintState next(@NotNull BlueprintState state, int maxMinutes) {
+        final var maxOre = (maxMinutes - state.minutes()) * this.maxOre;
+        final var maxClay = (maxMinutes - state.minutes()) * this.maxClay;
+        final var maxObsidian = (maxMinutes - state.minutes()) * this.maxObsidian;
 
         return new BlueprintState(state.blueprint(),
                 state.minutes() + 1,
@@ -74,10 +75,8 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
     public static final Pattern INPUT_PATTERN = Pattern.compile(
             "Blueprint (\\d+): Each ore robot costs (\\d+) ore. Each clay robot costs (\\d+) ore. Each obsidian robot costs (\\d+) ore and (\\d+) clay. Each geode robot costs (\\d+) ore and (\\d+) obsidian.");
 
-    public static Blueprint from(String line) {
-        assert line != null;
-
-        final Matcher matcher = INPUT_PATTERN.matcher(line);
+    public static Blueprint of(@NotNull String line) {
+        final var matcher = INPUT_PATTERN.matcher(line);
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid blueprint description: " + line);
 
@@ -90,9 +89,9 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
                 ));
     }
 
-    public static Map<Integer, Blueprint> from(List<String> lines) {
+    public static Map<Integer, Blueprint> of(@NotNull List<String> lines) {
         return lines.stream()
-                .map(Blueprint::from)
+                .map(Blueprint::of)
                 .collect(Collectors.toMap(Blueprint::id, blueprint -> blueprint));
     }
 
@@ -101,10 +100,10 @@ public record Blueprint(int id, List<RobotCost> costs, int maxOre, int maxClay, 
     }
 
     public Optional<BlueprintState> max(int maxMinutes) {
-        final Set<BlueprintState> history = new HashSet<>();
-        final Map<Integer,BlueprintState> maxGeodes = new HashMap<>();
-        final Map<Integer, Integer> geodeBots = new HashMap<>();
-        final PriorityQueue<BlueprintState> queue = new PriorityQueue<>(
+        final var history = new HashSet<BlueprintState>();
+        final var maxGeodes = new HashMap<Integer, BlueprintState>();
+        final var geodeBots = new HashMap<Integer, Integer>();
+        final var queue = new PriorityQueue<BlueprintState>(
                 Comparator.comparing((BlueprintState state) -> state.prod().geode())
                         .thenComparing((BlueprintState state) -> state.prod().obsidian())
                         .reversed()

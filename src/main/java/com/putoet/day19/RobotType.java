@@ -1,6 +1,6 @@
 package com.putoet.day19;
 
-public enum RobotType {
+enum RobotType {
     ORE_ROBOT,
     CLAY_ROBOT,
     OBSIDIAN_ROBOT,

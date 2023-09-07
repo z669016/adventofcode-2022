@@ -1,6 +1,6 @@
 package com.putoet.day19;
 
-public record Robots(int ore, int clay, int obsidian, int geode) {
+record Robots(int ore, int clay, int obsidian, int geode) {
     public static final Robots init = new Robots(1, 0, 0, 0);
 
     public Robots add(RobotType type) {

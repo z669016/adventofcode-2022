@@ -1,6 +1,6 @@
 package com.putoet.day19;
 
-public record Prod(int ore, int clay, int obsidian, int geode) {
+record Prod(int ore, int clay, int obsidian, int geode) {
     public static final Prod init = new Prod(0, 0, 0, 0);
 
     public Prod add(Robots robots, int maxOre, int maxClay, int maxObsidian) {

@@ -1,16 +1,14 @@
 package com.putoet.day19;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Supplier;
 
-public record Robot(RobotType type) implements Supplier<Prod> {
+record Robot(@NotNull RobotType type) implements Supplier<Prod> {
     public static final Prod PROD_ORE = new Prod(1, 0, 0, 0);
     public static final Prod PROD_CLAY = new Prod(0, 1, 0, 0);
     public static final Prod PROD_OBSIDIAN = new Prod(0, 0, 1, 0);
     public static final Prod PROD_GEODE = new Prod(0, 0, 0, 1);
-
-    public Robot {
-        assert type != null;
-    }
 
     @Override
     public Prod get() {

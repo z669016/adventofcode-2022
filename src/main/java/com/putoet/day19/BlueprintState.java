@@ -1,16 +1,13 @@
 package com.putoet.day19;
 
-public record BlueprintState(int blueprint, int minutes, Prod prod, Robots robots) {
-    public BlueprintState {
-        assert prod != null;
-        assert robots != null;
-    }
+import org.jetbrains.annotations.NotNull;
 
+record BlueprintState(int blueprint, int minutes, @NotNull Prod prod, @NotNull Robots robots) {
     public int qualityLevel() {
         return blueprint * prod().geode();
     }
 
-    public static BlueprintState init(Blueprint blueprint) {
+    public static BlueprintState init(@NotNull Blueprint blueprint) {
         return new BlueprintState(blueprint.id(),
                 0,
                 Prod.init,

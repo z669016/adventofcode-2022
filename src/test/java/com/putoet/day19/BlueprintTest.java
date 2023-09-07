@@ -9,7 +9,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BlueprintTest {
-    final Map<Integer,Blueprint> blueprints = Blueprint.from(ResourceLines.list("/day19.txt"));
+    final Map<Integer,Blueprint> blueprints = Blueprint.of(ResourceLines.list("/day19.txt"));
 
     @Test
     void from() {

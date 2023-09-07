@@ -1,30 +1,21 @@
 package com.putoet.day19;
 
-import com.putoet.day.Day;
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-public class Day19 extends Day {
-    private final Map<Integer, Blueprint> blueprints;
-
-    public Day19() {
-        blueprints = Blueprint.from(ResourceLines.list("/day19.txt"));
-    }
-
-    public Collection<Blueprint> blueprints() {
-        return blueprints.values();
-    }
-
+public class Day19  {
     public static void main(String[] args) {
-        final var day = new Day19();
-        day.challenge();
+        final var blueprints = Blueprint.of(ResourceLines.list("/day19.txt"));
+
+        Timer.run(() -> part1(blueprints));
+        Timer.run(() -> part2(blueprints));
     }
 
-    @Override
-    public void part1() {
-        final var max = blueprints().stream()
+    static void part1(Map<Integer, Blueprint> blueprints) {
+        final var max = blueprints.values().stream()
                 .parallel()
                 .map(Blueprint::max)
                 .filter(Optional::isPresent)
@@ -34,8 +25,7 @@ public class Day19 extends Day {
         System.out.println("The sum of all blueprint quality levels is " + max.stream().mapToInt(BlueprintState::qualityLevel).sum());
     }
 
-    @Override
-    public void part2() {
+    static void part2(Map<Integer, Blueprint> blueprints) {
         var mul = Stream.of(1, 2, 3)
                 .parallel()
                 .map(i -> blueprints.get(i).max(32).orElseThrow())
