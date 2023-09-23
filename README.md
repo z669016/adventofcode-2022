@@ -350,4 +350,18 @@ determine wrapping (```Predicate<Point>```) and one method returning a new start
 This one  took me some time to wrap my head around it. The normal mathematics on numbers doesn't apply, because 
 although the radix is 5, there are no symbols for values 3 and 4 as you would normally have. So, the max value for a 
 value of 4 positions is not 5^4 - 1, but 2 * 5^3 + 2 * 5^2 + 2 * 5^1 + 2 * 5^0. But okay, when I got that clear, it 
-wasn't difficult anymore. 
+wasn't difficult anymore.
+
+## Java comparison
+This week, Java 21 has been released, so I decided to compare runtime between Java 17 and Java 21. To do so, I created
+an All class, that run all individual challenges by loading the DayXX class and calling the ```main()``` method.
+
+I ran the All class with Java 17 and Java 21, and noticed some remarkable differences on the long running challenges:
+* Day 16: Java 17: 80333ms, **Java 21: 22918ms** --> Floyd-Warshall algorithm, parallel stream
+* Day 19: Java 17: 33473ms, Java 21: 31934ms --> BSF algorithm
+* Day 23: **Java 17: 75674ms**, Java 21: 91568ms --> streaming with Set and List
+* Day 24: **Java 17: 50819ms**, Java 21: 61255ms --> BSF algorithm
+* Overall: Java 17: 242263ms, **Java 21: 209563ms** 
+
+So four long running challenges, on two challenges Java 17 is much faster, on one both are comparable, and on one 
+Java 21 is much faster.  
