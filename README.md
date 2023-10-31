@@ -219,13 +219,13 @@ covered ranges for all Y values in that range, and the first row with 2 ranges i
 for the specific x/y location, and return its ```Beacon.turingFrequency()```.
 
 ## Day 16
-Inspired by [Johannes](https://github.com/jerchende), I refactored my solution to use the 
-[Floyd-Warshall](https://www.baeldung.com/cs/floyd-warshall-shortest-path) algorithm for shortest path. This reduced 
-the runtime for part 2 from 20 minutes to 90 seconds. The ```Valve``` class is just a record with a factory method for
-parsing the input. The ```Routes``` class creates a map for all shortest routes between valuable valves (valves with
-a flow rate > 0) using the Floyd-Warshall algorithm. The ```Valves``` class contains the ```maximumPressure()``` to 
-solve part 1. ```maximumPressureWithHelp()``` solves part 2, by generating a set of half of the possible routes, and
-finds the max pressure when those are visited bby me while the others get visited by an elephant (helper).
+Inspired by [Johannes](https://github.com/jerchende), I refactored my solution to use the [Floyd-Warshall](https://www.baeldung.com/cs/floyd-warshall-shortest-path) algorithm for shortest path. 
+This reduced the runtime for part 2 from 20 minutes to 90 seconds. The ```Valve``` class is just a record with a 
+factory method for parsing the input. The ```Routes``` class creates a map for all shortest routes between valuable 
+valves (valves with a flow rate > 0) using the Floyd-Warshall algorithm. The ```Valves``` class contains the 
+```maximumPressure()``` to solve part 1. ```maximumPressureWithHelp()``` solves part 2, by generating a set of half of 
+the possible routes, and finds the max pressure when those are visited bby me while the others get visited by an 
+elephant (helper).
 
 ## Day 17
 Yes, Tetris! ... Started with a ```Rock``` class to represent the different types of falling rock, and a convenience
@@ -251,7 +251,7 @@ without a grid. Finally implemented a grid, and refactored part 1. Then I screwe
 steam. Never try to be too smart ... clearly...
 
 ## Day 19
-This feels like a BSF. Created a ```Blueprint``` record, to handle ... blueprints, and search for a max using BSF. 
+This feels like a BFS. Created a ```Blueprint``` record, to handle ... blueprints, and search for a max using BFS. 
 BlueprintState record, to check for history and manage search state, a ```Prod``` record to record produced items, and 
 a ```Robots``` record to maintain the manufactured robots.
 
@@ -322,19 +322,19 @@ places. Thanks to ```Elves.move()``` returning the number of moved elves, part 2
 returns 0 (it runs in 87 seconds, which is indeed too much)
 
 ## Day 24
-This sounds like a BSF problem again, although the state in between also depends on teh contents of the board (location
+This sounds like a BFS problem again, although the state in between also depends on teh contents of the board (location
 of the blizzards). Created a ```Blizzard``` record to store the state of a blizzard (location, facing, symbol, max,
 and reset). ```Blizzard.next()``` returns the next blizzard state, wrapping the valley if required.
 The ```Valley``` record holds a ```List<Blizzard>```, and the in and out location, and also a ```next()``` method, that
-returns the next state of the valley with all blizzards moved one step. To support BSF, ```Valley``` also contains a
+returns the next state of the valley with all blizzards moved one step. To support BFS, ```Valley``` also contains a
 ```contains(point)``` method (determines if the point is in the Valley or equals in/out location), and an ```isOpen()``` 
 method, which indicates if a certain position is free to enter. The ```toString()``` and ```toString(point)``` are used
 for visualization and storing state.
 
 ```PathFinder.solve()``` performs a BFS from the initial point (```valley.in()```) towards the end (```valley.out()```),
-and that will do for part 1. For part 2, I added a ```PathFinder.solve(initialState, found)``` to start a BSF to a 
+and that will do for part 1. For part 2, I added a ```PathFinder.solve(initialState, found)``` to start a BFS to a 
 goal, using a specific initial state. To solve part 2, reuse the result of part 1 as the initial-state to a second BFS
-and find the ```valley.in()```. Then use that end-state to again perform a BSF towards the end (```valley.out()```). 
+and find the ```valley.in()```. Then use that end-state to again perform a BFS towards the end (```valley.out()```). 
 Reusing the end-state of the previous search ensures the minute count is continued, and the blizzard states are correct
 when moving to the start and end again. 
 
@@ -358,9 +358,9 @@ an All class, that run all individual challenges by loading the DayXX class and 
 
 I ran the All class with Java 17 and Java 21, and noticed some remarkable differences on the long running challenges:
 * Day 16: Java 17: 80333ms, **Java 21: 22918ms** --> Floyd-Warshall algorithm, parallel stream
-* Day 19: Java 17: 33473ms, Java 21: 31934ms --> BSF algorithm
+* Day 19: Java 17: 33473ms, Java 21: 31934ms --> BFS algorithm
 * Day 23: **Java 17: 75674ms**, Java 21: 91568ms --> streaming with Set and List
-* Day 24: **Java 17: 50819ms**, Java 21: 61255ms --> BSF algorithm
+* Day 24: **Java 17: 50819ms**, Java 21: 61255ms --> BFS algorithm
 * Overall: Java 17: 242263ms, **Java 21: 209563ms** 
 
 So four long running challenges, on two challenges Java 17 is much faster, on one both are comparable, and on one 
