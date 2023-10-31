@@ -6,8 +6,11 @@ to read a resource file and transform the content into a ```List<String>```, or 
 file containing comma separated values and returning a List of these values, optionally after transformation from 
 ```String``` to ```Integer```.
 
-Also uses the algorithm library, which contains generic classes for addressing classic compute problems (from the book 
-**Classic Computer Science Problems In Java** (c) Manning.com - 2020) 
+Also uses the algorithm library, which contains generic classes for addressing classic compute problems, from the book 
+[Classic Computer Science Problems In Java](https://www.manning.com/books/classic-computer-science-problems-in-java) 
+by David Kopec.
+
+![Book cover of the book titles "Classic Computer Science Problems in Java" by David Kopec](https://images.manning.com/264/352/resize/book/3/7004c62-e0af-4431-bfdd-3089252fe224/Kopec-CCP-HI.png)
 
 It was never my intention to create the shortest program possible. I did try to create clear and simple implementations.
 
@@ -33,7 +36,7 @@ and realized that standard solutions had to be available for many Graph related 
 time using them. The challenge would be transforming an input matrix into a Graph, which I considered a nice learning 
 opportunity.
 
-![Book cover of the book titles "Advanced Algorithms and Data Structures" by Marcello La Rocca](https://images.manning.com/720/960/resize/book/1/7f0f0f9-0f9f-4b1e-9c2f-2a4e2a4e2a4e/LaRocca-Advanced_hires.png)
+![Book cover of the book titles "Advanced Algorithms and Data Structures" by Marcello La Rocca](https://images.manning.com/360/480/resize/book/e/59c8b18-b8fd-4d32-939b-25dcbb4d525d/Rocca-ADS-HI.png)
 
 ## Day 1
 December 1, 2022, looking forward to a month of puzzles! Day 1 in general is for warming up. Create a list of 
