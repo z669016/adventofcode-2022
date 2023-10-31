@@ -11,6 +11,30 @@ Also uses the algorithm library, which contains generic classes for addressing c
 
 It was never my intention to create the shortest program possible. I did try to create clear and simple implementations.
 
+## Java comparison
+This week, Java 21 has been released, so I decided to compare runtime between Java 17 and Java 21. To do so, I created
+an All class, that run all individual challenges by loading the DayXX class and calling the ```main()``` method.
+
+I ran the All class with Java 17 and Java 21, and noticed some remarkable differences on the long running challenges:
+* Day 16: Java 17: 80333ms, **Java 21: 22918ms** --> Floyd-Warshall algorithm, parallel stream
+* Day 19: Java 17: 33473ms, Java 21: 31934ms --> BFS algorithm
+* Day 23: **Java 17: 75674ms**, Java 21: 91568ms --> streaming with Set and List
+* Day 24: **Java 17: 50819ms**, Java 21: 61255ms --> BFS algorithm
+* Overall: Java 17: 242263ms, **Java 21: 209563ms**
+
+So four long running challenges, on two challenges Java 17 is much faster, on one both are comparable, and on one
+Java 21 is much faster.
+
+## GraphT
+After migration to Java 21 (which improved overall performance (at least on average), I also introduced JGraphT to 
+remove boilerplate code for graph related puzzles. I was reading 
+[Advanced Algorithms and Data Structures](https://www.manning.com/books/advanced-algorithms-and-data-structures)  
+and realized that standard solutions had to be available for many Graph related issues and thought I could spare some 
+time using them. The challenge would be transforming an input matrix into a Graph, which I considered a nice learning 
+opportunity.
+
+![Book cover of the book titles "Advanced Algorithms and Data Structures" by Marcello La Rocca](https://images.manning.com/720/960/resize/book/1/7f0f0f9-0f9f-4b1e-9c2f-2a4e2a4e2a4e/LaRocca-Advanced_hires.png)
+
 ## Day 1
 December 1, 2022, looking forward to a month of puzzles! Day 1 in general is for warming up. Create a list of 
 ```ElF``` each carrying a list of calories (int). For part 1, find the Elf with max ```Elf::calories```. To solve
@@ -352,16 +376,3 @@ although the radix is 5, there are no symbols for values 3 and 4 as you would no
 value of 4 positions is not 5^4 - 1, but 2 * 5^3 + 2 * 5^2 + 2 * 5^1 + 2 * 5^0. But okay, when I got that clear, it 
 wasn't difficult anymore.
 
-## Java comparison
-This week, Java 21 has been released, so I decided to compare runtime between Java 17 and Java 21. To do so, I created
-an All class, that run all individual challenges by loading the DayXX class and calling the ```main()``` method.
-
-I ran the All class with Java 17 and Java 21, and noticed some remarkable differences on the long running challenges:
-* Day 16: Java 17: 80333ms, **Java 21: 22918ms** --> Floyd-Warshall algorithm, parallel stream
-* Day 19: Java 17: 33473ms, Java 21: 31934ms --> BFS algorithm
-* Day 23: **Java 17: 75674ms**, Java 21: 91568ms --> streaming with Set and List
-* Day 24: **Java 17: 50819ms**, Java 21: 61255ms --> BFS algorithm
-* Overall: Java 17: 242263ms, **Java 21: 209563ms** 
-
-So four long running challenges, on two challenges Java 17 is much faster, on one both are comparable, and on one 
-Java 21 is much faster.  
