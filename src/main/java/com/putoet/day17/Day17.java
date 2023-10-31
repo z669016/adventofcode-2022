@@ -17,13 +17,13 @@ public class Day17 {
 
         cave.run();
 
-        System.out.println("The tower of rocks after 2022 rocks have stopped falling has height: " + cave.highestRock());
+        System.out.println("The tower of rocks after 2022 rocks have stopped falling has label: " + cave.highestRock());
     }
 
     static void part2(String input) {
         final var maxRocks = 1_000_000_000_000L;
         final var analytics = analytics(input);
-        System.out.println("The tower of rocks after " + maxRocks + " rocks have stopped falling has height: " +
+        System.out.println("The tower of rocks after " + maxRocks + " rocks have stopped falling has label: " +
                            heightAfter(input, analytics, maxRocks));
     }
 

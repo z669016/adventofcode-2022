@@ -1,49 +1,29 @@
 package com.putoet.day12;
 
-import com.putoet.grid.Grid;
-import com.putoet.grid.Point;
 import org.jetbrains.annotations.NotNull;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
 
 import java.util.List;
-import java.util.stream.Stream;
 
-record HeightMap(@NotNull Grid grid) {
-    public Point start() {
-        return grid.findFirst(c -> c == 'S').orElseThrow();
+record HeightMap(@NotNull Graph<HeightPoint, DefaultEdge> graph) {
+    public HeightPoint start() {
+        return graph.vertexSet().stream()
+                .filter(vertex -> vertex.label() == 'S')
+                .findFirst()
+                .orElseThrow();
     }
 
-    public Point end() {
-        return grid.findFirst(c -> c == 'E').orElseThrow();
+    public HeightPoint end() {
+        return graph.vertexSet().stream()
+                .filter(vertex -> vertex.label() == 'E')
+                .findFirst()
+                .orElseThrow();
     }
 
-    public List<Point> findAllLowest() {
-        return grid.findAll(c -> c == 'a' || c == 'S');
-    }
-
-    public List<Point> next(@NotNull Point current) {
-        final var height = grid.get(current.x(), current.y());
-        final var start = start();
-
-        return Stream.of(Point.NORTH, Point.EAST, Point.SOUTH, Point.WEST)
-                .map(current::add)
-                .filter(p -> grid.contains(p.x(), p.y()))
-                .filter(p -> !p.equals(start))
-                .filter(p -> difference(height, grid.get(p.x(), p.y())) < 2)
+    public List<HeightPoint> findAllLowest() {
+        return graph.vertexSet().stream()
+                .filter(vertex -> vertex.label() == 'S' || vertex.label() == 'a')
                 .toList();
-    }
-
-    private static int difference(char from, char to) {
-        if (to == 'S')
-            throw new IllegalStateException("Should not move to S");
-        if (from == 'E')
-            throw new IllegalStateException("Should not move from E");
-
-        if (from == 'S')
-            return 1;
-
-        if (to == 'E')
-            to = 'z';
-
-        return to - from;
     }
 }
