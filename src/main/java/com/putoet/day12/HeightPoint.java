@@ -6,7 +6,7 @@ public record HeightPoint(Point point, char label) {
     private static final int BASE = 'a';
 
     public int distance(HeightPoint other) {
-        return Math.abs(this.height() - other.height());
+        return other.height() - this.height();
     }
 
     private int height() {
