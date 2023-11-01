@@ -1,6 +1,7 @@
 package com.putoet.day19;
 
 import org.jetbrains.annotations.NotNull;
+import org.jheaps.array.BinaryArrayHeap;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -102,7 +103,7 @@ record Blueprint(int id, @NotNull List<RobotCost> costs, int maxOre, int maxClay
         final var history = new HashSet<BlueprintState>();
         final var maxGeodes = new HashMap<Integer, BlueprintState>();
         final var geodeBots = new HashMap<Integer, Integer>();
-        final var queue = new PriorityQueue<>(
+        final var queue = new BinaryArrayHeap<>(
                 Comparator.comparing((BlueprintState state) -> state.prod().geode())
                         .thenComparing((BlueprintState state) -> state.prod().obsidian())
                         .reversed()
@@ -112,9 +113,9 @@ record Blueprint(int id, @NotNull List<RobotCost> costs, int maxOre, int maxClay
         maxGeodes.put(0, init);
         geodeBots.put(0, 0);
 
-        queue.offer(init);
+        queue.insert(init);
         while (!queue.isEmpty()) {
-            var current = queue.poll();
+            var current = queue.deleteMin();
 
             if (current.prod().geode() > maxGeodes.computeIfAbsent(current.minutes(), k -> current).prod().geode())
                 maxGeodes.put(current.minutes(), current);
@@ -133,7 +134,7 @@ record Blueprint(int id, @NotNull List<RobotCost> costs, int maxOre, int maxClay
             affordable.stream()
                     .filter(state -> state.prod().geode() >= maxGeodes.computeIfAbsent(state.minutes(), k -> state).prod().geode() - 1)
                     .filter(history::add)
-                    .forEach(queue::offer);
+                    .forEach(queue::insert);
         }
 
         if (maxGeodes.containsKey(maxMinutes))
