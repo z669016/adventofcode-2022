@@ -21,12 +21,15 @@ an All class, that run all individual challenges by loading the DayXX class and 
 I ran the All class with Java 17 and Java 21, and noticed some remarkable differences on the long running challenges:
 * Day 16: Java 17: 80333ms, **Java 21: 22918ms** --> Floyd-Warshall algorithm, parallel stream
 * Day 19: Java 17: 33473ms, Java 21: 31934ms --> BFS algorithm
-* Day 23: **Java 17: 75674ms**, Java 21: 91568ms --> streaming with Set and List
-* Day 24: **Java 17: 50819ms**, Java 21: 61255ms --> BFS algorithm
+* Day 23: **Java 17: 75674ms**, Java 21: 34335ms --> streaming with Set and List
+* Day 24: **Java 17: 50819ms**, Java 21: 25555ms --> BFS algorithm
 * Overall: Java 17: 242263ms, **Java 21: 209563ms**
 
 So four long running challenges, on two challenges Java 17 is much faster, on one both are comparable, and on one
 Java 21 is much faster.
+
+**The timings aren't right! Running a day individually takes much less time than running all days in one go. Most 
+likely as result of GC pauses.**
 
 ## GraphT
 After migration to Java 21 (which improved overall performance (at least on average), I also introduced JGraphT to 
@@ -37,6 +40,9 @@ time using them. The challenge would be transforming an input matrix into a Grap
 opportunity.
 
 ![Book cover of the book titles "Advanced Algorithms and Data Structures" by Marcello La Rocca](https://images.manning.com/360/480/resize/book/e/59c8b18-b8fd-4d32-939b-25dcbb4d525d/Rocca-ADS-HI.png)
+
+Using [JHeaps](https://www.jheaps.org/) BinaryArrayHeap to implement a priority queue on Day 19 (as this library is 
+also used by JGraphT), did improve the performance of Day 19 with .5 seconds. 
 
 ## Day 1
 December 1, 2022, looking forward to a month of puzzles! Day 1 in general is for warming up. Create a list of 
