@@ -7,7 +7,7 @@
     <artifactId>adventofcode-2022</artifactId>
     <version>2.0-SNAPSHOT</version>
 
-    <name>adventofcode-2021</name>
+    <name>adventofcode-2022</name>
     <description>A simple adventofcode-2022.</description>
 
     <parent>
@@ -19,24 +19,14 @@
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
+        <javatuples.version>1.2</javatuples.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>23.0.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jgrapht</groupId>
-            <artifactId>jgrapht-core</artifactId>
-            <version>1.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jheaps</groupId>
-            <artifactId>jheaps</artifactId>
-            <version>0.14</version>
+            <groupId>org.javatuples</groupId>
+            <artifactId>javatuples</artifactId>
+            <version>${javatuples.version}</version>
         </dependency>
     </dependencies>
 </project>

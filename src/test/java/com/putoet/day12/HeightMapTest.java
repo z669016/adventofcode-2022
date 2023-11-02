@@ -15,7 +15,7 @@ class HeightMapTest {
     @Test
     void createGraph() {
         assertEquals(40, heights.graph().vertexSet().size());
-        assertEquals(44, heights.graph().edgeSet().size());
+        assertEquals(111, heights.graph().edgeSet().size());
     }
 
     @Test
