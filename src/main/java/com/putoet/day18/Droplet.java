@@ -1,6 +1,7 @@
 package com.putoet.day18;
 
 import com.putoet.grid.Point3D;
+import com.putoet.grid.Points3D;
 import org.javatuples.Triplet;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,7 +53,7 @@ class Droplet {
             if (cubes[current.z()][current.y()][current.x()] == AIR) {
                 cubes[current.z()][current.y()][current.x()] = STEAM;
 
-                Point3D.directions(true).stream()
+                Points3D.directionsSquare().stream()
                         .map(current::add)
                         .filter(p -> p.x() >= 0 && p.x() < cubes.length)
                         .filter(p -> p.y() >= 0 && p.y() < cubes.length)
