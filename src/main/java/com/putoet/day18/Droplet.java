@@ -2,7 +2,6 @@ package com.putoet.day18;
 
 import com.putoet.grid.Point3D;
 import com.putoet.grid.Points3D;
-import org.javatuples.Triplet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -68,13 +67,12 @@ class Droplet {
         return new Droplet(input.stream()
                 .map(line -> {
                             final var split = line.split(",");
-                            return new Triplet<>(
+                            return Point3D.of(
                                     Integer.parseInt(split[0]),
                                     Integer.parseInt(split[1]),
                                     Integer.parseInt(split[2]));
                         }
                 )
-                .map(t -> Point3D.of(t.getValue0(), t.getValue1(), t.getValue2()))
                 .toList()
         );
     }

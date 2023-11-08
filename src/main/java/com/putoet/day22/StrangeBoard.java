@@ -2,7 +2,6 @@ package com.putoet.day22;
 
 import com.putoet.grid.GridUtils;
 import com.putoet.grid.Point;
-import org.javatuples.Pair;
 import org.jetbrains.annotations.NotNull;
 
 class StrangeBoard {
@@ -59,27 +58,27 @@ class StrangeBoard {
         };
     }
 
-    public Pair<Point, Facing> move(@NotNull MoveStrategy strategy, int distance) {
+    public Location move(@NotNull MoveStrategy strategy, int distance) {
         while (distance-- > 0) {
             var next = move(strategy);
 
-            location = next.getValue0();
-            facing = next.getValue1();
+            location = next.point();
+            facing = next.facing();
         }
 
-        return Pair.with(location, facing);
+        return new Location(location, facing);
     }
 
-    public Pair<Point, Facing> move(@NotNull MoveStrategy strategy) {
+    public Location move(@NotNull MoveStrategy strategy) {
         // find the next valid grid location (i.e. non-void)
         var next = strategy.nextLocation(location, facing);
-        while (grid[next.getValue0().y()][next.getValue0().x()] == MoveStrategy.VOID) {
-            next = strategy.nextLocation(next.getValue0(), next.getValue1());
+        while (grid[next.point().y()][next.point().x()] == MoveStrategy.VOID) {
+            next = strategy.nextLocation(next.point(), next.facing());
         }
 
         // don't move if the next location is a wall
-        if (grid[next.getValue0().y()][next.getValue0().x()] == MoveStrategy.WALL)
-            return Pair.with(location, facing);
+        if (grid[next.point().y()][next.point().x()] == MoveStrategy.WALL)
+            return new Location(location, facing);
 
         // open location found
         return next;

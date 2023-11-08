@@ -1,7 +1,6 @@
 package com.putoet.day11;
 
 import org.apache.commons.math3.util.ArithmeticUtils;
-import org.javatuples.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -46,7 +45,8 @@ class Game {
 
     public static List<Monkey> monkeys(@NotNull List<String> input) {
         final var monkeys = new ArrayList<Monkey>();
-        final var next = new ArrayList<Pair<Integer, Integer>>();
+        final var nextTrue = new ArrayList<Integer>();
+        final var nextFalse = new ArrayList<Integer>();
 
 //        Monkey 0:
 //          Starting items: 79, 98
@@ -63,17 +63,14 @@ class Game {
                     parseTest(input.get(i + 3))
             );
             monkeys.add(monkey);
-            next.add(Pair.with(
-                    parseIfTrue(input.get(i + 4)),
-                    parseIfFalse(input.get(i + 5))
-            ));
+            nextTrue.add(parseIfTrue(input.get(i + 4)));
+            nextFalse.add(parseIfFalse(input.get(i + 5)));
         }
 
         for (var i = 0; i < monkeys.size(); i++) {
-            var pair = next.get(i);
             monkeys.get(i)
-                    .next(true, monkeys.get(pair.getValue0()))
-                    .next(false, monkeys.get(pair.getValue1()));
+                    .next(true, monkeys.get(nextTrue.get(i)))
+                    .next(false, monkeys.get(nextFalse.get(i)));
         }
 
         return monkeys;

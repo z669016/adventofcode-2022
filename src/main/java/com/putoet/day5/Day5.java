@@ -2,7 +2,6 @@ package com.putoet.day5;
 
 import com.putoet.resources.ResourceLines;
 import com.putoet.utils.Timer;
-import org.javatuples.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -13,23 +12,23 @@ public class Day5 {
     static final Crane crateMover9000 = Crates::take;
     static final Crane crateMover9001 = (stack, count) -> stack.take(count).reverse();
 
+    record Input(List<Instruction> instructions, List<String> stacks) {}
+
     public static void main(String[] args) {
         final var input = init(ResourceLines.list("/day5.txt"));
-        final var instructions = input.getValue0();
-        final var stacks = input.getValue1();
 
         Timer.run(() -> {
-            final Cargo cargo = new Cargo(stacks.stream().map(Crates::new).toList());
-            System.out.println("Top crates after processing are: " + move(instructions, cargo, crateMover9000));
+            final Cargo cargo = new Cargo(input.stacks().stream().map(Crates::new).toList());
+            System.out.println("Top crates after processing are: " + move(input.instructions(), cargo, crateMover9000));
         });
 
         Timer.run(() -> {
-            final Cargo cargo = new Cargo(stacks.stream().map(Crates::new).toList());
-            System.out.println("Top crates after processing with the 9001 crane are: " + move(instructions, cargo, crateMover9001));
+            final Cargo cargo = new Cargo(input.stacks().stream().map(Crates::new).toList());
+            System.out.println("Top crates after processing with the 9001 crane are: " + move(input.instructions(), cargo, crateMover9001));
         });
     }
 
-    static Pair<List<Instruction>, List<String>> init(List<String> input) {
+    static Input init(List<String> input) {
         final var instructions = new ArrayList<Instruction>();
         List<String> stacks = List.of();
 
@@ -49,7 +48,7 @@ public class Day5 {
             }
         }
 
-        return Pair.with(instructions, stacks);
+        return new Input(instructions, stacks);
     }
 
     static List<String> createStacks(@NotNull List<String> stack) {

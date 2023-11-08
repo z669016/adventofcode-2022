@@ -23,10 +23,10 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.javatuples</groupId>
-            <artifactId>javatuples</artifactId>
-            <version>${javatuples.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.javatuples</groupId>-->
+<!--            <artifactId>javatuples</artifactId>-->
+<!--            <version>${javatuples.version}</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

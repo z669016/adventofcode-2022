@@ -1,6 +1,5 @@
 package com.putoet.day17;
 
-import org.javatuples.Triplet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -34,13 +33,11 @@ class CaveAnalytics extends Cave{
             }
         }
 
-        var triplet = signatures.entrySet().stream()
+        analytics = signatures.entrySet().stream()
                 .filter(e -> e.getValue().size() > 1)
-                .map(e -> Triplet.with(e.getKey(), e.getValue().get(0), e.getValue().get(1) - e.getValue().get(0)))
-                .min(Comparator.comparing(Triplet::getValue1))
+                .map(e -> new Analytics(e.getKey(), e.getValue().get(0), e.getValue().get(1) - e.getValue().get(0)))
+                .min(Comparator.comparing(Analytics::startRepeat))
                 .orElseThrow();
-
-        analytics = new Analytics(triplet.getValue0(), triplet.getValue1(), triplet.getValue2());
     }
 
     public Optional<Queue<Integer>> signatureDrop(@NotNull Rock rock, @NotNull Push push) {

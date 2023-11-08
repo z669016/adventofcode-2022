@@ -1,6 +1,5 @@
 package com.putoet.day21;
 
-import org.javatuples.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -34,27 +33,27 @@ class Values {
     public static Values of(@NotNull List<String> lines) {
         final var values = new Values();
         lines.forEach(line -> {
-            final var pair = values.of(line);
-            values.map.put(pair.getValue0(), pair.getValue1());
+            final var entry = values.of(line);
+            values.map.put(entry.getKey(), entry.getValue());
         });
 
         return values;
     }
 
-    public Pair<String, Supplier<String>> of(@NotNull String line) {
+    public Map.Entry<String, Supplier<String>> of(@NotNull String line) {
         final var splitLine = line.split(": ");
         final var splitOperation = splitLine[1].split(" ");
 
         if (splitOperation.length == 1) {
             final long value = Long.parseLong(splitOperation[0]);
-            return Pair.with(splitLine[0], new Value(value));
+            return Map.entry(splitLine[0], new Value(value));
         }
 
         final var left = splitOperation[0];
         final var operator = Operator.from(splitOperation[1]);
         final var right = splitOperation[2];
 
-        return Pair.with(splitLine[0], new Operation(this, left, operator, right));
+        return Map.entry(splitLine[0], new Operation(this, left, operator, right));
     }
 
     public static OptionalLong tryParse(@NotNull String value) {

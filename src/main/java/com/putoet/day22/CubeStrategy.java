@@ -1,7 +1,6 @@
 package com.putoet.day22;
 
 import com.putoet.grid.Point;
-import org.javatuples.Pair;
 import org.jetbrains.annotations.NotNull;
 
 record CubeStrategy(char[][] grid) implements MoveStrategy {
@@ -9,11 +8,11 @@ record CubeStrategy(char[][] grid) implements MoveStrategy {
     // 1 going right: 2 right x = x, y = y
     // 1 going down : 3 down x = x, y = y
     // 1 going left : 5 right x = 0, y = 149 - y
-    public static Pair<Point, Facing> moveFromOne(@NotNull Point location, @NotNull Facing facing) {
+    public static Location moveFromOne(@NotNull Point location, @NotNull Facing facing) {
         return switch (facing) {
-            case NORTH -> Pair.with(Point.of(0, location.x() + 100), Facing.WEST);
-            case WEST, SOUTH -> Pair.with(location.add(facing.point()), facing);
-            case EAST -> Pair.with(Point.of(0, 149 - location.y()), Facing.WEST);
+            case NORTH -> new Location(Point.of(0, location.x() + 100), Facing.WEST);
+            case WEST, SOUTH -> new Location(location.add(facing.point()), facing);
+            case EAST -> new Location(Point.of(0, 149 - location.y()), Facing.WEST);
         };
     }
 
@@ -21,12 +20,12 @@ record CubeStrategy(char[][] grid) implements MoveStrategy {
     // 2 going right: 4 left x = 100, y = 149 - y
     // 2 going down : 3 left x = 99, y = x - 50
     // 2 going left : 1 left x = x, y = y
-    public static Pair<Point, Facing> moveFromTwo(@NotNull Point location, @NotNull Facing facing) {
+    public static Location moveFromTwo(@NotNull Point location, @NotNull Facing facing) {
         return switch (facing) {
-            case NORTH -> Pair.with(Point.of(location.x() - 100, 199), Facing.NORTH);
-            case WEST -> Pair.with(Point.of(99, 149 - location.y()), Facing.EAST);
-            case SOUTH -> Pair.with(Point.of(99, location.x() - 50), Facing.EAST);
-            case EAST -> Pair.with(location.add(facing.point()), facing);
+            case NORTH -> new Location(Point.of(location.x() - 100, 199), Facing.NORTH);
+            case WEST -> new Location(Point.of(99, 149 - location.y()), Facing.EAST);
+            case SOUTH -> new Location(Point.of(99, location.x() - 50), Facing.EAST);
+            case EAST -> new Location(location.add(facing.point()), facing);
         };
     }
 
@@ -34,11 +33,11 @@ record CubeStrategy(char[][] grid) implements MoveStrategy {
     // 3 going right: 2 up , x = y + 50, y = 49
     // 3 going down : 4 down, x = x, y = y
     // 3 going left : 5 down, x = y - 50, y = 100
-    public static Pair<Point, Facing> moveFromThree(@NotNull Point location, @NotNull Facing facing) {
+    public static Location moveFromThree(@NotNull Point location, @NotNull Facing facing) {
         return switch (facing) {
-            case NORTH, SOUTH -> Pair.with(location.add(facing.point()), facing);
-            case WEST -> Pair.with(Point.of(location.y() + 50, 49), Facing.NORTH);
-            case EAST -> Pair.with(Point.of(location.y() - 50, 100), Facing.SOUTH);
+            case NORTH, SOUTH -> new Location(location.add(facing.point()), facing);
+            case WEST -> new Location(Point.of(location.y() + 50, 49), Facing.NORTH);
+            case EAST -> new Location(Point.of(location.y() - 50, 100), Facing.SOUTH);
         };
     }
 
@@ -46,11 +45,11 @@ record CubeStrategy(char[][] grid) implements MoveStrategy {
     // 4 going right: 2 left x = 149, y = 49 - (y - 100)
     // 4 going down : 6 left x = 49, y = x + 100
     // 4 going left : 5 left x = x, y = y
-    public static Pair<Point, Facing> moveFromFour(@NotNull Point location, @NotNull Facing facing) {
+    public static Location moveFromFour(@NotNull Point location, @NotNull Facing facing) {
         return switch (facing) {
-            case NORTH, EAST -> Pair.with(location.add(facing.point()), facing);
-            case WEST -> Pair.with(Point.of(149, 49 - (location.y() - 100)), Facing.EAST);
-            case SOUTH -> Pair.with(Point.of(49, location.x() + 100), Facing.EAST);
+            case NORTH, EAST -> new Location(location.add(facing.point()), facing);
+            case WEST -> new Location(Point.of(149, 49 - (location.y() - 100)), Facing.EAST);
+            case SOUTH -> new Location(Point.of(49, location.x() + 100), Facing.EAST);
         };
     }
 
@@ -58,11 +57,11 @@ record CubeStrategy(char[][] grid) implements MoveStrategy {
     // 5 going right: 4 right x = x, y = y
     // 5 going down : 6 down, x = x, y = y
     // 5 going left : 1 right, x = 50, y = 49 - (y - 100)
-    public static Pair<Point, Facing> moveFromFive(@NotNull Point location, @NotNull Facing facing) {
+    public static Location moveFromFive(@NotNull Point location, @NotNull Facing facing) {
         return switch (facing) {
-            case NORTH -> Pair.with(Point.of(50, location.x() + 50), Facing.WEST);
-            case WEST, SOUTH -> Pair.with(location.add(facing.point()), facing);
-            case EAST -> Pair.with(Point.of(50, 49 - (location.y() - 100)), Facing.WEST);
+            case NORTH -> new Location(Point.of(50, location.x() + 50), Facing.WEST);
+            case WEST, SOUTH -> new Location(location.add(facing.point()), facing);
+            case EAST -> new Location(Point.of(50, 49 - (location.y() - 100)), Facing.WEST);
         };
     }
 
@@ -70,21 +69,21 @@ record CubeStrategy(char[][] grid) implements MoveStrategy {
     // 6 going right: 4 up, x = y - 100, y = 149
     // 6 going down : 2 down, x = x + 100, y = 0
     // 6 going left : 1 down, x = y - 100, y = 0
-    public static Pair<Point, Facing> moveFromSix(@NotNull Point location, @NotNull Facing facing) {
+    public static Location moveFromSix(@NotNull Point location, @NotNull Facing facing) {
         return switch (facing) {
-            case NORTH -> Pair.with(location.add(facing.point()), facing);
-            case WEST -> Pair.with(Point.of(location.y() - 100, 149), Facing.NORTH);
-            case SOUTH -> Pair.with(Point.of(location.x() + 100, 0), Facing.SOUTH);
-            case EAST -> Pair.with(Point.of(location.y() - 100, 0), Facing.SOUTH);
+            case NORTH -> new Location(location.add(facing.point()), facing);
+            case WEST -> new Location(Point.of(location.y() - 100, 149), Facing.NORTH);
+            case SOUTH -> new Location(Point.of(location.x() + 100, 0), Facing.SOUTH);
+            case EAST -> new Location(Point.of(location.y() - 100, 0), Facing.SOUTH);
         };
     }
 
     @Override
-    public Pair<Point, Facing> nextLocation(@NotNull Point location, @NotNull Facing facing) {
+    public Location nextLocation(@NotNull Point location, @NotNull Facing facing) {
         // move one step in the facing direction
         final var next = location.add(facing.point());
         return switch (wrapping(location, next)) {
-            case 0 -> Pair.with(next, facing);
+            case 0 -> new Location(next, facing);
             case 1 -> moveFromOne(location, facing);
             case 2 -> moveFromTwo(location, facing);
             case 3 -> moveFromThree(location, facing);

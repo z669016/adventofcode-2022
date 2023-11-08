@@ -1,8 +1,6 @@
 package com.putoet.day24;
 
-import com.putoet.grid.Point;
 import com.putoet.utils.Timer;
-import org.javatuples.Triplet;
 
 public class Day24 {
     public static void main(String[] args) {
@@ -10,19 +8,19 @@ public class Day24 {
         Timer.run(() -> part2(endPoint));
     }
 
-    static Triplet<Valley, Point, Integer> part1() {
-        final var endPoint = PathFinder.solve().orElseThrow();
+    static ValleyRoute part1() {
+        final var route = PathFinder.solve().orElseThrow();
         System.out.println("The fewest number of minutes required to avoid the blizzards and reach the goal is "
-                           + endPoint.getValue2());
+                           + route.steps());
 
-        return endPoint;
+        return route;
     }
 
-    static void part2(Triplet<Valley, Point, Integer> endPoint) {
-        System.out.println("Made it to the end in " + endPoint.getValue2() + " minutes.");
-        var startingPoint = PathFinder.solve(endPoint, state -> state.getValue0().in().equals(state.getValue1())).orElseThrow();
-        System.out.println("Made it back to the beginning in " + startingPoint.getValue2() + " minutes.");
-        endPoint = PathFinder.solve(startingPoint, state -> state.getValue0().out().equals(state.getValue1())).orElseThrow();
-        System.out.println("Made it back to the end again in " + endPoint.getValue2() + " minutes.");
+    static void part2(ValleyRoute route) {
+        System.out.println("Made it to the end in " + route.steps() + " minutes.");
+        final var startingPoint = PathFinder.solve(route, state -> state.valley().in().equals(state.point())).orElseThrow();
+        System.out.println("Made it back to the beginning in " + startingPoint.steps() + " minutes.");
+        route = PathFinder.solve(startingPoint, state -> state.valley().out().equals(state.point())).orElseThrow();
+        System.out.println("Made it back to the end again in " + route.steps() + " minutes.");
     }
 }
