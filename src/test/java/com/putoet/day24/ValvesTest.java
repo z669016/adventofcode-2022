@@ -9,6 +9,6 @@ class ValvesTest {
     @Test
     void solve() {
         final var count = PathFinder.solve().orElseThrow();
-        assertEquals(18, count.getValue2());
+        assertEquals(18, count.steps());
     }
 }
