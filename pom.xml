@@ -21,12 +21,4 @@
         <maven.compiler.target>21</maven.compiler.target>
         <javatuples.version>1.2</javatuples.version>
     </properties>
-
-    <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.javatuples</groupId>-->
-<!--            <artifactId>javatuples</artifactId>-->
-<!--            <version>${javatuples.version}</version>-->
-<!--        </dependency>-->
-    </dependencies>
 </project>
