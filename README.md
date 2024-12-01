@@ -19,17 +19,17 @@ This week, Java 21 has been released, so I decided to compare runtime between Ja
 an All class, that run all individual challenges by loading the DayXX class and calling the ```main()``` method.
 
 I ran the All class with Java 17 and Java 21, and noticed some remarkable differences on the long running challenges:
-* Day 16: Java 17: 80333ms, **Java 21: 22918ms** --> Floyd-Warshall algorithm, parallel stream
-* Day 19: Java 17: 33473ms, Java 21: 31934ms --> BFS algorithm
-* Day 23: **Java 17: 75674ms**, Java 21: 34335ms --> streaming with Set and List
-* Day 24: **Java 17: 50819ms**, Java 21: 25555ms --> BFS algorithm
-* Overall: Java 17: 242263ms, **Java 21: 209563ms**
+* Day 16: Java 17: 80,333 ms, **Java 21: 22,918 ms** --> Floyd-Warshall algorithm, parallel stream
+* Day 19: Java 17: 33,473 ms, Java 21: 31,934 ms --> BFS algorithm
+* Day 23: **Java 17: 75,674 ms**, Java 21: 34,335 ms --> streaming with Set and List
+* Day 24: **Java 17: 50,819 ms**, Java 21: 25,555 ms --> BFS algorithm
+* Overall: Java 17: 242,263 ms, **Java 21: 209,563 ms**
 
 So four long running challenges, on two challenges Java 17 is much faster, on one both are comparable, and on one
 Java 21 is much faster.
 
-**The timings aren't right! Running a day individually takes much less time than running all days in one go. Most 
-likely as result of GC pauses.**
+**The timings aren't right! Running a day individually takes much less time than running all days in one go. For day 
+23, the difference is 50 seconds (according to the timer) which simply doesn't make aby sense... **
 
 ## GraphT
 After migration to Java 21 (which improved overall performance (at least on average), I also introduced JGraphT to 
